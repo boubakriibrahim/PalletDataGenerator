@@ -1,0 +1,525 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.core.config_loader &mdash; PalletDataGenerator 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/_modules/palletdatagenerator/core/config_loader.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.core.config_loader</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for palletdatagenerator.core.config_loader</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Configuration loader for YAML configuration files.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">yaml</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">palletdatagenerator.core.generator</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenerationConfig</span>
+
+
+<div class="viewcode-block" id="ConfigLoader">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.config_loader.html#palletdatagenerator.core.config_loader.ConfigLoader">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ConfigLoader</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Load and validate configuration from YAML files.&quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ConfigLoader.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.config_loader.html#palletdatagenerator.core.config_loader.ConfigLoader.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize configuration loader.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config_path: Path to YAML configuration file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">config_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">config_path</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_config_data</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="ConfigLoader.load_config">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.config_loader.html#palletdatagenerator.core.config_loader.ConfigLoader.load_config">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load configuration from YAML file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Configuration dictionary</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            FileNotFoundError: If configuration file doesn&#39;t exist</span>
+<span class="sd">            yaml.YAMLError: If YAML parsing fails</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="k">raise</span> <span class="ne">FileNotFoundError</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;Configuration file not found: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config_path</span><span class="si">}</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config_path</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_config_data</span> <span class="o">=</span> <span class="n">yaml</span><span class="o">.</span><span class="n">safe_load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_config_data</span> <span class="ow">or</span> <span class="p">{}</span></div>
+
+
+<div class="viewcode-block" id="ConfigLoader.load_generation_config">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.config_loader.html#palletdatagenerator.core.config_loader.ConfigLoader.load_generation_config">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">load_generation_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">GenerationConfig</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load generation configuration from YAML file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            GenerationConfig object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_config</span><span class="p">()</span>
+
+        <span class="c1"># Extract generation parameters with defaults</span>
+        <span class="n">generation_params</span> <span class="o">=</span> <span class="n">config_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;generation&quot;</span><span class="p">,</span> <span class="p">{})</span>
+
+        <span class="k">return</span> <span class="n">GenerationConfig</span><span class="p">(</span>
+            <span class="n">scene_type</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;scene_type&quot;</span><span class="p">,</span> <span class="s2">&quot;single_pallet&quot;</span><span class="p">),</span>
+            <span class="n">num_frames</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;num_frames&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span>
+            <span class="n">resolution</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;resolution&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">])),</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;output_dir&quot;</span><span class="p">,</span> <span class="s2">&quot;./output&quot;</span><span class="p">),</span>
+            <span class="n">export_formats</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;export_formats&quot;</span><span class="p">,</span> <span class="p">[</span><span class="s2">&quot;yolo&quot;</span><span class="p">]),</span>
+            <span class="n">random_seed</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;random_seed&quot;</span><span class="p">),</span>
+            <span class="n">use_gpu</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;use_gpu&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+            <span class="n">samples</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;samples&quot;</span><span class="p">,</span> <span class="mi">128</span><span class="p">),</span>
+            <span class="n">pallet_count</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_count&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">box_count_range</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;box_count_range&quot;</span><span class="p">,</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">])),</span>
+            <span class="n">train_ratio</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;train_ratio&quot;</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">),</span>
+            <span class="n">val_ratio</span><span class="o">=</span><span class="n">generation_params</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val_ratio&quot;</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ConfigLoader.get_section">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.config_loader.html#palletdatagenerator.core.config_loader.ConfigLoader.get_section">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_section</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">section_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a specific configuration section.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            section_name: Name of the configuration section</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Configuration section dictionary</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_config</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">config_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">section_name</span><span class="p">,</span> <span class="p">{})</span></div>
+
+
+<div class="viewcode-block" id="ConfigLoader.get_value">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.config_loader.html#palletdatagenerator.core.config_loader.ConfigLoader.get_value">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">default</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a specific configuration value.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            key: Configuration key (supports dot notation for nested keys)</span>
+<span class="sd">            default: Default value if key not found</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Configuration value</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">config_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_config</span><span class="p">()</span>
+
+        <span class="c1"># Support dot notation for nested keys</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="n">key</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+        <span class="n">value</span> <span class="o">=</span> <span class="n">config_data</span>
+
+        <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="ow">and</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">value</span><span class="p">:</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="n">value</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">return</span> <span class="n">default</span>
+
+        <span class="k">return</span> <span class="n">value</span></div>
+
+
+<div class="viewcode-block" id="ConfigLoader.validate_config">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.config_loader.html#palletdatagenerator.core.config_loader.ConfigLoader.validate_config">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_config</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate configuration file.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            True if configuration is valid</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            ValueError: If configuration is invalid</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">config_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">load_config</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed to load configuration: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+
+        <span class="c1"># Validate generation section if present</span>
+        <span class="k">if</span> <span class="s2">&quot;generation&quot;</span> <span class="ow">in</span> <span class="n">config_data</span><span class="p">:</span>
+            <span class="n">generation</span> <span class="o">=</span> <span class="n">config_data</span><span class="p">[</span><span class="s2">&quot;generation&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Validate scene_type</span>
+            <span class="k">if</span> <span class="s2">&quot;scene_type&quot;</span> <span class="ow">in</span> <span class="n">generation</span><span class="p">:</span>
+                <span class="n">valid_scene_types</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;single_pallet&quot;</span><span class="p">,</span> <span class="s2">&quot;warehouse&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">generation</span><span class="p">[</span><span class="s2">&quot;scene_type&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_scene_types</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;Invalid scene_type. Must be one of: </span><span class="si">{</span><span class="n">valid_scene_types</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+
+            <span class="c1"># Validate num_frames</span>
+            <span class="k">if</span> <span class="s2">&quot;num_frames&quot;</span> <span class="ow">in</span> <span class="n">generation</span> <span class="ow">and</span> <span class="p">(</span>
+                <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">generation</span><span class="p">[</span><span class="s2">&quot;num_frames&quot;</span><span class="p">],</span> <span class="nb">int</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">generation</span><span class="p">[</span><span class="s2">&quot;num_frames&quot;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+            <span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;num_frames must be a positive integer&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Validate resolution</span>
+            <span class="k">if</span> <span class="s2">&quot;resolution&quot;</span> <span class="ow">in</span> <span class="n">generation</span><span class="p">:</span>
+                <span class="n">resolution</span> <span class="o">=</span> <span class="n">generation</span><span class="p">[</span><span class="s2">&quot;resolution&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">resolution</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">resolution</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+                    <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">resolution</span><span class="p">)</span>
+                <span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;resolution must be a list of two positive integers [width, height]&quot;</span>
+                    <span class="p">)</span>
+
+            <span class="c1"># Validate export_formats</span>
+            <span class="k">if</span> <span class="s2">&quot;export_formats&quot;</span> <span class="ow">in</span> <span class="n">generation</span><span class="p">:</span>
+                <span class="n">valid_formats</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;yolo&quot;</span><span class="p">,</span> <span class="s2">&quot;coco&quot;</span><span class="p">,</span> <span class="s2">&quot;voc&quot;</span><span class="p">]</span>
+                <span class="n">formats</span> <span class="o">=</span> <span class="n">generation</span><span class="p">[</span><span class="s2">&quot;export_formats&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">formats</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;export_formats must be a list&quot;</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">fmt</span> <span class="ow">in</span> <span class="n">formats</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">fmt</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_formats</span><span class="p">:</span>
+                        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                            <span class="sa">f</span><span class="s2">&quot;Invalid export format &#39;</span><span class="si">{</span><span class="n">fmt</span><span class="si">}</span><span class="s2">&#39;. Must be one of: </span><span class="si">{</span><span class="n">valid_formats</span><span class="si">}</span><span class="s2">&quot;</span>
+                        <span class="p">)</span>
+
+            <span class="c1"># Validate ratios</span>
+            <span class="k">if</span> <span class="s2">&quot;train_ratio&quot;</span> <span class="ow">in</span> <span class="n">generation</span><span class="p">:</span>
+                <span class="n">ratio</span> <span class="o">=</span> <span class="n">generation</span><span class="p">[</span><span class="s2">&quot;train_ratio&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;train_ratio must be a number between 0 and 1&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="s2">&quot;val_ratio&quot;</span> <span class="ow">in</span> <span class="n">generation</span><span class="p">:</span>
+                <span class="n">ratio</span> <span class="o">=</span> <span class="n">generation</span><span class="p">[</span><span class="s2">&quot;val_ratio&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">ratio</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span> <span class="ow">or</span> <span class="ow">not</span> <span class="p">(</span><span class="mi">0</span> <span class="o">&lt;</span> <span class="n">ratio</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;val_ratio must be a number between 0 and 1&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Validate that train_ratio + val_ratio &lt; 1</span>
+            <span class="n">train_ratio</span> <span class="o">=</span> <span class="n">generation</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;train_ratio&quot;</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+            <span class="n">val_ratio</span> <span class="o">=</span> <span class="n">generation</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;val_ratio&quot;</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">train_ratio</span> <span class="o">+</span> <span class="n">val_ratio</span> <span class="o">&gt;=</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;train_ratio + val_ratio must be less than 1&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Validate box_count_range</span>
+            <span class="k">if</span> <span class="s2">&quot;box_count_range&quot;</span> <span class="ow">in</span> <span class="n">generation</span><span class="p">:</span>
+                <span class="n">box_range</span> <span class="o">=</span> <span class="n">generation</span><span class="p">[</span><span class="s2">&quot;box_count_range&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">box_range</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">box_range</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">2</span>
+                    <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span> <span class="ow">and</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">box_range</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="n">box_range</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">box_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="p">):</span>
+                    <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
+                        <span class="s2">&quot;box_count_range must be a list of two positive integers [min, max] where min &lt;= max&quot;</span>
+                    <span class="p">)</span>
+
+        <span class="k">return</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="ConfigLoader.create_example_config">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.config_loader.html#palletdatagenerator.core.config_loader.ConfigLoader.create_example_config">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_example_config</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create an example configuration file.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            output_path: Path where to save the example configuration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">example_config</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;generation&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;scene_type&quot;</span><span class="p">:</span> <span class="s2">&quot;single_pallet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;num_frames&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+                <span class="s2">&quot;num_batches&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1280</span><span class="p">,</span> <span class="mi">720</span><span class="p">],</span>
+                <span class="s2">&quot;output_dir&quot;</span><span class="p">:</span> <span class="s2">&quot;./output&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;export_formats&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;yolo&quot;</span><span class="p">,</span> <span class="s2">&quot;coco&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">42</span><span class="p">,</span>
+                <span class="s2">&quot;use_gpu&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;samples&quot;</span><span class="p">:</span> <span class="mi">128</span><span class="p">,</span>
+                <span class="s2">&quot;pallet_count&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;box_count_range&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">15</span><span class="p">],</span>
+                <span class="s2">&quot;train_ratio&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+                <span class="s2">&quot;val_ratio&quot;</span><span class="p">:</span> <span class="mf">0.2</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;project&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;clone_to_desktop&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;desktop_path&quot;</span><span class="p">:</span> <span class="s2">&quot;auto&quot;</span><span class="p">,</span>  <span class="c1"># Auto-detect or specify custom path</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;PalletDataGenerator&quot;</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;rendering&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;engine&quot;</span><span class="p">:</span> <span class="s2">&quot;CYCLES&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;device&quot;</span><span class="p">:</span> <span class="s2">&quot;GPU&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;max_bounces&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+                <span class="s2">&quot;use_denoising&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;denoiser&quot;</span><span class="p">:</span> <span class="s2">&quot;AUTO&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;fast_mode&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;scene&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;lighting&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;hdri_path&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;sun_energy&quot;</span><span class="p">:</span> <span class="mf">3.0</span><span class="p">,</span>
+                    <span class="s2">&quot;sun_angle&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mi">45</span><span class="p">,</span> <span class="mi">135</span><span class="p">],</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;camera&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;height_range&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span>  <span class="c1"># Forklift height simulation</span>
+                    <span class="s2">&quot;angle_range&quot;</span><span class="p">:</span> <span class="p">[</span><span class="o">-</span><span class="mi">30</span><span class="p">,</span> <span class="mi">30</span><span class="p">],</span>
+                    <span class="s2">&quot;distance_range&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">8.0</span><span class="p">],</span>
+                    <span class="s2">&quot;focal_length&quot;</span><span class="p">:</span> <span class="mf">35.0</span><span class="p">,</span>
+                    <span class="s2">&quot;sensor_size&quot;</span><span class="p">:</span> <span class="mf">36.0</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;backgrounds&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;use_random_backgrounds&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                    <span class="s2">&quot;images_dir&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="s2">&quot;supported_formats&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;.jpg&quot;</span><span class="p">,</span> <span class="s2">&quot;.jpeg&quot;</span><span class="p">,</span> <span class="s2">&quot;.png&quot;</span><span class="p">,</span> <span class="s2">&quot;.exr&quot;</span><span class="p">,</span> <span class="s2">&quot;.hdr&quot;</span><span class="p">],</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;materials&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;randomize_colors&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s2">&quot;use_textures&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                    <span class="s2">&quot;texture_dir&quot;</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;objects&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;pallet&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;dimensions&quot;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.2</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">,</span> <span class="mf">0.15</span><span class="p">],</span> <span class="s2">&quot;material_variations&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">},</span>
+                <span class="s2">&quot;boxes&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;size_variations&quot;</span><span class="p">:</span> <span class="p">[</span>
+                        <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">],</span>
+                        <span class="p">[</span><span class="mf">0.4</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">],</span>
+                        <span class="p">[</span><span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.35</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">],</span>
+                    <span class="p">],</span>
+                    <span class="s2">&quot;material_variations&quot;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+                    <span class="s2">&quot;stacking_probability&quot;</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+                <span class="p">},</span>
+            <span class="p">},</span>
+            <span class="s2">&quot;advanced&quot;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s2">&quot;analysis_images&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;depth_maps&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;normal_maps&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;segmentation_masks&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+                <span class="s2">&quot;multi_pass_rendering&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="n">output_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span>
+        <span class="n">output_path</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">yaml</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">example_config</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">default_flow_style</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, PalletDataGenerator Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

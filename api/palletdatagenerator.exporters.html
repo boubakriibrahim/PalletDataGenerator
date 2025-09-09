@@ -1,0 +1,595 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="palletdatagenerator.exporters package" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="api/palletdatagenerator.exporters.html" />
+<meta property="og:site_name" content="PalletDataGenerator" />
+<meta property="og:description" content="Submodules: palletdatagenerator.exporters.coco module- COCOExporter- COCOExporter.__init__(), COCOExporter.add_image(), COCOExporter.add_annotation(), COCOExporter.export_frame_annotations(), COCOE..." />
+<meta name="description" content="Submodules: palletdatagenerator.exporters.coco module- COCOExporter- COCOExporter.__init__(), COCOExporter.add_image(), COCOExporter.add_annotation(), COCOExporter.export_frame_annotations(), COCOE..." />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.exporters package &mdash; PalletDataGenerator 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/api/palletdatagenerator.exporters.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.exporters package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/docs/api/palletdatagenerator.exporters.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="palletdatagenerator-exporters-package">
+<h1>palletdatagenerator.exporters package<a class="headerlink" href="#palletdatagenerator-exporters-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="palletdatagenerator.exporters.coco.html">palletdatagenerator.exporters.coco module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="palletdatagenerator.exporters.coco.html#palletdatagenerator.exporters.coco.COCOExporter"><code class="docutils literal notranslate"><span class="pre">COCOExporter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.coco.html#palletdatagenerator.exporters.coco.COCOExporter.__init__"><code class="docutils literal notranslate"><span class="pre">COCOExporter.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.coco.html#palletdatagenerator.exporters.coco.COCOExporter.add_image"><code class="docutils literal notranslate"><span class="pre">COCOExporter.add_image()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.coco.html#palletdatagenerator.exporters.coco.COCOExporter.add_annotation"><code class="docutils literal notranslate"><span class="pre">COCOExporter.add_annotation()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.coco.html#palletdatagenerator.exporters.coco.COCOExporter.export_frame_annotations"><code class="docutils literal notranslate"><span class="pre">COCOExporter.export_frame_annotations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.coco.html#palletdatagenerator.exporters.coco.COCOExporter.export_dataset_annotations"><code class="docutils literal notranslate"><span class="pre">COCOExporter.export_dataset_annotations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.coco.html#palletdatagenerator.exporters.coco.COCOExporter.create_dataset_splits"><code class="docutils literal notranslate"><span class="pre">COCOExporter.create_dataset_splits()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.coco.html#palletdatagenerator.exporters.coco.COCOExporter.validate_annotations"><code class="docutils literal notranslate"><span class="pre">COCOExporter.validate_annotations()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="palletdatagenerator.exporters.voc.html">palletdatagenerator.exporters.voc module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="palletdatagenerator.exporters.voc.html#palletdatagenerator.exporters.voc.VOCExporter"><code class="docutils literal notranslate"><span class="pre">VOCExporter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.voc.html#palletdatagenerator.exporters.voc.VOCExporter.__init__"><code class="docutils literal notranslate"><span class="pre">VOCExporter.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.voc.html#palletdatagenerator.exporters.voc.VOCExporter.export_frame_annotations"><code class="docutils literal notranslate"><span class="pre">VOCExporter.export_frame_annotations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.voc.html#palletdatagenerator.exporters.voc.VOCExporter.export_dataset_annotations"><code class="docutils literal notranslate"><span class="pre">VOCExporter.export_dataset_annotations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.voc.html#palletdatagenerator.exporters.voc.VOCExporter.create_train_val_split"><code class="docutils literal notranslate"><span class="pre">VOCExporter.create_train_val_split()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.voc.html#palletdatagenerator.exporters.voc.VOCExporter.validate_xml_files"><code class="docutils literal notranslate"><span class="pre">VOCExporter.validate_xml_files()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="palletdatagenerator.exporters.yolo.html">palletdatagenerator.exporters.yolo module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="palletdatagenerator.exporters.yolo.html#palletdatagenerator.exporters.yolo.YOLOExporter"><code class="docutils literal notranslate"><span class="pre">YOLOExporter</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.yolo.html#palletdatagenerator.exporters.yolo.YOLOExporter.__init__"><code class="docutils literal notranslate"><span class="pre">YOLOExporter.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.yolo.html#palletdatagenerator.exporters.yolo.YOLOExporter.bbox_to_yolo_format"><code class="docutils literal notranslate"><span class="pre">YOLOExporter.bbox_to_yolo_format()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.yolo.html#palletdatagenerator.exporters.yolo.YOLOExporter.export_frame_annotations"><code class="docutils literal notranslate"><span class="pre">YOLOExporter.export_frame_annotations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.yolo.html#palletdatagenerator.exporters.yolo.YOLOExporter.export_dataset_annotations"><code class="docutils literal notranslate"><span class="pre">YOLOExporter.export_dataset_annotations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.yolo.html#palletdatagenerator.exporters.yolo.YOLOExporter.detect_pallet_faces_and_holes"><code class="docutils literal notranslate"><span class="pre">YOLOExporter.detect_pallet_faces_and_holes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.exporters.yolo.html#palletdatagenerator.exporters.yolo.YOLOExporter.create_training_split"><code class="docutils literal notranslate"><span class="pre">YOLOExporter.create_training_split()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-palletdatagenerator.exporters">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-palletdatagenerator.exporters" title="Link to this heading"></a></h2>
+<p>Exporters for different annotation formats.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.YOLOExporter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.exporters.</span></span><span class="sig-name descname"><span class="pre">YOLOExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/yolo.html#YOLOExporter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.YOLOExporter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Export object detection annotations in YOLO format.</p>
+<p>YOLO format specifications:
+- One text file per image
+- Each line: class_id center_x center_y width height
+- All coordinates normalized to [0, 1]</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.YOLOExporter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">class_mapping</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/yolo.html#YOLOExporter.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.YOLOExporter.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize YOLO exporter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_dir</strong> – Directory to save YOLO label files</p></li>
+<li><p><strong>class_mapping</strong> – Dictionary mapping class names to class IDs</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.YOLOExporter.bbox_to_yolo_format">
+<span class="sig-name descname"><span class="pre">bbox_to_yolo_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bbox</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/yolo.html#YOLOExporter.bbox_to_yolo_format"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.YOLOExporter.bbox_to_yolo_format" title="Link to this definition"></a></dt>
+<dd><p>Convert bounding box to YOLO format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bbox</strong> – Bounding box dictionary with x_min, y_min, x_max, y_max</p></li>
+<li><p><strong>img_width</strong> – Image width in pixels</p></li>
+<li><p><strong>img_height</strong> – Image height in pixels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Tuple of (center_x, center_y, width, height) normalized to [0, 1]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.YOLOExporter.create_training_split">
+<span class="sig-name descname"><span class="pre">create_training_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.15</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/yolo.html#YOLOExporter.create_training_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.YOLOExporter.create_training_split" title="Link to this definition"></a></dt>
+<dd><p>Create train/validation/test split for YOLO training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_ratio</strong> – Ratio of data for training</p></li>
+<li><p><strong>val_ratio</strong> – Ratio of data for validation (rest goes to test)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with train/val/test file lists</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.YOLOExporter.detect_pallet_faces_and_holes">
+<span class="sig-name descname"><span class="pre">detect_pallet_faces_and_holes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pallet_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/yolo.html#YOLOExporter.detect_pallet_faces_and_holes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.YOLOExporter.detect_pallet_faces_and_holes" title="Link to this definition"></a></dt>
+<dd><p>Detect pallet faces and holes for YOLO annotation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pallet_obj</strong> – Blender pallet object</p></li>
+<li><p><strong>camera_obj</strong> – Blender camera object</p></li>
+<li><p><strong>img_width</strong> – Image width in pixels</p></li>
+<li><p><strong>img_height</strong> – Image height in pixels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of detection dictionaries for faces and holes</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.YOLOExporter.export_dataset_annotations">
+<span class="sig-name descname"><span class="pre">export_dataset_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/yolo.html#YOLOExporter.export_dataset_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.YOLOExporter.export_dataset_annotations" title="Link to this definition"></a></dt>
+<dd><p>Export annotations for entire dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset_info</strong> – Dataset information with frames and detections</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with export statistics and file paths</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.YOLOExporter.export_frame_annotations">
+<span class="sig-name descname"><span class="pre">export_frame_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">detections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/yolo.html#YOLOExporter.export_frame_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.YOLOExporter.export_frame_annotations" title="Link to this definition"></a></dt>
+<dd><p>Export annotations for a single frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame_id</strong> – Frame identifier</p></li>
+<li><p><strong>detections</strong> – List of detection dictionaries</p></li>
+<li><p><strong>img_width</strong> – Image width in pixels</p></li>
+<li><p><strong>img_height</strong> – Image height in pixels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to created YOLO label file</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.COCOExporter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.exporters.</span></span><span class="sig-name descname"><span class="pre">COCOExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'PalletDataset'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/coco.html#COCOExporter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.COCOExporter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Export annotations in COCO (Common Objects in Context) format.</p>
+<p>COCO format is widely used for object detection, segmentation, and keypoint detection.
+This exporter focuses on object detection with bounding boxes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.COCOExporter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">dataset_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'PalletDataset'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/coco.html#COCOExporter.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.COCOExporter.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize COCO exporter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_dir</strong> – Directory to save COCO annotation files</p></li>
+<li><p><strong>dataset_name</strong> – Name of the dataset for metadata</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.COCOExporter.add_annotation">
+<span class="sig-name descname"><span class="pre">add_annotation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">category_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">bbox</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">segmentation</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">area</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iscrowd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/coco.html#COCOExporter.add_annotation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.COCOExporter.add_annotation" title="Link to this definition"></a></dt>
+<dd><p>Add annotation to COCO dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_id</strong> – ID of the image this annotation belongs to</p></li>
+<li><p><strong>category_name</strong> – Name of the object category</p></li>
+<li><p><strong>bbox</strong> – Bounding box in format [x, y, width, height]</p></li>
+<li><p><strong>segmentation</strong> – Optional segmentation polygon</p></li>
+<li><p><strong>area</strong> – Optional area of the annotation</p></li>
+<li><p><strong>iscrowd</strong> – Whether this is a crowd annotation (0 or 1)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Annotation ID assigned to this annotation</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.COCOExporter.add_image">
+<span class="sig-name descname"><span class="pre">add_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/coco.html#COCOExporter.add_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.COCOExporter.add_image" title="Link to this definition"></a></dt>
+<dd><p>Add image to COCO dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>image_path</strong> – Path to the image file</p></li>
+<li><p><strong>width</strong> – Image width in pixels</p></li>
+<li><p><strong>height</strong> – Image height in pixels</p></li>
+<li><p><strong>frame_id</strong> – Optional frame identifier</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Image ID assigned to this image</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.COCOExporter.create_dataset_splits">
+<span class="sig-name descname"><span class="pre">create_dataset_splits</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.15</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/coco.html#COCOExporter.create_dataset_splits"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.COCOExporter.create_dataset_splits" title="Link to this definition"></a></dt>
+<dd><p>Create train/validation/test splits in COCO format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_ratio</strong> – Ratio of data for training</p></li>
+<li><p><strong>val_ratio</strong> – Ratio of data for validation</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with information about created splits</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.COCOExporter.export_dataset_annotations">
+<span class="sig-name descname"><span class="pre">export_dataset_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/coco.html#COCOExporter.export_dataset_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.COCOExporter.export_dataset_annotations" title="Link to this definition"></a></dt>
+<dd><p>Export complete dataset annotations to COCO format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset_info</strong> – Dataset information with frames and detections</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to exported COCO annotation file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.COCOExporter.export_frame_annotations">
+<span class="sig-name descname"><span class="pre">export_frame_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">detections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/coco.html#COCOExporter.export_frame_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.COCOExporter.export_frame_annotations" title="Link to this definition"></a></dt>
+<dd><p>Export annotations for a single frame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame_id</strong> – Frame identifier</p></li>
+<li><p><strong>image_path</strong> – Path to the image file</p></li>
+<li><p><strong>detections</strong> – List of detection dictionaries</p></li>
+<li><p><strong>img_width</strong> – Image width in pixels</p></li>
+<li><p><strong>img_height</strong> – Image height in pixels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Image ID assigned to this frame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.COCOExporter.validate_annotations">
+<span class="sig-name descname"><span class="pre">validate_annotations</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/coco.html#COCOExporter.validate_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.COCOExporter.validate_annotations" title="Link to this definition"></a></dt>
+<dd><p>Validate COCO annotations for common issues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with validation results and issues found</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.VOCExporter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.exporters.</span></span><span class="sig-name descname"><span class="pre">VOCExporter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">images_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'images'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/voc.html#VOCExporter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.VOCExporter" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Export annotations in PASCAL VOC XML format.</p>
+<p>VOC format uses XML files with one file per image containing
+all object annotations for that image.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.VOCExporter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">images_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'images'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/voc.html#VOCExporter.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.VOCExporter.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize VOC exporter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>output_dir</strong> – Directory to save VOC XML files</p></li>
+<li><p><strong>images_dir</strong> – Directory containing the images (for XML references)</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.VOCExporter.create_train_val_split">
+<span class="sig-name descname"><span class="pre">create_train_val_split</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.13)"><span class="pre">float</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.8</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/voc.html#VOCExporter.create_train_val_split"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.VOCExporter.create_train_val_split" title="Link to this definition"></a></dt>
+<dd><p>Create train/validation split for VOC format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>train_ratio</strong> – Ratio of data for training (rest goes to validation)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with train and validation file lists</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.VOCExporter.export_dataset_annotations">
+<span class="sig-name descname"><span class="pre">export_dataset_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset_info</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/voc.html#VOCExporter.export_dataset_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.VOCExporter.export_dataset_annotations" title="Link to this definition"></a></dt>
+<dd><p>Export complete dataset annotations in VOC format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataset_info</strong> – Dataset information with frames and detections</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary with export statistics</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.VOCExporter.export_frame_annotations">
+<span class="sig-name descname"><span class="pre">export_frame_annotations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">detections</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_width</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/voc.html#VOCExporter.export_frame_annotations"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.VOCExporter.export_frame_annotations" title="Link to this definition"></a></dt>
+<dd><p>Export annotations for a single frame in VOC format.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>frame_id</strong> – Frame identifier</p></li>
+<li><p><strong>image_path</strong> – Path to the image file</p></li>
+<li><p><strong>detections</strong> – List of detection dictionaries</p></li>
+<li><p><strong>img_width</strong> – Image width in pixels</p></li>
+<li><p><strong>img_height</strong> – Image height in pixels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Path to created VOC XML file</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.exporters.VOCExporter.validate_xml_files">
+<span class="sig-name descname"><span class="pre">validate_xml_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/exporters/voc.html#VOCExporter.validate_xml_files"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.exporters.VOCExporter.validate_xml_files" title="Link to this definition"></a></dt>
+<dd><p>Validate all XML files for common issues.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary with validation results</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, PalletDataGenerator Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

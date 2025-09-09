@@ -1,0 +1,712 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.exporters.coco &mdash; PalletDataGenerator 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/_modules/palletdatagenerator/exporters/coco.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.exporters.coco</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for palletdatagenerator.exporters.coco</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;COCO format exporter for object detection and segmentation annotations.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">datetime</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">importlib.util</span>
+
+    <span class="n">BLENDER_AVAILABLE</span> <span class="o">=</span> <span class="n">importlib</span><span class="o">.</span><span class="n">util</span><span class="o">.</span><span class="n">find_spec</span><span class="p">(</span><span class="s2">&quot;bpy&quot;</span><span class="p">)</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+    <span class="k">if</span> <span class="n">BLENDER_AVAILABLE</span><span class="p">:</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">mathutils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">BLENDER_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="COCOExporter">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.coco.html#palletdatagenerator.COCOExporter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">COCOExporter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export annotations in COCO (Common Objects in Context) format.</span>
+
+<span class="sd">    COCO format is widely used for object detection, segmentation, and keypoint detection.</span>
+<span class="sd">    This exporter focuses on object detection with bounding boxes.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="COCOExporter.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.coco.html#palletdatagenerator.COCOExporter.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">dataset_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;PalletDataset&quot;</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize COCO exporter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            output_dir: Directory to save COCO annotation files</span>
+<span class="sd">            dataset_name: Name of the dataset for metadata</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span> <span class="o">=</span> <span class="n">dataset_name</span>
+
+        <span class="c1"># Initialize COCO structure</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_info</span><span class="p">(),</span>
+            <span class="s2">&quot;licenses&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_licenses</span><span class="p">(),</span>
+            <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_create_categories</span><span class="p">(),</span>
+            <span class="s2">&quot;images&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">annotation_id</span> <span class="o">=</span> <span class="mi">1</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_info</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create COCO info section.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Info dictionary with dataset metadata</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2"> - Synthetic pallet dataset&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://github.com/boubakriibrahim/PalletDataGenerator&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;version&quot;</span><span class="p">:</span> <span class="s2">&quot;0.1.0&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;year&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">year</span><span class="p">,</span>
+            <span class="s2">&quot;contributor&quot;</span><span class="p">:</span> <span class="s2">&quot;PalletDataGenerator&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;date_created&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_licenses</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create COCO licenses section.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of license dictionaries</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;MIT License&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;url&quot;</span><span class="p">:</span> <span class="s2">&quot;https://opensource.org/licenses/MIT&quot;</span><span class="p">,</span>
+            <span class="p">}</span>
+        <span class="p">]</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_categories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create COCO categories section.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of category dictionaries</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;pallet&quot;</span><span class="p">,</span> <span class="s2">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;logistics&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;pallet_face&quot;</span><span class="p">,</span> <span class="s2">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;pallet_part&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;hole&quot;</span><span class="p">,</span> <span class="s2">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;pallet_part&quot;</span><span class="p">},</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="s2">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;cargo&quot;</span><span class="p">},</span>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="COCOExporter.add_image">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.coco.html#palletdatagenerator.COCOExporter.add_image">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_image</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">image_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">frame_id</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add image to COCO dataset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image_path: Path to the image file</span>
+<span class="sd">            width: Image width in pixels</span>
+<span class="sd">            height: Image height in pixels</span>
+<span class="sd">            frame_id: Optional frame identifier</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Image ID assigned to this image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">image_filename</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">image_path</span><span class="p">)</span>
+
+        <span class="n">image_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_id</span><span class="p">,</span>
+            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">width</span><span class="p">,</span>
+            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">height</span><span class="p">,</span>
+            <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="n">image_filename</span><span class="p">,</span>
+            <span class="s2">&quot;license&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+            <span class="s2">&quot;flickr_url&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;coco_url&quot;</span><span class="p">:</span> <span class="s2">&quot;&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;date_captured&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="n">frame_id</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">image_data</span><span class="p">[</span><span class="s2">&quot;frame_id&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frame_id</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">image_data</span><span class="p">)</span>
+
+        <span class="n">current_image_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">image_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">image_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">current_image_id</span></div>
+
+
+<div class="viewcode-block" id="COCOExporter.add_annotation">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.coco.html#palletdatagenerator.COCOExporter.add_annotation">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">add_annotation</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">image_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">category_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">bbox</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">segmentation</span><span class="p">:</span> <span class="nb">list</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">area</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">iscrowd</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Add annotation to COCO dataset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            image_id: ID of the image this annotation belongs to</span>
+<span class="sd">            category_name: Name of the object category</span>
+<span class="sd">            bbox: Bounding box in format [x, y, width, height]</span>
+<span class="sd">            segmentation: Optional segmentation polygon</span>
+<span class="sd">            area: Optional area of the annotation</span>
+<span class="sd">            iscrowd: Whether this is a crowd annotation (0 or 1)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Annotation ID assigned to this annotation</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Find category ID</span>
+        <span class="n">category_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">category</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">category_name</span><span class="p">:</span>
+                <span class="n">category_id</span> <span class="o">=</span> <span class="n">category</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span>
+                <span class="k">break</span>
+
+        <span class="k">if</span> <span class="n">category_id</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Unknown category &#39;</span><span class="si">{</span><span class="n">category_name</span><span class="si">}</span><span class="s2">&#39;, skipping annotation&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span>
+
+        <span class="c1"># Convert bbox format from {x_min, y_min, x_max, y_max} to [x, y, width, height]</span>
+        <span class="k">if</span> <span class="s2">&quot;x_min&quot;</span> <span class="ow">in</span> <span class="n">bbox</span><span class="p">:</span>
+            <span class="n">coco_bbox</span> <span class="o">=</span> <span class="p">[</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">coco_bbox</span> <span class="o">=</span> <span class="n">bbox</span>
+
+        <span class="c1"># Calculate area if not provided</span>
+        <span class="k">if</span> <span class="n">area</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">area</span> <span class="o">=</span> <span class="n">coco_bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="n">coco_bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span>  <span class="c1"># width * height</span>
+
+        <span class="n">annotation_data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_id</span><span class="p">,</span>
+            <span class="s2">&quot;image_id&quot;</span><span class="p">:</span> <span class="n">image_id</span><span class="p">,</span>
+            <span class="s2">&quot;category_id&quot;</span><span class="p">:</span> <span class="n">category_id</span><span class="p">,</span>
+            <span class="s2">&quot;segmentation&quot;</span><span class="p">:</span> <span class="n">segmentation</span> <span class="ow">or</span> <span class="p">[],</span>
+            <span class="s2">&quot;area&quot;</span><span class="p">:</span> <span class="n">area</span><span class="p">,</span>
+            <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="n">coco_bbox</span><span class="p">,</span>
+            <span class="s2">&quot;iscrowd&quot;</span><span class="p">:</span> <span class="n">iscrowd</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">annotation_data</span><span class="p">)</span>
+
+        <span class="n">current_annotation_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">annotation_id</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">annotation_id</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="k">return</span> <span class="n">current_annotation_id</span></div>
+
+
+<div class="viewcode-block" id="COCOExporter.export_frame_annotations">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.coco.html#palletdatagenerator.COCOExporter.export_frame_annotations">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_frame_annotations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">frame_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">image_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">detections</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">img_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">img_height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">int</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export annotations for a single frame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame_id: Frame identifier</span>
+<span class="sd">            image_path: Path to the image file</span>
+<span class="sd">            detections: List of detection dictionaries</span>
+<span class="sd">            img_width: Image width in pixels</span>
+<span class="sd">            img_height: Image height in pixels</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Image ID assigned to this frame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Add image to dataset</span>
+        <span class="n">image_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_image</span><span class="p">(</span><span class="n">image_path</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span><span class="p">,</span> <span class="n">frame_id</span><span class="p">)</span>
+
+        <span class="c1"># Add annotations for this image</span>
+        <span class="k">for</span> <span class="n">detection</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">:</span>
+            <span class="n">class_name</span> <span class="o">=</span> <span class="n">detection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_name&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+            <span class="n">bbox</span> <span class="o">=</span> <span class="n">detection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bbox_2d&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">bbox</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Add annotation</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_annotation</span><span class="p">(</span>
+                <span class="n">image_id</span><span class="o">=</span><span class="n">image_id</span><span class="p">,</span>
+                <span class="n">category_name</span><span class="o">=</span><span class="n">class_name</span><span class="p">,</span>
+                <span class="n">bbox</span><span class="o">=</span><span class="n">bbox</span><span class="p">,</span>
+                <span class="n">area</span><span class="o">=</span><span class="n">bbox</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;area&quot;</span><span class="p">,</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]),</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">image_id</span></div>
+
+
+<div class="viewcode-block" id="COCOExporter.export_dataset_annotations">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.coco.html#palletdatagenerator.COCOExporter.export_dataset_annotations">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_dataset_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export complete dataset annotations to COCO format.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_info: Dataset information with frames and detections</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Path to exported COCO annotation file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">frames</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;frames&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="k">for</span> <span class="n">frame_data</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">:</span>
+            <span class="n">frame_id</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;frame_id&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">image_path</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;image_path&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;frame_</span><span class="si">{</span><span class="n">frame_id</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+            <span class="n">detections</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;detections&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">img_width</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">1280</span><span class="p">)</span>
+            <span class="n">img_height</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">export_frame_annotations</span><span class="p">(</span>
+                <span class="n">frame_id</span><span class="p">,</span> <span class="n">image_path</span><span class="p">,</span> <span class="n">detections</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Save COCO annotations</span>
+        <span class="n">output_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;annotations.json&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">output_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Save statistics</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_statistics</span><span class="p">()</span>
+        <span class="n">stats_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;coco_stats.json&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">stats_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COCO export complete:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s1">&#39;images&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> images&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s1">&#39;annotations&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> annotations&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s1">&#39;categories&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> categories&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Saved to: </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_file</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_statistics</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate statistics about the exported dataset.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with dataset statistics</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;total_images&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;total_annotations&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Count annotations per category</span>
+        <span class="k">for</span> <span class="n">annotation</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]:</span>
+            <span class="n">category_id</span> <span class="o">=</span> <span class="n">annotation</span><span class="p">[</span><span class="s2">&quot;category_id&quot;</span><span class="p">]</span>
+
+            <span class="c1"># Find category name</span>
+            <span class="n">category_name</span> <span class="o">=</span> <span class="s2">&quot;unknown&quot;</span>
+            <span class="k">for</span> <span class="n">category</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">category</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">category_id</span><span class="p">:</span>
+                    <span class="n">category_name</span> <span class="o">=</span> <span class="n">category</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span>
+                    <span class="k">break</span>
+
+            <span class="k">if</span> <span class="n">category_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">]:</span>
+                <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">][</span><span class="n">category_name</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s2">&quot;total_area&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s2">&quot;avg_area&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="p">}</span>
+
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">][</span><span class="n">category_name</span><span class="p">][</span><span class="s2">&quot;count&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">][</span><span class="n">category_name</span><span class="p">][</span><span class="s2">&quot;total_area&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="n">annotation</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Calculate average areas</span>
+        <span class="k">for</span> <span class="n">_category_name</span><span class="p">,</span> <span class="n">category_stats</span> <span class="ow">in</span> <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">category_stats</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">category_stats</span><span class="p">[</span><span class="s2">&quot;avg_area&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span>
+                    <span class="n">category_stats</span><span class="p">[</span><span class="s2">&quot;total_area&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">category_stats</span><span class="p">[</span><span class="s2">&quot;count&quot;</span><span class="p">]</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">stats</span>
+
+<div class="viewcode-block" id="COCOExporter.create_dataset_splits">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.coco.html#palletdatagenerator.COCOExporter.create_dataset_splits">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_dataset_splits</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">train_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">val_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create train/validation/test splits in COCO format.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_ratio: Ratio of data for training</span>
+<span class="sd">            val_ratio: Ratio of data for validation</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with information about created splits</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+        <span class="c1"># Get all images</span>
+        <span class="n">all_images</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">all_images</span><span class="p">)</span>
+
+        <span class="n">total_images</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">all_images</span><span class="p">)</span>
+        <span class="n">train_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_images</span> <span class="o">*</span> <span class="n">train_ratio</span><span class="p">)</span>
+        <span class="n">val_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_images</span> <span class="o">*</span> <span class="n">val_ratio</span><span class="p">)</span>
+
+        <span class="c1"># Split images</span>
+        <span class="n">train_images</span> <span class="o">=</span> <span class="n">all_images</span><span class="p">[:</span><span class="n">train_count</span><span class="p">]</span>
+        <span class="n">val_images</span> <span class="o">=</span> <span class="n">all_images</span><span class="p">[</span><span class="n">train_count</span> <span class="p">:</span> <span class="n">train_count</span> <span class="o">+</span> <span class="n">val_count</span><span class="p">]</span>
+        <span class="n">test_images</span> <span class="o">=</span> <span class="n">all_images</span><span class="p">[</span><span class="n">train_count</span> <span class="o">+</span> <span class="n">val_count</span> <span class="p">:]</span>
+
+        <span class="n">splits_info</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image_count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">train_images</span><span class="p">),</span> <span class="s2">&quot;annotation_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+            <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image_count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">val_images</span><span class="p">),</span> <span class="s2">&quot;annotation_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+            <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;image_count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">test_images</span><span class="p">),</span> <span class="s2">&quot;annotation_count&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Create separate COCO files for each split</span>
+        <span class="k">for</span> <span class="n">split_name</span><span class="p">,</span> <span class="n">split_images</span> <span class="ow">in</span> <span class="p">[</span>
+            <span class="p">(</span><span class="s2">&quot;train&quot;</span><span class="p">,</span> <span class="n">train_images</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="n">val_images</span><span class="p">),</span>
+            <span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="n">test_images</span><span class="p">),</span>
+        <span class="p">]:</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">split_images</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Get image IDs for this split</span>
+            <span class="n">split_image_ids</span> <span class="o">=</span> <span class="p">{</span><span class="n">img</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="n">split_images</span><span class="p">}</span>
+
+            <span class="c1"># Filter annotations for this split</span>
+            <span class="n">split_annotations</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">ann</span>
+                <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">ann</span><span class="p">[</span><span class="s2">&quot;image_id&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">split_image_ids</span>
+            <span class="p">]</span>
+
+            <span class="n">splits_info</span><span class="p">[</span><span class="n">split_name</span><span class="p">][</span><span class="s2">&quot;annotation_count&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">split_annotations</span><span class="p">)</span>
+
+            <span class="c1"># Create COCO structure for this split</span>
+            <span class="n">split_coco</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+                <span class="s2">&quot;licenses&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;licenses&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;categories&quot;</span><span class="p">],</span>
+                <span class="s2">&quot;images&quot;</span><span class="p">:</span> <span class="n">split_images</span><span class="p">,</span>
+                <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="n">split_annotations</span><span class="p">,</span>
+            <span class="p">}</span>
+
+            <span class="c1"># Update info for split</span>
+            <span class="n">split_coco</span><span class="p">[</span><span class="s2">&quot;info&quot;</span><span class="p">][</span><span class="s2">&quot;description&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="sa">f</span><span class="s2">&quot; - </span><span class="si">{</span><span class="n">split_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2"> split&quot;</span>
+
+            <span class="c1"># Save split file</span>
+            <span class="n">split_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;annotations_</span><span class="si">{</span><span class="n">split_name</span><span class="si">}</span><span class="s2">.json&quot;</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">split_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">split_coco</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Save split information</span>
+        <span class="n">split_info_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;dataset_splits_info.json&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">split_info_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">splits_info</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;COCO dataset splits created:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">split_name</span><span class="p">,</span> <span class="n">split_info</span> <span class="ow">in</span> <span class="n">splits_info</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="n">split_name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">split_info</span><span class="p">[</span><span class="s1">&#39;image_count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> images, &quot;</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">split_info</span><span class="p">[</span><span class="s1">&#39;annotation_count&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> annotations&quot;</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">splits_info</span></div>
+
+
+<div class="viewcode-block" id="COCOExporter.validate_annotations">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.coco.html#palletdatagenerator.COCOExporter.validate_annotations">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validate_annotations</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Validate COCO annotations for common issues.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with validation results and issues found</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">validation_results</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;valid&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+            <span class="s2">&quot;issues&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;warnings&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;statistics&quot;</span><span class="p">:</span> <span class="p">{},</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Check for duplicate image IDs</span>
+        <span class="n">image_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">img</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">img</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">image_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">image_ids</span><span class="p">)):</span>
+            <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;valid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;issues&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Duplicate image IDs found&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check for duplicate annotation IDs</span>
+        <span class="n">annotation_ids</span> <span class="o">=</span> <span class="p">[</span><span class="n">ann</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]]</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">annotation_ids</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">annotation_ids</span><span class="p">)):</span>
+            <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;valid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;issues&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Duplicate annotation IDs found&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Check for annotations referencing non-existent images</span>
+        <span class="n">valid_image_ids</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">image_ids</span><span class="p">)</span>
+        <span class="n">orphaned_annotations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">ann</span>
+            <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="n">ann</span><span class="p">[</span><span class="s2">&quot;image_id&quot;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">valid_image_ids</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="n">orphaned_annotations</span><span class="p">:</span>
+            <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;valid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;issues&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">orphaned_annotations</span><span class="p">)</span><span class="si">}</span><span class="s2"> annotations reference non-existent images&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Check for invalid bounding boxes</span>
+        <span class="n">invalid_bboxes</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]:</span>
+            <span class="n">bbox</span> <span class="o">=</span> <span class="n">ann</span><span class="p">[</span><span class="s2">&quot;bbox&quot;</span><span class="p">]</span>
+            <span class="k">if</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="n">bbox</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">4</span>
+                <span class="ow">or</span> <span class="nb">any</span><span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">bbox</span><span class="p">)</span>
+                <span class="ow">or</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+                <span class="ow">or</span> <span class="n">bbox</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span>
+            <span class="p">):</span>
+                <span class="n">invalid_bboxes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ann</span><span class="p">[</span><span class="s2">&quot;id&quot;</span><span class="p">])</span>
+
+        <span class="k">if</span> <span class="n">invalid_bboxes</span><span class="p">:</span>
+            <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;valid&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;issues&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">invalid_bboxes</span><span class="p">)</span><span class="si">}</span><span class="s2"> annotations have invalid bounding boxes&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Generate statistics</span>
+        <span class="n">validation_results</span><span class="p">[</span><span class="s2">&quot;statistics&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;total_images&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;total_annotations&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;categories_used&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span>
+                <span class="p">{</span><span class="n">ann</span><span class="p">[</span><span class="s2">&quot;category_id&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">ann</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]}</span>
+            <span class="p">),</span>
+            <span class="s2">&quot;avg_annotations_per_image&quot;</span><span class="p">:</span> <span class="p">(</span>
+                <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">])</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">coco_data</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]</span>
+                <span class="k">else</span> <span class="mi">0</span>
+            <span class="p">),</span>
+        <span class="p">}</span>
+
+        <span class="k">return</span> <span class="n">validation_results</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, PalletDataGenerator Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

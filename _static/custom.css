@@ -1,0 +1,230 @@
+/* Custom CSS for PalletDataGenerator documentation */
+
+/* Root variables for consistent theming */
+:root {
+    --primary-color: #2980B9;
+    --secondary-color: #3498DB;
+    --accent-color: #E74C3C;
+    --success-color: #27AE60;
+    --warning-color: #F39C12;
+    --dark-color: #2C3E50;
+    --light-color: #ECF0F1;
+}
+
+/* Header styling */
+.wy-nav-top {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+}
+
+/* Sidebar styling */
+.wy-side-nav-search {
+    background: var(--primary-color);
+}
+
+.wy-side-nav-search input[type="text"] {
+    border-radius: 4px;
+    border: none;
+}
+
+/* Content area improvements */
+.wy-nav-content {
+    max-width: 1200px;
+}
+
+/* Code blocks styling */
+.highlight {
+    border-radius: 6px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+.highlight-python .highlight {
+    border-left-color: #3776ab;
+}
+
+.highlight-bash .highlight {
+    border-left-color: var(--success-color);
+}
+
+.highlight-yaml .highlight {
+    border-left-color: var(--warning-color);
+}
+
+/* Admonition styling */
+.admonition {
+    border-radius: 6px;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 1rem 0;
+}
+
+.admonition.note {
+    border-left: 4px solid var(--secondary-color);
+}
+
+.admonition.warning {
+    border-left: 4px solid var(--warning-color);
+}
+
+.admonition.tip {
+    border-left: 4px solid var(--success-color);
+}
+
+.admonition.important {
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Table styling */
+.wy-table-responsive table td,
+.wy-table-responsive table th {
+    white-space: normal;
+}
+
+.rst-content table.docutils {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.rst-content table.docutils thead {
+    background: var(--light-color);
+}
+
+/* Button styling */
+.btn {
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.btn-primary:hover {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* API documentation styling */
+.rst-content dl:not(.docutils) dt {
+    background: var(--light-color);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 4px 4px 0 0;
+}
+
+.rst-content dl:not(.docutils) dd {
+    border-left: 3px solid var(--light-color);
+    border-bottom: 3px solid var(--light-color);
+    border-right: 3px solid var(--light-color);
+    border-radius: 0 0 4px 4px;
+}
+
+/* Navigation improvements */
+.wy-menu-vertical li.current a {
+    border-right: 3px solid var(--secondary-color);
+}
+
+.wy-menu-vertical li.current > a {
+    background: rgba(52, 152, 219, 0.1);
+}
+
+/* Search results */
+.wy-side-nav-search .wy-dropdown > a,
+.wy-side-nav-search > a {
+    color: white;
+    font-weight: bold;
+}
+
+/* Footer */
+footer {
+    margin-top: 2rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--light-color);
+    text-align: center;
+    color: #666;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+    .wy-nav-content {
+        margin-left: 0;
+    }
+
+    .rst-content .highlight {
+        margin: 1rem -1rem;
+        border-radius: 0;
+    }
+}
+
+/* Code copy button */
+.copybtn {
+    background: var(--secondary-color);
+    border-color: var(--secondary-color);
+}
+
+.copybtn:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Emoji support */
+.emoji {
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+/* Custom badges */
+.badge {
+    display: inline-block;
+    padding: 0.25em 0.6em;
+    font-size: 75%;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.375rem;
+}
+
+.badge-primary {
+    color: #fff;
+    background-color: var(--primary-color);
+}
+
+.badge-success {
+    color: #fff;
+    background-color: var(--success-color);
+}
+
+.badge-warning {
+    color: #212529;
+    background-color: var(--warning-color);
+}
+
+.badge-danger {
+    color: #fff;
+    background-color: var(--accent-color);
+}
+
+/* Animated elements */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-in-up {
+    animation: fadeInUp 0.6s ease-out;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --light-color: #34495E;
+        --dark-color: #ECF0F1;
+    }
+}

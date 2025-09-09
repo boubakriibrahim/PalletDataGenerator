@@ -1,0 +1,526 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="palletdatagenerator.core.generator module" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="api/palletdatagenerator.core.generator.html" />
+<meta property="og:site_name" content="PalletDataGenerator" />
+<meta property="og:description" content="Core generator classes for pallet and warehouse dataset generation." />
+<meta name="description" content="Core generator classes for pallet and warehouse dataset generation." />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.core.generator module &mdash; PalletDataGenerator 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/api/palletdatagenerator.core.generator.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.core.generator module</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/docs/api/palletdatagenerator.core.generator.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-palletdatagenerator.core.generator">
+<span id="palletdatagenerator-core-generator-module"></span><h1>palletdatagenerator.core.generator module<a class="headerlink" href="#module-palletdatagenerator.core.generator" title="Link to this heading"></a></h1>
+<p>Core generator classes for pallet and warehouse dataset generation.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.Euler">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.core.generator.</span></span><span class="sig-name descname"><span class="pre">Euler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#Euler"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.Euler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.Euler.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#Euler.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.Euler.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.Matrix">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.core.generator.</span></span><span class="sig-name descname"><span class="pre">Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#Matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.Matrix" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.Matrix.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#Matrix.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.Matrix.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.Vector">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.core.generator.</span></span><span class="sig-name descname"><span class="pre">Vector</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#Vector"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.Vector" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.Vector.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#Vector.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.Vector.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.core.generator.</span></span><span class="sig-name descname"><span class="pre">GenerationConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'outputs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_images:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution:</span> <span class="pre">tuple[int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">int]</span> <span class="pre">=</span> <span class="pre">(1280</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">720)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_engine:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'CYCLES'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_config:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lighting_config:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_formats:</span> <span class="pre">list[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#GenerationConfig"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Configuration class for dataset generation.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.output_dir">
+<span class="sig-name descname"><span class="pre">output_dir</span></span><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.output_dir" title="Link to this definition"></a></dt>
+<dd><p>Directory to save generated datasets</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.num_images">
+<span class="sig-name descname"><span class="pre">num_images</span></span><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.num_images" title="Link to this definition"></a></dt>
+<dd><p>Number of images to generate</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.resolution">
+<span class="sig-name descname"><span class="pre">resolution</span></span><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.resolution" title="Link to this definition"></a></dt>
+<dd><p>Tuple of (width, height) for output resolution</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)">tuple</a>[<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)">int</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.render_engine">
+<span class="sig-name descname"><span class="pre">render_engine</span></span><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.render_engine" title="Link to this definition"></a></dt>
+<dd><p>Blender render engine (‘CYCLES’ or ‘EEVEE’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.camera_config">
+<span class="sig-name descname"><span class="pre">camera_config</span></span><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.camera_config" title="Link to this definition"></a></dt>
+<dd><p>Camera settings dictionary</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.lighting_config">
+<span class="sig-name descname"><span class="pre">lighting_config</span></span><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.lighting_config" title="Link to this definition"></a></dt>
+<dd><p>Light randomization settings</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)">dict</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.export_formats">
+<span class="sig-name descname"><span class="pre">export_formats</span></span><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.export_formats" title="Link to this definition"></a></dt>
+<dd><p>List of export formats (‘yolo’, ‘coco’, ‘voc’)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)">list</a>[<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)">str</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">output_dir</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'outputs'</span></em><a class="headerlink" href="#id0" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id1">
+<span class="sig-name descname"><span class="pre">num_images</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">50</span></em><a class="headerlink" href="#id1" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id2">
+<span class="sig-name descname"><span class="pre">resolution</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">(1280,</span> <span class="pre">720)</span></em><a class="headerlink" href="#id2" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id3">
+<span class="sig-name descname"><span class="pre">render_engine</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'CYCLES'</span></em><a class="headerlink" href="#id3" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id4">
+<span class="sig-name descname"><span class="pre">camera_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id4" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id5">
+<span class="sig-name descname"><span class="pre">lighting_config</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id5" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id6">
+<span class="sig-name descname"><span class="pre">export_formats</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#id6" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.__post_init__">
+<span class="sig-name descname"><span class="pre">__post_init__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#GenerationConfig.__post_init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.__post_init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize default configurations if not provided.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.GenerationConfig.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">output_dir:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'outputs'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_images:</span> <span class="pre">int</span> <span class="pre">=</span> <span class="pre">50</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resolution:</span> <span class="pre">tuple[int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">int]</span> <span class="pre">=</span> <span class="pre">(1280</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">720)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">render_engine:</span> <span class="pre">str</span> <span class="pre">=</span> <span class="pre">'CYCLES'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_config:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lighting_config:</span> <span class="pre">dict[str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">~typing.Any]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">export_formats:</span> <span class="pre">list[str]</span> <span class="pre">=</span> <span class="pre">&lt;factory&gt;</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="headerlink" href="#palletdatagenerator.core.generator.GenerationConfig.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.BaseGenerator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.core.generator.</span></span><span class="sig-name descname"><span class="pre">BaseGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#palletdatagenerator.core.generator.GenerationConfig" title="palletdatagenerator.core.generator.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#BaseGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.BaseGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class for dataset generators.</p>
+<p>Provides common functionality for Blender-based synthetic dataset generation
+including GPU configuration, rendering setup, and utility methods.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.BaseGenerator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#palletdatagenerator.core.generator.GenerationConfig" title="palletdatagenerator.core.generator.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#BaseGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.BaseGenerator.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize the generator with configuration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> – Generation configuration object</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#RuntimeError" title="(in Python v3.13)"><strong>RuntimeError</strong></a> – If Blender is not available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.BaseGenerator.enable_gpu">
+<span class="sig-name descname"><span class="pre">enable_gpu</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">preferred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#BaseGenerator.enable_gpu"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.BaseGenerator.enable_gpu" title="Link to this definition"></a></dt>
+<dd><p>Enable GPU rendering with platform-aware backend selection.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>preferred</strong> – Preferred GPU backend (optional)</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Name of selected backend or ‘CPU’ if no GPU available</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.BaseGenerator.configure_render_settings">
+<span class="sig-name descname"><span class="pre">configure_render_settings</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#BaseGenerator.configure_render_settings"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.BaseGenerator.configure_render_settings" title="Link to this definition"></a></dt>
+<dd><p>Configure Blender render settings based on configuration.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.PalletGenerator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.core.generator.</span></span><span class="sig-name descname"><span class="pre">PalletGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#palletdatagenerator.core.generator.GenerationConfig" title="palletdatagenerator.core.generator.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#PalletGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.PalletGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#palletdatagenerator.core.generator.BaseGenerator" title="palletdatagenerator.core.generator.BaseGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseGenerator</span></code></a></p>
+<p>Generator for single pallet synthetic datasets.</p>
+<p>Specializes in generating high-quality single pallet scenes with
+configurable lighting, camera positioning, and annotation generation.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.PalletGenerator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#palletdatagenerator.core.generator.GenerationConfig" title="palletdatagenerator.core.generator.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#PalletGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.PalletGenerator.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize pallet generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> – Generation configuration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.PalletGenerator.position_camera_for_side_face">
+<span class="sig-name descname"><span class="pre">position_camera_for_side_face</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">camera_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_obj</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/constants.html#None" title="(in Python v3.13)"><span class="pre">None</span></a></span></span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#PalletGenerator.position_camera_for_side_face"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.PalletGenerator.position_camera_for_side_face" title="Link to this definition"></a></dt>
+<dd><p>Position camera to capture pallet side faces optimally.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>camera_obj</strong> – Blender camera object</p></li>
+<li><p><strong>target_obj</strong> – Target pallet object to focus on</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.PalletGenerator.generate_dataset">
+<span class="sig-name descname"><span class="pre">generate_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#PalletGenerator.generate_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.PalletGenerator.generate_dataset" title="Link to this definition"></a></dt>
+<dd><p>Generate complete pallet dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing generation statistics and metadata</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.WarehouseGenerator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.core.generator.</span></span><span class="sig-name descname"><span class="pre">WarehouseGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#palletdatagenerator.core.generator.GenerationConfig" title="palletdatagenerator.core.generator.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#WarehouseGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.WarehouseGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#palletdatagenerator.core.generator.BaseGenerator" title="palletdatagenerator.core.generator.BaseGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseGenerator</span></code></a></p>
+<p>Generator for warehouse scene synthetic datasets.</p>
+<p>Specializes in generating complex warehouse environments with
+multiple pallets, realistic camera paths, and advanced scene management.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.WarehouseGenerator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#palletdatagenerator.core.generator.GenerationConfig" title="palletdatagenerator.core.generator.GenerationConfig"><span class="pre">GenerationConfig</span></a></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#WarehouseGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.WarehouseGenerator.__init__" title="Link to this definition"></a></dt>
+<dd><p>Initialize warehouse generator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>config</strong> – Generation configuration</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.WarehouseGenerator.generate_warehouse_path">
+<span class="sig-name descname"><span class="pre">generate_warehouse_path</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">num_points</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.13)"><span class="pre">int</span></a></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">50</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.13)"><span class="pre">list</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.13)"><span class="pre">tuple</span></a><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#palletdatagenerator.core.generator.Vector" title="palletdatagenerator.core.generator.Vector"><span class="pre">Vector</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#palletdatagenerator.core.generator.Vector" title="palletdatagenerator.core.generator.Vector"><span class="pre">Vector</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#WarehouseGenerator.generate_warehouse_path"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.WarehouseGenerator.generate_warehouse_path" title="Link to this definition"></a></dt>
+<dd><p>Generate realistic warehouse navigation path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>num_points</strong> – Number of path points to generate</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>List of (position, rotation) tuples for camera path</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.core.generator.WarehouseGenerator.generate_dataset">
+<span class="sig-name descname"><span class="pre">generate_dataset</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.13)"><span class="pre">dict</span></a><span class="p"><span class="pre">[</span></span><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.13)"><span class="pre">str</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Any" title="(in Python v3.13)"><span class="pre">Any</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="../_modules/palletdatagenerator/core/generator.html#WarehouseGenerator.generate_dataset"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.core.generator.WarehouseGenerator.generate_dataset" title="Link to this definition"></a></dt>
+<dd><p>Generate complete warehouse dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dictionary containing generation statistics and metadata</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, PalletDataGenerator Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

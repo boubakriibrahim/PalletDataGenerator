@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.exporters.yolo &mdash; PalletDataGenerator 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/_modules/palletdatagenerator/exporters/yolo.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.exporters.yolo</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for palletdatagenerator.exporters.yolo</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;YOLO format exporter for object detection annotations.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">bpy_extras.object_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">world_to_camera_view</span> <span class="k">as</span> <span class="n">w2cv</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mathutils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span>
+
+    <span class="n">BLENDER_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">BLENDER_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+
+
+<div class="viewcode-block" id="YOLOExporter">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.yolo.html#palletdatagenerator.YOLOExporter">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">YOLOExporter</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Export object detection annotations in YOLO format.</span>
+
+<span class="sd">    YOLO format specifications:</span>
+<span class="sd">    - One text file per image</span>
+<span class="sd">    - Each line: class_id center_x center_y width height</span>
+<span class="sd">    - All coordinates normalized to [0, 1]</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="YOLOExporter.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.yolo.html#palletdatagenerator.YOLOExporter.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">class_mapping</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize YOLO exporter.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            output_dir: Directory to save YOLO label files</span>
+<span class="sd">            class_mapping: Dictionary mapping class names to class IDs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">class_mapping</span> <span class="o">=</span> <span class="n">class_mapping</span> <span class="ow">or</span> <span class="p">{</span><span class="s2">&quot;pallet&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;box&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;hole&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+
+        <span class="c1"># Create classes.txt file</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_create_classes_file</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_create_classes_file</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create classes.txt file with class names.&quot;&quot;&quot;</span>
+        <span class="n">classes_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;classes.txt&quot;</span>
+
+        <span class="c1"># Sort classes by ID</span>
+        <span class="n">sorted_classes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">class_mapping</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">classes_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">class_name</span><span class="p">,</span> <span class="n">_class_id</span> <span class="ow">in</span> <span class="n">sorted_classes</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_name</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<div class="viewcode-block" id="YOLOExporter.bbox_to_yolo_format">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.yolo.html#palletdatagenerator.YOLOExporter.bbox_to_yolo_format">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">bbox_to_yolo_format</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">bbox</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span> <span class="n">img_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">img_height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert bounding box to YOLO format.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            bbox: Bounding box dictionary with x_min, y_min, x_max, y_max</span>
+<span class="sd">            img_width: Image width in pixels</span>
+<span class="sd">            img_height: Image height in pixels</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Tuple of (center_x, center_y, width, height) normalized to [0, 1]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Calculate center and dimensions</span>
+        <span class="n">center_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;x_max&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">center_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;y_max&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mf">2.0</span>
+        <span class="n">width</span> <span class="o">=</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;x_max&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">]</span>
+        <span class="n">height</span> <span class="o">=</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;y_max&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Normalize to [0, 1]</span>
+        <span class="n">center_x_norm</span> <span class="o">=</span> <span class="n">center_x</span> <span class="o">/</span> <span class="n">img_width</span>
+        <span class="n">center_y_norm</span> <span class="o">=</span> <span class="n">center_y</span> <span class="o">/</span> <span class="n">img_height</span>
+        <span class="n">width_norm</span> <span class="o">=</span> <span class="n">width</span> <span class="o">/</span> <span class="n">img_width</span>
+        <span class="n">height_norm</span> <span class="o">=</span> <span class="n">height</span> <span class="o">/</span> <span class="n">img_height</span>
+
+        <span class="c1"># Clamp to valid range</span>
+        <span class="n">center_x_norm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">center_x_norm</span><span class="p">))</span>
+        <span class="n">center_y_norm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">center_y_norm</span><span class="p">))</span>
+        <span class="n">width_norm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">width_norm</span><span class="p">))</span>
+        <span class="n">height_norm</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">height_norm</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">center_x_norm</span><span class="p">,</span> <span class="n">center_y_norm</span><span class="p">,</span> <span class="n">width_norm</span><span class="p">,</span> <span class="n">height_norm</span></div>
+
+
+<div class="viewcode-block" id="YOLOExporter.export_frame_annotations">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.yolo.html#palletdatagenerator.YOLOExporter.export_frame_annotations">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_frame_annotations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">frame_id</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">detections</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">img_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+        <span class="n">img_height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export annotations for a single frame.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame_id: Frame identifier</span>
+<span class="sd">            detections: List of detection dictionaries</span>
+<span class="sd">            img_width: Image width in pixels</span>
+<span class="sd">            img_height: Image height in pixels</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Path to created YOLO label file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">label_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;frame_</span><span class="si">{</span><span class="n">frame_id</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">.txt&quot;</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">label_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">detection</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">:</span>
+                <span class="n">class_name</span> <span class="o">=</span> <span class="n">detection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_name&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+
+                <span class="c1"># Skip unknown classes</span>
+                <span class="k">if</span> <span class="n">class_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_mapping</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">class_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">class_mapping</span><span class="p">[</span><span class="n">class_name</span><span class="p">]</span>
+                <span class="n">bbox</span> <span class="o">=</span> <span class="n">detection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;bbox_2d&quot;</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">bbox</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="c1"># Convert to YOLO format</span>
+                <span class="n">center_x</span><span class="p">,</span> <span class="n">center_y</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bbox_to_yolo_format</span><span class="p">(</span>
+                    <span class="n">bbox</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Write YOLO line</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">class_id</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">center_x</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">center_y</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">width</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">height</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span>
+                <span class="p">)</span>
+
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">label_file</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="YOLOExporter.export_dataset_annotations">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.yolo.html#palletdatagenerator.YOLOExporter.export_dataset_annotations">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_dataset_annotations</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">dataset_info</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Export annotations for entire dataset.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            dataset_info: Dataset information with frames and detections</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with export statistics and file paths</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;total_frames&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;total_detections&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;classes_found&quot;</span><span class="p">:</span> <span class="nb">set</span><span class="p">(),</span>
+            <span class="s2">&quot;label_files&quot;</span><span class="p">:</span> <span class="p">[],</span>
+        <span class="p">}</span>
+
+        <span class="n">frames</span> <span class="o">=</span> <span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;frames&quot;</span><span class="p">,</span> <span class="p">[])</span>
+
+        <span class="k">for</span> <span class="n">frame_data</span> <span class="ow">in</span> <span class="n">frames</span><span class="p">:</span>
+            <span class="n">frame_id</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;frame_id&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">detections</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;detections&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="n">img_width</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;width&quot;</span><span class="p">,</span> <span class="mi">1280</span><span class="p">)</span>
+            <span class="n">img_height</span> <span class="o">=</span> <span class="n">frame_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;height&quot;</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+
+            <span class="c1"># Export frame annotations</span>
+            <span class="n">label_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">export_frame_annotations</span><span class="p">(</span>
+                <span class="n">frame_id</span><span class="p">,</span> <span class="n">detections</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span>
+            <span class="p">)</span>
+
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;label_files&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label_file</span><span class="p">)</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_frames&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;total_detections&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">detections</span><span class="p">)</span>
+
+            <span class="c1"># Track classes</span>
+            <span class="k">for</span> <span class="n">detection</span> <span class="ow">in</span> <span class="n">detections</span><span class="p">:</span>
+                <span class="n">class_name</span> <span class="o">=</span> <span class="n">detection</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_name&quot;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">class_name</span><span class="p">:</span>
+                    <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;classes_found&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">class_name</span><span class="p">)</span>
+
+        <span class="c1"># Convert set to list for JSON serialization</span>
+        <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;classes_found&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s2">&quot;classes_found&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Save export statistics</span>
+        <span class="n">stats_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;export_stats.json&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">stats_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;YOLO export complete:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_frames&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> frames&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;total_detections&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> detections&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;classes_found&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> classes: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;classes_found&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">stats</span></div>
+
+
+<div class="viewcode-block" id="YOLOExporter.detect_pallet_faces_and_holes">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.yolo.html#palletdatagenerator.YOLOExporter.detect_pallet_faces_and_holes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">detect_pallet_faces_and_holes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">pallet_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">camera_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">img_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">img_height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Detect pallet faces and holes for YOLO annotation.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pallet_obj: Blender pallet object</span>
+<span class="sd">            camera_obj: Blender camera object</span>
+<span class="sd">            img_width: Image width in pixels</span>
+<span class="sd">            img_height: Image height in pixels</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of detection dictionaries for faces and holes</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">BLENDER_AVAILABLE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="p">[]</span>
+
+        <span class="n">detections</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Get pallet bounding box</span>
+        <span class="n">pallet_bbox</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_object_bbox_2d</span><span class="p">(</span>
+            <span class="n">pallet_obj</span><span class="p">,</span> <span class="n">camera_obj</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span>
+        <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">pallet_bbox</span><span class="p">:</span>
+            <span class="c1"># Add pallet detection</span>
+            <span class="n">detections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pallet&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;bbox_2d&quot;</span><span class="p">:</span> <span class="n">pallet_bbox</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span>
+                    <span class="s2">&quot;object_name&quot;</span><span class="p">:</span> <span class="n">pallet_obj</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Detect faces (simplified - based on viewing angle)</span>
+            <span class="n">face_detections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_pallet_faces</span><span class="p">(</span>
+                <span class="n">pallet_obj</span><span class="p">,</span> <span class="n">camera_obj</span><span class="p">,</span> <span class="n">pallet_bbox</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span>
+            <span class="p">)</span>
+            <span class="n">detections</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">face_detections</span><span class="p">)</span>
+
+            <span class="c1"># Detect holes in visible faces</span>
+            <span class="n">hole_detections</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_detect_pallet_holes</span><span class="p">(</span>
+                <span class="n">pallet_obj</span><span class="p">,</span> <span class="n">camera_obj</span><span class="p">,</span> <span class="n">face_detections</span><span class="p">,</span> <span class="n">img_width</span><span class="p">,</span> <span class="n">img_height</span>
+            <span class="p">)</span>
+            <span class="n">detections</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">hole_detections</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">detections</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_object_bbox_2d</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">camera_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">img_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">img_height</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get 2D bounding box of object in camera view.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            obj: Blender object</span>
+<span class="sd">            camera_obj: Blender camera object</span>
+<span class="sd">            img_width: Image width</span>
+<span class="sd">            img_height: Image height</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Bounding box dictionary or None if not visible</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">BLENDER_AVAILABLE</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Get object vertices in world space</span>
+        <span class="n">depsgraph</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">evaluated_depsgraph_get</span><span class="p">()</span>
+        <span class="n">obj_eval</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">evaluated_get</span><span class="p">(</span><span class="n">depsgraph</span><span class="p">)</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">mesh</span> <span class="o">=</span> <span class="n">obj_eval</span><span class="o">.</span><span class="n">to_mesh</span><span class="p">()</span>
+            <span class="n">vertices_world</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj_eval</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">@</span> <span class="n">v</span><span class="o">.</span><span class="n">co</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">mesh</span><span class="o">.</span><span class="n">vertices</span><span class="p">]</span>
+            <span class="n">obj_eval</span><span class="o">.</span><span class="n">to_mesh_clear</span><span class="p">()</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="c1"># Fallback to bounding box corners</span>
+            <span class="n">vertices_world</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">@</span> <span class="n">Vector</span><span class="p">(</span><span class="n">corner</span><span class="p">)</span> <span class="k">for</span> <span class="n">corner</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">bound_box</span>
+            <span class="p">]</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">vertices_world</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Project vertices to camera space</span>
+        <span class="n">scene</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+        <span class="n">projected_points</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">vertex</span> <span class="ow">in</span> <span class="n">vertices_world</span><span class="p">:</span>
+            <span class="c1"># Project to camera view</span>
+            <span class="n">co_2d</span> <span class="o">=</span> <span class="n">w2cv</span><span class="p">(</span><span class="n">scene</span><span class="p">,</span> <span class="n">camera_obj</span><span class="p">,</span> <span class="n">vertex</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">co_2d</span><span class="o">.</span><span class="n">z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>  <span class="c1"># In front of camera</span>
+                <span class="n">x</span> <span class="o">=</span> <span class="n">co_2d</span><span class="o">.</span><span class="n">x</span> <span class="o">*</span> <span class="n">img_width</span>
+                <span class="n">y</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">co_2d</span><span class="o">.</span><span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">img_height</span>  <span class="c1"># Flip Y coordinate</span>
+                <span class="n">projected_points</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">projected_points</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Calculate bounding box</span>
+        <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">projected_points</span><span class="p">,</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">xs</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">xs</span><span class="p">)</span>
+        <span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ys</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">ys</span><span class="p">)</span>
+
+        <span class="c1"># Clamp to image bounds</span>
+        <span class="n">x_min</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">x_min</span><span class="p">))</span>
+        <span class="n">x_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">img_width</span><span class="p">,</span> <span class="n">x_max</span><span class="p">))</span>
+        <span class="n">y_min</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">img_height</span><span class="p">,</span> <span class="n">y_min</span><span class="p">))</span>
+        <span class="n">y_max</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">img_height</span><span class="p">,</span> <span class="n">y_max</span><span class="p">))</span>
+
+        <span class="c1"># Check if bounding box is valid</span>
+        <span class="k">if</span> <span class="n">x_max</span> <span class="o">&lt;=</span> <span class="n">x_min</span> <span class="ow">or</span> <span class="n">y_max</span> <span class="o">&lt;=</span> <span class="n">y_min</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;x_min&quot;</span><span class="p">:</span> <span class="n">x_min</span><span class="p">,</span>
+            <span class="s2">&quot;y_min&quot;</span><span class="p">:</span> <span class="n">y_min</span><span class="p">,</span>
+            <span class="s2">&quot;x_max&quot;</span><span class="p">:</span> <span class="n">x_max</span><span class="p">,</span>
+            <span class="s2">&quot;y_max&quot;</span><span class="p">:</span> <span class="n">y_max</span><span class="p">,</span>
+            <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">x_max</span> <span class="o">-</span> <span class="n">x_min</span><span class="p">,</span>
+            <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">y_max</span> <span class="o">-</span> <span class="n">y_min</span><span class="p">,</span>
+        <span class="p">}</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_detect_pallet_faces</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">pallet_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">camera_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+        <span class="n">pallet_bbox</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">],</span>
+        <span class="n">img_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>  <span class="c1"># noqa: ARG002</span>
+        <span class="n">img_height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>  <span class="c1"># noqa: ARG002</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Detect visible pallet faces.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pallet_obj: Blender pallet object</span>
+<span class="sd">            camera_obj: Blender camera object</span>
+<span class="sd">            pallet_bbox: Pallet bounding box</span>
+<span class="sd">            img_width: Image width</span>
+<span class="sd">            img_height: Image height</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of face detections</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">face_detections</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Simplified face detection based on camera angle</span>
+        <span class="c1"># In a real implementation, this would analyze mesh faces</span>
+
+        <span class="c1"># Calculate viewing angle</span>
+        <span class="n">pallet_pos</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">pallet_obj</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+        <span class="n">camera_pos</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">camera_obj</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+        <span class="n">view_vector</span> <span class="o">=</span> <span class="p">(</span><span class="n">pallet_pos</span> <span class="o">-</span> <span class="n">camera_pos</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+
+        <span class="c1"># Estimate face visibility based on viewing angle</span>
+        <span class="n">angle_y</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">view_vector</span><span class="o">.</span><span class="n">y</span><span class="p">)</span>
+        <span class="n">angle_x</span> <span class="o">=</span> <span class="nb">abs</span><span class="p">(</span><span class="n">view_vector</span><span class="o">.</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="n">face_size_factor</span> <span class="o">=</span> <span class="mf">0.4</span>  <span class="c1"># Faces are ~40% of pallet size</span>
+
+        <span class="c1"># Front/back face</span>
+        <span class="k">if</span> <span class="n">angle_y</span> <span class="o">&gt;</span> <span class="mf">0.3</span><span class="p">:</span>
+            <span class="n">face_width</span> <span class="o">=</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">face_size_factor</span>
+            <span class="n">face_height</span> <span class="o">=</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.8</span>
+
+            <span class="n">center_x</span> <span class="o">=</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">center_y</span> <span class="o">=</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+
+            <span class="n">face_detections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pallet_face&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;bbox_2d&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;x_min&quot;</span><span class="p">:</span> <span class="n">center_x</span> <span class="o">-</span> <span class="n">face_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;y_min&quot;</span><span class="p">:</span> <span class="n">center_y</span> <span class="o">-</span> <span class="n">face_height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;x_max&quot;</span><span class="p">:</span> <span class="n">center_x</span> <span class="o">+</span> <span class="n">face_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;y_max&quot;</span><span class="p">:</span> <span class="n">center_y</span> <span class="o">+</span> <span class="n">face_height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">face_width</span><span class="p">,</span>
+                        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">face_height</span><span class="p">,</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;face_type&quot;</span><span class="p">:</span> <span class="s2">&quot;front&quot;</span> <span class="k">if</span> <span class="n">view_vector</span><span class="o">.</span><span class="n">y</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;back&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Side faces</span>
+        <span class="k">if</span> <span class="n">angle_x</span> <span class="o">&gt;</span> <span class="mf">0.3</span><span class="p">:</span>
+            <span class="n">face_width</span> <span class="o">=</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.8</span>
+            <span class="n">face_height</span> <span class="o">=</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="n">face_size_factor</span>
+
+            <span class="n">center_x</span> <span class="o">=</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+            <span class="n">center_y</span> <span class="o">=</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">pallet_bbox</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">2</span>
+
+            <span class="n">face_detections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="s2">&quot;pallet_face&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;bbox_2d&quot;</span><span class="p">:</span> <span class="p">{</span>
+                        <span class="s2">&quot;x_min&quot;</span><span class="p">:</span> <span class="n">center_x</span> <span class="o">-</span> <span class="n">face_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;y_min&quot;</span><span class="p">:</span> <span class="n">center_y</span> <span class="o">-</span> <span class="n">face_height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;x_max&quot;</span><span class="p">:</span> <span class="n">center_x</span> <span class="o">+</span> <span class="n">face_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;y_max&quot;</span><span class="p">:</span> <span class="n">center_y</span> <span class="o">+</span> <span class="n">face_height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                        <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">face_width</span><span class="p">,</span>
+                        <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">face_height</span><span class="p">,</span>
+                    <span class="p">},</span>
+                    <span class="s2">&quot;face_type&quot;</span><span class="p">:</span> <span class="s2">&quot;left&quot;</span> <span class="k">if</span> <span class="n">view_vector</span><span class="o">.</span><span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="s2">&quot;right&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">face_detections</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_detect_pallet_holes</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">pallet_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>  <span class="c1"># noqa: ARG002</span>
+        <span class="n">camera_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>  <span class="c1"># noqa: ARG002</span>
+        <span class="n">face_detections</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
+        <span class="n">img_width</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>  <span class="c1"># noqa: ARG002</span>
+        <span class="n">img_height</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span>  <span class="c1"># noqa: ARG002</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Detect holes in visible pallet faces.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            pallet_obj: Blender pallet object</span>
+<span class="sd">            camera_obj: Blender camera object</span>
+<span class="sd">            face_detections: List of detected faces</span>
+<span class="sd">            img_width: Image width</span>
+<span class="sd">            img_height: Image height</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of hole detections</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">hole_detections</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># Standard pallet has holes arranged in grid pattern</span>
+        <span class="c1"># holes_per_face = 8  # 4x2 grid typically - unused for now</span>
+        <span class="n">hole_size_factor</span> <span class="o">=</span> <span class="mf">0.15</span>  <span class="c1"># Holes are ~15% of face size</span>
+
+        <span class="k">for</span> <span class="n">face_data</span> <span class="ow">in</span> <span class="n">face_detections</span><span class="p">:</span>
+            <span class="n">face_bbox</span> <span class="o">=</span> <span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;bbox_2d&quot;</span><span class="p">]</span>
+            <span class="n">face_type</span> <span class="o">=</span> <span class="n">face_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;face_type&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Calculate hole positions within face</span>
+            <span class="k">if</span> <span class="n">face_type</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;front&quot;</span><span class="p">,</span> <span class="s2">&quot;back&quot;</span><span class="p">]:</span>
+                <span class="c1"># 4 holes horizontally, 2 vertically</span>
+                <span class="n">holes_x</span><span class="p">,</span> <span class="n">holes_y</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># 2 holes horizontally, 4 vertically for side faces</span>
+                <span class="n">holes_x</span><span class="p">,</span> <span class="n">holes_y</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span>
+
+            <span class="n">hole_width</span> <span class="o">=</span> <span class="n">face_bbox</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">holes_x</span> <span class="o">*</span> <span class="n">hole_size_factor</span>
+            <span class="n">hole_height</span> <span class="o">=</span> <span class="n">face_bbox</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">holes_y</span> <span class="o">*</span> <span class="n">hole_size_factor</span>
+
+            <span class="n">spacing_x</span> <span class="o">=</span> <span class="n">face_bbox</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">holes_x</span>
+            <span class="n">spacing_y</span> <span class="o">=</span> <span class="n">face_bbox</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">holes_y</span>
+
+            <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">holes_y</span><span class="p">):</span>
+                <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">holes_x</span><span class="p">):</span>
+                    <span class="c1"># Calculate hole center</span>
+                    <span class="n">hole_center_x</span> <span class="o">=</span> <span class="n">face_bbox</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">spacing_x</span> <span class="o">*</span> <span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
+                    <span class="n">hole_center_y</span> <span class="o">=</span> <span class="n">face_bbox</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">spacing_y</span> <span class="o">*</span> <span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
+
+                    <span class="n">hole_detections</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;class_name&quot;</span><span class="p">:</span> <span class="s2">&quot;hole&quot;</span><span class="p">,</span>
+                            <span class="s2">&quot;bbox_2d&quot;</span><span class="p">:</span> <span class="p">{</span>
+                                <span class="s2">&quot;x_min&quot;</span><span class="p">:</span> <span class="n">hole_center_x</span> <span class="o">-</span> <span class="n">hole_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                                <span class="s2">&quot;y_min&quot;</span><span class="p">:</span> <span class="n">hole_center_y</span> <span class="o">-</span> <span class="n">hole_height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                                <span class="s2">&quot;x_max&quot;</span><span class="p">:</span> <span class="n">hole_center_x</span> <span class="o">+</span> <span class="n">hole_width</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                                <span class="s2">&quot;y_max&quot;</span><span class="p">:</span> <span class="n">hole_center_y</span> <span class="o">+</span> <span class="n">hole_height</span> <span class="o">/</span> <span class="mi">2</span><span class="p">,</span>
+                                <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">hole_width</span><span class="p">,</span>
+                                <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">hole_height</span><span class="p">,</span>
+                            <span class="p">},</span>
+                            <span class="s2">&quot;hole_id&quot;</span><span class="p">:</span> <span class="n">row</span> <span class="o">*</span> <span class="n">holes_x</span> <span class="o">+</span> <span class="n">col</span><span class="p">,</span>
+                            <span class="s2">&quot;face_type&quot;</span><span class="p">:</span> <span class="n">face_type</span><span class="p">,</span>
+                            <span class="s2">&quot;confidence&quot;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>
+                        <span class="p">}</span>
+                    <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">hole_detections</span>
+
+<div class="viewcode-block" id="YOLOExporter.create_training_split">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.exporters.yolo.html#palletdatagenerator.YOLOExporter.create_training_split">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_training_split</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">train_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">val_ratio</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.15</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create train/validation/test split for YOLO training.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            train_ratio: Ratio of data for training</span>
+<span class="sd">            val_ratio: Ratio of data for validation (rest goes to test)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary with train/val/test file lists</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+
+        <span class="c1"># Get all label files</span>
+        <span class="n">label_files</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s2">&quot;frame_*.txt&quot;</span><span class="p">))</span>
+        <span class="n">label_files</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+
+        <span class="c1"># Shuffle for random split</span>
+        <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">label_files</span><span class="p">)</span>
+
+        <span class="n">total_files</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">label_files</span><span class="p">)</span>
+        <span class="n">train_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_files</span> <span class="o">*</span> <span class="n">train_ratio</span><span class="p">)</span>
+        <span class="n">val_count</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">total_files</span> <span class="o">*</span> <span class="n">val_ratio</span><span class="p">)</span>
+
+        <span class="n">splits</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;train&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">label_files</span><span class="p">[:</span><span class="n">train_count</span><span class="p">]],</span>
+            <span class="s2">&quot;val&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">label_files</span><span class="p">[</span><span class="n">train_count</span> <span class="p">:</span> <span class="n">train_count</span> <span class="o">+</span> <span class="n">val_count</span><span class="p">]],</span>
+            <span class="s2">&quot;test&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">label_files</span><span class="p">[</span><span class="n">train_count</span> <span class="o">+</span> <span class="n">val_count</span> <span class="p">:]],</span>
+        <span class="p">}</span>
+
+        <span class="c1"># Save split information</span>
+        <span class="n">split_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">/</span> <span class="s2">&quot;dataset_split.json&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">split_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">splits</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset split created:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Train: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;train&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> files&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Val: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;val&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> files&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  - Test: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">splits</span><span class="p">[</span><span class="s1">&#39;test&#39;</span><span class="p">])</span><span class="si">}</span><span class="s2"> files&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">splits</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, PalletDataGenerator Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

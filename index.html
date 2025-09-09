@@ -1,0 +1,467 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="PalletDataGenerator Documentation" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="index.html" />
+<meta property="og:site_name" content="PalletDataGenerator" />
+<meta property="og:description" content="PalletDataGenerator Logo A professional Python library for generating synthetic pallet datasets using Blender for computer vision tasks. PyPI version Build Status Coverage Status PyPI - Downloads P..." />
+<meta name="description" content="PalletDataGenerator Logo A professional Python library for generating synthetic pallet datasets using Blender for computer vision tasks. PyPI version Build Status Coverage Status PyPI - Downloads P..." />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PalletDataGenerator Documentation &mdash; PalletDataGenerator 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/index.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=30646c52"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installation Guide" href="installation.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="#" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">PalletDataGenerator Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/docs/index.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="palletdatagenerator-documentation">
+<h1>PalletDataGenerator Documentation<a class="headerlink" href="#palletdatagenerator-documentation" title="Link to this heading"></a></h1>
+<a class="reference internal image-reference" href="_static/logo.png"><img alt="PalletDataGenerator Logo" class="align-center" src="_static/logo.png" style="width: 200px;" />
+</a>
+<p><strong>A professional Python library for generating synthetic pallet datasets using Blender for computer vision tasks.</strong></p>
+<p><a class="reference external" href="https://badge.fury.io/py/palletdatagenerator"><img alt="PyPI version" src="https://badge.fury.io/py/palletdatagenerator.svg" /></a>
+<a class="reference external" href="https://github.com/boubakriibrahim/PalletDataGenerator/actions/workflows/ci-cd.yml"><img alt="Build Status" src="https://github.com/boubakriibrahim/PalletDataGenerator/actions/workflows/ci-cd.yml/badge.svg" /></a>
+<a class="reference external" href="https://coveralls.io/github/boubakriibrahim/PalletDataGenerator?branch=main"><img alt="Coverage Status" src="https://coveralls.io/repos/github/boubakriibrahim/PalletDataGenerator/badge.svg?branch=main" /></a>
+<a class="reference external" href="https://pypistats.org/packages/palletdatagenerator"><img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/palletdatagenerator.svg" /></a>
+<a class="reference external" href="https://pypi.org/project/palletdatagenerator/"><img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/palletdatagenerator.svg" /></a>
+<a class="reference external" href="https://www.python.org/downloads/"><img alt="Python 3.11+" src="https://img.shields.io/badge/python-3.11+-blue.svg" /></a>
+<a class="reference external" href="https://www.blender.org/"><img alt="Blender 4.5+" src="https://img.shields.io/badge/blender-4.5+-orange.svg" /></a>
+<a class="reference internal" href="#LICENSE"><span class="xref myst"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" /></span></a>
+<a class="reference external" href="https://palletdatagenerator.readthedocs.io/en/latest/?badge=latest"><img alt="Documentation Status" src="https://readthedocs.org/projects/palletdatagenerator/badge/?version=latest" /></a></p>
+<section id="overview">
+<h2>🎯 Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>PalletDataGenerator is a comprehensive solution for creating high-quality synthetic datasets of pallets and warehouse environments. Built with professional computer vision workflows in mind, it provides:</p>
+<ul class="simple">
+<li><p><strong>🎬 Realistic Scene Generation</strong>: Single pallet and multi-pallet warehouse scenarios</p></li>
+<li><p><strong>📊 Multiple Export Formats</strong>: YOLO, COCO, and PASCAL VOC annotations</p></li>
+<li><p><strong>⚡ GPU-Accelerated Rendering</strong>: High-performance generation with Blender Cycles</p></li>
+<li><p><strong>🔧 Flexible Configuration</strong>: YAML-based configuration with CLI overrides</p></li>
+<li><p><strong>📦 Batch Processing</strong>: Organized output with <code class="docutils literal notranslate"><span class="pre">generated_XXXX</span></code> folder structure</p></li>
+<li><p><strong>🐍 Professional Architecture</strong>: Clean, modular, and extensively tested</p></li>
+</ul>
+</section>
+<section id="quick-start">
+<h2>🚀 Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<section id="installation">
+<h3>Installation<a class="headerlink" href="#installation" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Install the package</span>
+pip<span class="w"> </span>install<span class="w"> </span>palletdatagenerator
+
+<span class="c1"># Or install from source</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/boubakriibrahim/PalletDataGenerator.git
+<span class="nb">cd</span><span class="w"> </span>PalletDataGenerator
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span>.
+</pre></div>
+</div>
+</section>
+<section id="basic-usage">
+<h3>Basic Usage<a class="headerlink" href="#basic-usage" title="Link to this heading"></a></h3>
+<section id="with-blender-recommended">
+<h4>With Blender (Recommended)<a class="headerlink" href="#with-blender-recommended" title="Link to this heading"></a></h4>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open your Blender scene and run the generator</span>
+blender<span class="w"> </span>warehouse_objects.blend<span class="w"> </span>--python<span class="w"> </span>-m<span class="w"> </span>palletdatagenerator.blender_runner<span class="w"> </span>--<span class="w"> </span>generate<span class="w"> </span>--output<span class="w"> </span>./dataset<span class="w"> </span>--num-frames<span class="w"> </span><span class="m">100</span>
+</pre></div>
+</div>
+</section>
+<section id="direct-python-usage">
+<h4>Direct Python Usage<a class="headerlink" href="#direct-python-usage" title="Link to this heading"></a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">palletdatagenerator</span><span class="w"> </span><span class="kn">import</span> <span class="n">PalletDataGenerator</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">palletdatagenerator.core.generator</span><span class="w"> </span><span class="kn">import</span> <span class="n">GenerationConfig</span>
+
+<span class="c1"># Create generator</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">PalletDataGenerator</span><span class="p">()</span>
+
+<span class="c1"># Configure generation</span>
+<span class="n">config</span> <span class="o">=</span> <span class="n">GenerationConfig</span><span class="p">(</span>
+    <span class="n">scene_type</span><span class="o">=</span><span class="s2">&quot;warehouse&quot;</span><span class="p">,</span>
+    <span class="n">num_frames</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">1280</span><span class="p">,</span> <span class="mi">720</span><span class="p">),</span>
+    <span class="n">output_dir</span><span class="o">=</span><span class="s2">&quot;./dataset&quot;</span><span class="p">,</span>
+    <span class="n">export_formats</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;yolo&quot;</span><span class="p">,</span> <span class="s2">&quot;coco&quot;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Generate dataset</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate_dataset</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="documentation">
+<h2>📚 Documentation<a class="headerlink" href="#documentation" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#system-requirements">🚀 System Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-methods">📦 Installation Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#blender-setup">🎨 Blender Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#verification">🧪 Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#troubleshooting">🐛 Troubleshooting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#common-use-cases">🎯 Common Use Cases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#understanding-the-output">📊 Understanding the Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#cli-command-reference">🔧 CLI Command Reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#blender-integration">🎨 Blender Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#performance-tips">📈 Performance Tips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="architecture">
+<h2>🏗️ Architecture<a class="headerlink" href="#architecture" title="Link to this heading"></a></h2>
+</section>
+<section id="features">
+<h2>🎨 Features<a class="headerlink" href="#features" title="Link to this heading"></a></h2>
+<section id="core-capabilities">
+<h3>Core Capabilities<a class="headerlink" href="#core-capabilities" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Scene Types</strong>: Single pallet and warehouse environments</p></li>
+<li><p><strong>Export Formats</strong>: YOLO, COCO, PASCAL VOC</p></li>
+<li><p><strong>Rendering</strong>: GPU-accelerated with Blender Cycles</p></li>
+<li><p><strong>Randomization</strong>: Materials, lighting, camera positions</p></li>
+<li><p><strong>Batch Processing</strong>: Automated generation with organized output</p></li>
+</ul>
+</section>
+<section id="advanced-features">
+<h3>Advanced Features<a class="headerlink" href="#advanced-features" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Background Images</strong>: Random background replacement from image folders</p></li>
+<li><p><strong>Forklift Simulation</strong>: Realistic camera heights and movements (1.4-2.0m)</p></li>
+<li><p><strong>Analysis Images</strong>: Debug visualization with annotation overlays</p></li>
+<li><p><strong>Depth Maps</strong>: Optional depth information for 3D applications</p></li>
+<li><p><strong>Segmentation Masks</strong>: Instance and semantic segmentation support</p></li>
+</ul>
+</section>
+</section>
+<section id="configuration">
+<h2>🔧 Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<section id="yaml-configuration">
+<h3>YAML Configuration<a class="headerlink" href="#yaml-configuration" title="Link to this heading"></a></h3>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="nt">generation</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">scene_type</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;warehouse&quot;</span>
+<span class="w">  </span><span class="nt">num_frames</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">500</span>
+<span class="w">  </span><span class="nt">batch_size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">100</span>
+<span class="w">  </span><span class="nt">num_batches</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">5</span>
+<span class="w">  </span><span class="nt">resolution</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">1280</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">720</span><span class="p p-Indicator">]</span>
+<span class="w">  </span><span class="nt">export_formats</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="s">&quot;yolo&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;coco&quot;</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="s">&quot;voc&quot;</span><span class="p p-Indicator">]</span>
+
+<span class="nt">scene</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">backgrounds</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">use_random_backgrounds</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+<span class="w">    </span><span class="nt">images_dir</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;./backgrounds&quot;</span>
+<span class="w">  </span><span class="nt">camera</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">height_range</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">[</span><span class="nv">1.4</span><span class="p p-Indicator">,</span><span class="w"> </span><span class="nv">2.0</span><span class="p p-Indicator">]</span>
+<span class="w">    </span><span class="nt">focal_length</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">35.0</span>
+
+<span class="nt">project</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">clone_to_desktop</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">  </span><span class="nt">desktop_path</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;auto&quot;</span>
+</pre></div>
+</div>
+</section>
+<section id="cli-usage">
+<h3>CLI Usage<a class="headerlink" href="#cli-usage" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate with custom parameters</span>
+palletdatagenerator<span class="w"> </span>generate<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--scene-type<span class="w"> </span>warehouse<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--num-frames<span class="w"> </span><span class="m">500</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--num-batches<span class="w"> </span><span class="m">5</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--export-format<span class="w"> </span>yolo<span class="w"> </span>coco<span class="w"> </span>voc<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--gpu<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--verbose
+
+<span class="c1"># Use configuration file with overrides</span>
+palletdatagenerator<span class="w"> </span>generate<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--config<span class="w"> </span>config.yaml<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--output<span class="w"> </span>./custom_output<span class="w"> </span><span class="se">\</span>
+<span class="w">  </span>--num-frames<span class="w"> </span><span class="m">1000</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="requirements">
+<h2>📋 Requirements<a class="headerlink" href="#requirements" title="Link to this heading"></a></h2>
+<section id="system-requirements">
+<h3>System Requirements<a class="headerlink" href="#system-requirements" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Python</strong>: 3.11 (3.11.13 recommended for optimal compatibility)</p></li>
+<li><p><strong>Blender</strong>: 4.5+ (4.5.1 LTS recommended)</p></li>
+<li><p><strong>GPU</strong>: NVIDIA (CUDA), AMD (OpenCL), or Apple Silicon (Metal) for acceleration</p></li>
+<li><p><strong>RAM</strong>: 8GB minimum, 16GB+ recommended</p></li>
+<li><p><strong>Storage</strong>: 1GB+ free space per 1000 generated images</p></li>
+</ul>
+</section>
+</section>
+<section id="contributing">
+<h2>🤝 Contributing<a class="headerlink" href="#contributing" title="Link to this heading"></a></h2>
+<p>We welcome contributions! Please see our <a class="reference internal" href="#development.md"><span class="xref myst">Contributing Guide</span></a> for details.</p>
+<section id="development-setup">
+<h3>Development Setup<a class="headerlink" href="#development-setup" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Clone the repository</span>
+git<span class="w"> </span>clone<span class="w"> </span>https://github.com/boubakriibrahim/PalletDataGenerator.git
+<span class="nb">cd</span><span class="w"> </span>PalletDataGenerator
+
+<span class="c1"># Set up development environment</span>
+python<span class="w"> </span>-m<span class="w"> </span>palletdatagenerator<span class="w"> </span>setup<span class="w"> </span>--python-version<span class="w"> </span><span class="m">3</span>.11
+
+<span class="c1"># Activate virtual environment</span>
+<span class="nb">source</span><span class="w"> </span>pallet_env/bin/activate<span class="w">  </span><span class="c1"># Linux/Mac</span>
+<span class="c1"># or</span>
+pallet_env<span class="se">\S</span>cripts<span class="se">\a</span>ctivate<span class="w">  </span><span class="c1"># Windows</span>
+
+<span class="c1"># Install in development mode</span>
+pip<span class="w"> </span>install<span class="w"> </span>-e<span class="w"> </span><span class="s2">&quot;.[dev]&quot;</span>
+
+<span class="c1"># Run tests</span>
+pytest<span class="w"> </span>tests/
+</pre></div>
+</div>
+</section>
+</section>
+<section id="license">
+<h2>📄 License<a class="headerlink" href="#license" title="Link to this heading"></a></h2>
+<p>This project is licensed under the MIT License - see the <a class="reference internal" href="#LICENSE"><span class="xref myst">LICENSE</span></a> file for details.</p>
+</section>
+<section id="acknowledgments">
+<h2>🙏 Acknowledgments<a class="headerlink" href="#acknowledgments" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Blender Foundation</strong> for the amazing Blender software</p></li>
+<li><p><strong>Computer Vision Community</strong> for dataset format standards</p></li>
+<li><p><strong>Contributors</strong> who help improve this library</p></li>
+</ul>
+</section>
+<section id="support">
+<h2>📞 Support<a class="headerlink" href="#support" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>Documentation</strong>: <a class="reference external" href="https://palletdatagenerator.readthedocs.io/">https://palletdatagenerator.readthedocs.io/</a></p></li>
+<li><p><strong>Issues</strong>: <a class="reference external" href="https://github.com/boubakriibrahim/PalletDataGenerator/issues">GitHub Issues</a></p></li>
+<li><p><strong>Discussions</strong>: <a class="reference external" href="https://github.com/boubakriibrahim/PalletDataGenerator/discussions">GitHub Discussions</a></p></li>
+</ul>
+<hr class="docutils" />
+<p><strong>Made with ❤️ for the Computer Vision Community</strong></p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installation.html" class="btn btn-neutral float-right" title="Installation Guide" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, PalletDataGenerator Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

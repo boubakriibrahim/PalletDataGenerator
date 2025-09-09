@@ -1,0 +1,690 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.core.renderer &mdash; PalletDataGenerator 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/_modules/palletdatagenerator/core/renderer.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.core.renderer</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for palletdatagenerator.core.renderer</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Blender rendering functionality for dataset generation.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Callable</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mathutils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Vector</span>
+
+    <span class="n">BLENDER_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">BLENDER_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+
+<div class="viewcode-block" id="Vector">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.Vector">[docs]</a>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
+<div class="viewcode-block" id="Vector.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.Vector.__init__">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">pass</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BlenderRenderer">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BlenderRenderer</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Professional Blender rendering interface for synthetic datasets.</span>
+
+<span class="sd">    Handles all aspects of Blender rendering including compositor setup,</span>
+<span class="sd">    multi-pass rendering, and output management.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BlenderRenderer.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_paths</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize renderer with output paths.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            output_paths: Dictionary mapping pass types to output directories</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If Blender is not available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">BLENDER_AVAILABLE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Blender Python API not available&quot;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span> <span class="o">=</span> <span class="n">output_paths</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_compositor</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_compositor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup Blender compositor for multi-pass rendering.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">node_tree</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">node_tree</span>
+        <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+
+        <span class="c1"># Render layers input</span>
+        <span class="n">render_layer</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeRLayers&quot;</span><span class="p">)</span>
+
+        <span class="c1"># RGB output (default)</span>
+        <span class="c1"># This is handled by the regular render output</span>
+
+        <span class="c1"># Depth output (16-bit PNG)</span>
+        <span class="k">if</span> <span class="s2">&quot;depth&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span><span class="p">:</span>
+            <span class="n">depth_output</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeOutputFile&quot;</span><span class="p">)</span>
+            <span class="n">depth_output</span><span class="o">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span><span class="p">[</span><span class="s2">&quot;depth&quot;</span><span class="p">]</span>
+            <span class="n">depth_output</span><span class="o">.</span><span class="n">file_slots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;depth_######&quot;</span>
+            <span class="n">depth_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="s2">&quot;PNG&quot;</span>
+            <span class="n">depth_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">color_depth</span> <span class="o">=</span> <span class="s2">&quot;16&quot;</span>
+            <span class="n">depth_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">color_mode</span> <span class="o">=</span> <span class="s2">&quot;BW&quot;</span>
+
+            <span class="c1"># Convert depth to millimeters and normalize</span>
+            <span class="n">depth_multiply</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeMath&quot;</span><span class="p">)</span>
+            <span class="n">depth_multiply</span><span class="o">.</span><span class="n">operation</span> <span class="o">=</span> <span class="s2">&quot;MULTIPLY&quot;</span>
+            <span class="n">depth_multiply</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1000.0</span>  <span class="c1"># Convert to mm</span>
+
+            <span class="n">depth_normalize</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeMath&quot;</span><span class="p">)</span>
+            <span class="n">depth_normalize</span><span class="o">.</span><span class="n">operation</span> <span class="o">=</span> <span class="s2">&quot;MULTIPLY&quot;</span>
+            <span class="n">depth_normalize</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="mf">65535.0</span>  <span class="c1"># Normalize to 0-1</span>
+
+            <span class="n">depth_clamp</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeMath&quot;</span><span class="p">)</span>
+            <span class="n">depth_clamp</span><span class="o">.</span><span class="n">operation</span> <span class="o">=</span> <span class="s2">&quot;MINIMUM&quot;</span>
+            <span class="n">depth_clamp</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+            <span class="c1"># Connect depth processing chain</span>
+            <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layer</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;Depth&quot;</span><span class="p">],</span> <span class="n">depth_multiply</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">depth_multiply</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">depth_normalize</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">depth_normalize</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">depth_clamp</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">depth_clamp</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">depth_output</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># Normal output</span>
+        <span class="k">if</span> <span class="s2">&quot;normals&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span><span class="p">:</span>
+            <span class="n">normal_output</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeOutputFile&quot;</span><span class="p">)</span>
+            <span class="n">normal_output</span><span class="o">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span><span class="p">[</span><span class="s2">&quot;normals&quot;</span><span class="p">]</span>
+            <span class="n">normal_output</span><span class="o">.</span><span class="n">file_slots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;normal_######&quot;</span>
+            <span class="n">normal_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="s2">&quot;PNG&quot;</span>
+            <span class="n">normal_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">color_depth</span> <span class="o">=</span> <span class="s2">&quot;8&quot;</span>
+            <span class="n">normal_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">color_mode</span> <span class="o">=</span> <span class="s2">&quot;RGB&quot;</span>
+
+            <span class="c1"># Process normals (convert from -1,1 to 0,1 range)</span>
+            <span class="n">normal_separate</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeSepRGBA&quot;</span><span class="p">)</span>
+            <span class="n">normal_combine</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeCombRGBA&quot;</span><span class="p">)</span>
+
+            <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span>
+                <span class="n">render_layer</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;Normal&quot;</span><span class="p">],</span> <span class="n">normal_separate</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Convert each channel from -1,1 to 0,1</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">):</span>
+                <span class="n">add_node</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeMath&quot;</span><span class="p">)</span>
+                <span class="n">add_node</span><span class="o">.</span><span class="n">operation</span> <span class="o">=</span> <span class="s2">&quot;ADD&quot;</span>
+                <span class="n">add_node</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.0</span>
+
+                <span class="n">multiply_node</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeMath&quot;</span><span class="p">)</span>
+                <span class="n">multiply_node</span><span class="o">.</span><span class="n">operation</span> <span class="o">=</span> <span class="s2">&quot;MULTIPLY&quot;</span>
+                <span class="n">multiply_node</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">0.5</span>
+
+                <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">normal_separate</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">add_node</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">add_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">multiply_node</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">multiply_node</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">normal_combine</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+            <span class="n">normal_combine</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">default_value</span> <span class="o">=</span> <span class="mf">1.0</span>  <span class="c1"># Alpha</span>
+            <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">normal_combine</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">normal_output</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="c1"># Object index output</span>
+        <span class="k">if</span> <span class="s2">&quot;index&quot;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span><span class="p">:</span>
+            <span class="n">index_output</span> <span class="o">=</span> <span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;CompositorNodeOutputFile&quot;</span><span class="p">)</span>
+            <span class="n">index_output</span><span class="o">.</span><span class="n">base_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span><span class="p">[</span><span class="s2">&quot;index&quot;</span><span class="p">]</span>
+            <span class="n">index_output</span><span class="o">.</span><span class="n">file_slots</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;index_######&quot;</span>
+            <span class="n">index_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="s2">&quot;PNG&quot;</span>
+            <span class="n">index_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">color_depth</span> <span class="o">=</span> <span class="s2">&quot;8&quot;</span>
+            <span class="n">index_output</span><span class="o">.</span><span class="n">format</span><span class="o">.</span><span class="n">color_mode</span> <span class="o">=</span> <span class="s2">&quot;BW&quot;</span>
+
+            <span class="n">node_tree</span><span class="o">.</span><span class="n">links</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">render_layer</span><span class="o">.</span><span class="n">outputs</span><span class="p">[</span><span class="s2">&quot;IndexOB&quot;</span><span class="p">],</span> <span class="n">index_output</span><span class="o">.</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<div class="viewcode-block" id="BlenderRenderer.configure_scene_for_rendering">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.configure_scene_for_rendering">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure_scene_for_rendering</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">resolution</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">engine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CYCLES&quot;</span><span class="p">,</span> <span class="n">samples</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">64</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure scene rendering settings.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            resolution: Tuple of (width, height)</span>
+<span class="sd">            engine: Render engine (&#39;CYCLES&#39; or &#39;EEVEE&#39;)</span>
+<span class="sd">            samples: Number of samples for rendering quality</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span>
+
+        <span class="c1"># Basic render settings</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="n">engine</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">resolution_x</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">resolution_y</span> <span class="o">=</span> <span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">resolution_percentage</span> <span class="o">=</span> <span class="mi">100</span>
+
+        <span class="c1"># Color management for realism</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">view_settings</span><span class="o">.</span><span class="n">view_transform</span> <span class="o">=</span> <span class="s2">&quot;Filmic&quot;</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">view_settings</span><span class="o">.</span><span class="n">look</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">sequencer_colorspace_settings</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Rec.709&quot;</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Warning] Could not set color management settings&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Engine-specific settings</span>
+        <span class="k">if</span> <span class="n">engine</span> <span class="o">==</span> <span class="s2">&quot;CYCLES&quot;</span><span class="p">:</span>
+            <span class="n">cycles</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">cycles</span>
+            <span class="n">cycles</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="n">samples</span>
+
+            <span class="c1"># Performance optimizations</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cycles</span><span class="o">.</span><span class="n">use_adaptive_sampling</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">cycles</span><span class="o">.</span><span class="n">use_denoising</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">cycles</span><span class="o">.</span><span class="n">use_persistent_data</span> <span class="o">=</span> <span class="kc">True</span>  <span class="c1"># Faster for multiple renders</span>
+                <span class="n">cycles</span><span class="o">.</span><span class="n">light_threshold</span> <span class="o">=</span> <span class="mf">0.001</span>  <span class="c1"># Reduce fireflies</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="s2">&quot;[Warning] Some Cycles settings not available in this Blender version&quot;</span>
+                <span class="p">)</span>
+
+        <span class="c1"># Enable render passes</span>
+        <span class="n">view_layer</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">view_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">view_layer</span><span class="o">.</span><span class="n">use_pass_z</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">view_layer</span><span class="o">.</span><span class="n">use_pass_normal</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">view_layer</span><span class="o">.</span><span class="n">use_pass_object_index</span> <span class="o">=</span> <span class="kc">True</span></div>
+
+
+<div class="viewcode-block" id="BlenderRenderer.render_frame">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.render_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">render_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frame_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">output_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Render a single frame with all passes.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame_number: Frame number for output naming</span>
+<span class="sd">            output_name: Optional custom output name (defaults to frame number)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Path to rendered RGB image</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">output_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">output_name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;frame_</span><span class="si">{</span><span class="n">frame_number</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="c1"># Set frame for animation (if needed)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">frame_set</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+
+        <span class="c1"># Main RGB output path</span>
+        <span class="n">rgb_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">),</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">output_name</span><span class="si">}</span><span class="s2">.png&quot;</span>
+        <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">rgb_path</span>
+
+        <span class="c1"># Render with all passes</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">rgb_path</span></div>
+
+
+<div class="viewcode-block" id="BlenderRenderer.enable_gpu_rendering">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.enable_gpu_rendering">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enable_gpu_rendering</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preferred_backend</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enable GPU rendering with optimal backend selection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            preferred_backend: Preferred GPU backend (optional)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Selected backend name or &#39;CPU&#39; if no GPU available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prefs</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">preferences</span>
+        <span class="k">if</span> <span class="s2">&quot;cycles&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prefs</span><span class="o">.</span><span class="n">addons</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[GPU] Cycles add-on not found; using CPU.&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;CPU&quot;</span>
+
+        <span class="n">cycles_prefs</span> <span class="o">=</span> <span class="n">prefs</span><span class="o">.</span><span class="n">addons</span><span class="p">[</span><span class="s2">&quot;cycles&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">preferences</span>
+
+        <span class="c1"># Platform-aware backend selection</span>
+        <span class="n">backend_order</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">preferred_backend</span><span class="p">:</span>
+            <span class="n">backend_order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">preferred_backend</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>  <span class="c1"># macOS</span>
+            <span class="n">backend_order</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;METAL&quot;</span><span class="p">])</span>
+        <span class="k">else</span><span class="p">:</span>  <span class="c1"># Windows/Linux</span>
+            <span class="n">backend_order</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="s2">&quot;CUDA&quot;</span><span class="p">,</span> <span class="s2">&quot;OPTIX&quot;</span><span class="p">,</span> <span class="s2">&quot;HIP&quot;</span><span class="p">,</span> <span class="s2">&quot;ONEAPI&quot;</span><span class="p">,</span> <span class="s2">&quot;OPENCL&quot;</span><span class="p">])</span>
+
+        <span class="c1"># Remove duplicates while preserving order</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">backend_order</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">backend_order</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">b</span> <span class="ow">in</span> <span class="n">seen</span> <span class="ow">or</span> <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="p">))]</span>
+
+        <span class="n">selected_backend</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">backend_order</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cycles_prefs</span><span class="o">.</span><span class="n">compute_device_type</span> <span class="o">=</span> <span class="n">backend</span>
+                <span class="n">cycles_prefs</span><span class="o">.</span><span class="n">refresh_devices</span><span class="p">()</span>
+
+                <span class="c1"># Enable compatible devices</span>
+                <span class="n">any_device_enabled</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">cycles_prefs</span><span class="o">.</span><span class="n">devices</span><span class="p">:</span>
+                    <span class="k">if</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="ow">or</span> <span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;GPU&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="p">):</span>
+                        <span class="n">device</span><span class="o">.</span><span class="n">use</span> <span class="o">=</span> <span class="kc">True</span>
+                        <span class="n">any_device_enabled</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">device</span><span class="o">.</span><span class="n">use</span> <span class="o">=</span> <span class="kc">False</span>
+
+                <span class="k">if</span> <span class="n">any_device_enabled</span><span class="p">:</span>
+                    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;GPU&quot;</span>
+                    <span class="n">selected_backend</span> <span class="o">=</span> <span class="n">backend</span>
+                    <span class="k">break</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[GPU] Failed to initialize </span><span class="si">{</span><span class="n">backend</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">selected_backend</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[GPU] No compatible GPU backend found; using CPU.&quot;</span><span class="p">)</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;CPU&quot;</span>
+            <span class="k">return</span> <span class="s2">&quot;CPU&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[GPU] Successfully enabled </span><span class="si">{</span><span class="n">selected_backend</span><span class="si">}</span><span class="s2"> rendering&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">selected_backend</span></div>
+
+
+<div class="viewcode-block" id="BlenderRenderer.auto_select_denoiser">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.auto_select_denoiser">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">auto_select_denoiser</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">gpu_backend</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Automatically select optimal denoiser based on GPU backend.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            gpu_backend: Currently active GPU backend</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Selected denoiser name</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">denoiser</span> <span class="o">=</span> <span class="s2">&quot;OPTIX&quot;</span> <span class="k">if</span> <span class="n">gpu_backend</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;CUDA&quot;</span><span class="p">,</span> <span class="s2">&quot;OPTIX&quot;</span><span class="p">)</span> <span class="k">else</span> <span class="s2">&quot;OPENIMAGEDENOISE&quot;</span>
+
+        <span class="c1"># Apply denoiser setting</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="p">,</span> <span class="s2">&quot;denoiser&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">denoiser</span> <span class="o">=</span> <span class="n">denoiser</span>
+            <span class="k">elif</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="p">,</span> <span class="s2">&quot;use_denoising&quot;</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">use_denoising</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Warning] Could not set denoiser to </span><span class="si">{</span><span class="n">denoiser</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">denoiser</span></div>
+
+
+<div class="viewcode-block" id="BlenderRenderer.setup_object_indices">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.setup_object_indices">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_object_indices</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objects</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="nb">int</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup object indices for segmentation pass.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            objects: List of objects to assign indices</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary mapping objects to their assigned indices</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">object_indices</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">obj</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">objects</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">obj</span><span class="p">,</span> <span class="s2">&quot;pass_index&quot;</span><span class="p">):</span>
+                <span class="n">obj</span><span class="o">.</span><span class="n">pass_index</span> <span class="o">=</span> <span class="n">idx</span>
+                <span class="n">object_indices</span><span class="p">[</span><span class="n">obj</span><span class="p">]</span> <span class="o">=</span> <span class="n">idx</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Warning] Object </span><span class="si">{</span><span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> does not support pass_index&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">object_indices</span></div>
+
+
+<div class="viewcode-block" id="BlenderRenderer.create_analysis_render">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.create_analysis_render">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_analysis_render</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">frame_number</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">objects_info</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create analysis render with bounding box overlays.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame_number: Frame number for output naming</span>
+<span class="sd">            objects_info: List of object information dictionaries</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Path to analysis image or None if failed</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">from</span><span class="w"> </span><span class="nn">PIL</span><span class="w"> </span><span class="kn">import</span> <span class="n">Image</span><span class="p">,</span> <span class="n">ImageDraw</span><span class="p">,</span> <span class="n">ImageFont</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Warning] PIL not available, skipping analysis render&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># First, get the regular render</span>
+        <span class="n">rgb_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_frame</span><span class="p">(</span><span class="n">frame_number</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">rgb_path</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Error] RGB render not found: </span><span class="si">{</span><span class="n">rgb_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># Load image for annotation</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">img</span> <span class="o">=</span> <span class="n">Image</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">rgb_path</span><span class="p">)</span>
+            <span class="n">draw</span> <span class="o">=</span> <span class="n">ImageDraw</span><span class="o">.</span><span class="n">Draw</span><span class="p">(</span><span class="n">img</span><span class="p">)</span>
+
+            <span class="c1"># Try to load a font</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">font</span> <span class="o">=</span> <span class="n">ImageFont</span><span class="o">.</span><span class="n">truetype</span><span class="p">(</span><span class="s2">&quot;arial.ttf&quot;</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+                <span class="n">font</span> <span class="o">=</span> <span class="n">ImageFont</span><span class="o">.</span><span class="n">load_default</span><span class="p">()</span>
+
+            <span class="c1"># Draw bounding boxes and labels</span>
+            <span class="n">colors</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+                <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+                <span class="p">(</span><span class="mi">255</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">255</span><span class="p">),</span>
+            <span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">obj_info</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">objects_info</span><span class="p">):</span>
+                <span class="k">if</span> <span class="s2">&quot;bbox_2d&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">obj_info</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+                <span class="n">bbox</span> <span class="o">=</span> <span class="n">obj_info</span><span class="p">[</span><span class="s2">&quot;bbox_2d&quot;</span><span class="p">]</span>
+                <span class="n">color</span> <span class="o">=</span> <span class="n">colors</span><span class="p">[</span><span class="n">idx</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">colors</span><span class="p">)]</span>
+
+                <span class="c1"># Draw bounding box</span>
+                <span class="n">draw</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span>
+                    <span class="p">[(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]),</span> <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;x_max&quot;</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;y_max&quot;</span><span class="p">])],</span>
+                    <span class="n">outline</span><span class="o">=</span><span class="n">color</span><span class="p">,</span>
+                    <span class="n">width</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+                <span class="p">)</span>
+
+                <span class="c1"># Draw label</span>
+                <span class="n">label</span> <span class="o">=</span> <span class="n">obj_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;class_name&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;Object_</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">draw</span><span class="o">.</span><span class="n">text</span><span class="p">(</span>
+                    <span class="p">(</span><span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">],</span> <span class="n">bbox</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">25</span><span class="p">),</span> <span class="n">label</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">color</span><span class="p">,</span> <span class="n">font</span><span class="o">=</span><span class="n">font</span>
+                <span class="p">)</span>
+
+            <span class="c1"># Save analysis image</span>
+            <span class="n">analysis_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">output_paths</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;analysis&quot;</span><span class="p">,</span> <span class="s2">&quot;.&quot;</span><span class="p">),</span>
+                <span class="sa">f</span><span class="s2">&quot;analysis_</span><span class="si">{</span><span class="n">frame_number</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">analysis_path</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">analysis_path</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Error] Failed to create analysis render: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="BlenderRenderer.batch_render">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.batch_render">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">batch_render</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">frame_range</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">],</span> <span class="n">progress_callback</span><span class="p">:</span> <span class="n">Callable</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Render multiple frames in batch.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            frame_range: Tuple of (start_frame, end_frame)</span>
+<span class="sd">            progress_callback: Optional callback for progress updates</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of rendered image paths</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">start_frame</span><span class="p">,</span> <span class="n">end_frame</span> <span class="o">=</span> <span class="n">frame_range</span>
+        <span class="n">rendered_paths</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">total_frames</span> <span class="o">=</span> <span class="n">end_frame</span> <span class="o">-</span> <span class="n">start_frame</span> <span class="o">+</span> <span class="mi">1</span>
+
+        <span class="k">for</span> <span class="n">frame_num</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">start_frame</span><span class="p">,</span> <span class="n">end_frame</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">rgb_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">render_frame</span><span class="p">(</span><span class="n">frame_num</span><span class="p">)</span>
+                <span class="n">rendered_paths</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">rgb_path</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">progress_callback</span><span class="p">:</span>
+                    <span class="n">progress</span> <span class="o">=</span> <span class="p">(</span><span class="n">frame_num</span> <span class="o">-</span> <span class="n">start_frame</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">total_frames</span>
+                    <span class="n">progress_callback</span><span class="p">(</span><span class="n">progress</span><span class="p">,</span> <span class="n">frame_num</span><span class="p">,</span> <span class="n">rgb_path</span><span class="p">)</span>
+
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[Error] Failed to render frame </span><span class="si">{</span><span class="n">frame_num</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+        <span class="k">return</span> <span class="n">rendered_paths</span></div>
+
+
+<div class="viewcode-block" id="BlenderRenderer.cleanup">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.renderer.html#palletdatagenerator.BlenderRenderer.cleanup">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">cleanup</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clean up temporary objects and reset scene state.&quot;&quot;&quot;</span>
+        <span class="c1"># Remove generated lights</span>
+        <span class="n">generated_lights</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">obj</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;LIGHT&quot;</span> <span class="ow">and</span> <span class="s2">&quot;Generated&quot;</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">light</span> <span class="ow">in</span> <span class="n">generated_lights</span><span class="p">:</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+
+        <span class="c1"># Reset compositor if needed</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">use_nodes</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">node_tree</span><span class="o">.</span><span class="n">nodes</span><span class="o">.</span><span class="n">clear</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">use_nodes</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[Cleanup] Rendering cleanup completed&quot;</span><span class="p">)</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, PalletDataGenerator Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

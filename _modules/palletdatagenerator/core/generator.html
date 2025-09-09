@@ -1,0 +1,921 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.core.generator &mdash; PalletDataGenerator 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/_modules/palletdatagenerator/core/generator.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.core.generator</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for palletdatagenerator.core.generator</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Core generator classes for pallet and warehouse dataset generation.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">colorsys</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">field</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">bpy_extras.object_utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">world_to_camera_view</span> <span class="k">as</span> <span class="n">w2cv</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mathutils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Euler</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Vector</span>
+
+    <span class="n">BLENDER_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">BLENDER_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># Mock classes for type hints when Blender is not available</span>
+<div class="viewcode-block" id="Vector">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.Vector">[docs]</a>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Vector</span><span class="p">:</span>
+<div class="viewcode-block" id="Vector.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.Vector.__init__">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">pass</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Matrix">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.Matrix">[docs]</a>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Matrix</span><span class="p">:</span>
+<div class="viewcode-block" id="Matrix.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.Matrix.__init__">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">pass</span></div>
+</div>
+
+
+<div class="viewcode-block" id="Euler">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.Euler">[docs]</a>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Euler</span><span class="p">:</span>
+<div class="viewcode-block" id="Euler.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.Euler.__init__">[docs]</a>
+        <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+            <span class="k">pass</span></div>
+</div>
+
+
+    <span class="n">w2cv</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="GenerationConfig">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.GenerationConfig">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">GenerationConfig</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Configuration class for dataset generation.</span>
+
+<span class="sd">    Attributes:</span>
+<span class="sd">        output_dir: Directory to save generated datasets</span>
+<span class="sd">        num_images: Number of images to generate</span>
+<span class="sd">        resolution: Tuple of (width, height) for output resolution</span>
+<span class="sd">        render_engine: Blender render engine (&#39;CYCLES&#39; or &#39;EEVEE&#39;)</span>
+<span class="sd">        camera_config: Camera settings dictionary</span>
+<span class="sd">        lighting_config: Light randomization settings</span>
+<span class="sd">        export_formats: List of export formats (&#39;yolo&#39;, &#39;coco&#39;, &#39;voc&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;outputs&quot;</span>
+    <span class="n">num_images</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="n">resolution</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1280</span><span class="p">,</span> <span class="mi">720</span><span class="p">)</span>
+    <span class="n">render_engine</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;CYCLES&quot;</span>
+    <span class="n">camera_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">lighting_config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="nb">dict</span><span class="p">)</span>
+    <span class="n">export_formats</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">field</span><span class="p">(</span><span class="n">default_factory</span><span class="o">=</span><span class="k">lambda</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;yolo&quot;</span><span class="p">,</span> <span class="s2">&quot;coco&quot;</span><span class="p">])</span>
+
+<div class="viewcode-block" id="GenerationConfig.__post_init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.GenerationConfig.__post_init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">__post_init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize default configurations if not provided.&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_config</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">camera_config</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;focal_mm&quot;</span><span class="p">:</span> <span class="mf">35.0</span><span class="p">,</span>
+                <span class="s2">&quot;sensor_mm&quot;</span><span class="p">:</span> <span class="mf">36.0</span><span class="p">,</span>
+                <span class="s2">&quot;height_range&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">),</span>
+            <span class="p">}</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">lighting_config</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lighting_config</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;randomize_per_frame&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;light_count_range&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+                <span class="s2">&quot;use_colored_lights&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+                <span class="s2">&quot;colored_light_probability&quot;</span><span class="p">:</span> <span class="mf">0.6</span><span class="p">,</span>
+            <span class="p">}</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="BaseGenerator">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.BaseGenerator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">BaseGenerator</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Base class for dataset generators.</span>
+
+<span class="sd">    Provides common functionality for Blender-based synthetic dataset generation</span>
+<span class="sd">    including GPU configuration, rendering setup, and utility methods.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="BaseGenerator.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.BaseGenerator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">GenerationConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the generator with configuration.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: Generation configuration object</span>
+
+<span class="sd">        Raises:</span>
+<span class="sd">            RuntimeError: If Blender is not available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">BLENDER_AVAILABLE</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+                <span class="s2">&quot;Blender Python API not available. This library must be run within Blender.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">config</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scene</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_directories</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_setup_directories</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create output directory structure.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary mapping directory types to paths</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">base_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">output_dir</span><span class="p">)</span>
+        <span class="n">directories</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;images&quot;</span><span class="p">:</span> <span class="n">base_dir</span> <span class="o">/</span> <span class="s2">&quot;images&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;depth&quot;</span><span class="p">:</span> <span class="n">base_dir</span> <span class="o">/</span> <span class="s2">&quot;depth&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;normals&quot;</span><span class="p">:</span> <span class="n">base_dir</span> <span class="o">/</span> <span class="s2">&quot;normals&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;index&quot;</span><span class="p">:</span> <span class="n">base_dir</span> <span class="o">/</span> <span class="s2">&quot;index&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;analysis&quot;</span><span class="p">:</span> <span class="n">base_dir</span> <span class="o">/</span> <span class="s2">&quot;analysis&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;yolo_labels&quot;</span><span class="p">:</span> <span class="n">base_dir</span> <span class="o">/</span> <span class="s2">&quot;yolo_labels&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;voc_xml&quot;</span><span class="p">:</span> <span class="n">base_dir</span> <span class="o">/</span> <span class="s2">&quot;voc_xml&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">dir_path</span> <span class="ow">in</span> <span class="n">directories</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">dir_path</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">directories</span><span class="o">.</span><span class="n">items</span><span class="p">()}</span>
+
+<div class="viewcode-block" id="BaseGenerator.enable_gpu">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.BaseGenerator.enable_gpu">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">enable_gpu</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">preferred</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Enable GPU rendering with platform-aware backend selection.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            preferred: Preferred GPU backend (optional)</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Name of selected backend or &#39;CPU&#39; if no GPU available</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">prefs</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">preferences</span>
+        <span class="k">if</span> <span class="s2">&quot;cycles&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">prefs</span><span class="o">.</span><span class="n">addons</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[GPU] Cycles add-on not found; using CPU.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s2">&quot;CPU&quot;</span>
+
+        <span class="n">cprefs</span> <span class="o">=</span> <span class="n">prefs</span><span class="o">.</span><span class="n">addons</span><span class="p">[</span><span class="s2">&quot;cycles&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">preferences</span>
+
+        <span class="c1"># Platform-aware backend preference order</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="n">preferred</span><span class="p">:</span>
+            <span class="n">order</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">preferred</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+        <span class="k">if</span> <span class="n">sys</span><span class="o">.</span><span class="n">platform</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
+            <span class="n">order</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;METAL&quot;</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">order</span> <span class="o">+=</span> <span class="p">[</span><span class="s2">&quot;CUDA&quot;</span><span class="p">,</span> <span class="s2">&quot;OPTIX&quot;</span><span class="p">,</span> <span class="s2">&quot;HIP&quot;</span><span class="p">,</span> <span class="s2">&quot;ONEAPI&quot;</span><span class="p">,</span> <span class="s2">&quot;OPENCL&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Remove duplicates while preserving order</span>
+        <span class="n">seen</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+        <span class="n">order</span> <span class="o">=</span> <span class="p">[</span><span class="n">b</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">order</span> <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">b</span> <span class="ow">in</span> <span class="n">seen</span> <span class="ow">or</span> <span class="n">seen</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">b</span><span class="p">))]</span>
+
+        <span class="n">chosen</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">order</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cprefs</span><span class="o">.</span><span class="n">compute_device_type</span> <span class="o">=</span> <span class="n">backend</span>
+                <span class="n">cprefs</span><span class="o">.</span><span class="n">refresh_devices</span><span class="p">()</span>
+                <span class="n">any_used</span> <span class="o">=</span> <span class="kc">False</span>
+                <span class="k">for</span> <span class="n">device</span> <span class="ow">in</span> <span class="n">cprefs</span><span class="o">.</span><span class="n">devices</span><span class="p">:</span>
+                    <span class="n">use_flag</span> <span class="o">=</span> <span class="n">backend</span> <span class="ow">in</span> <span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="ow">or</span> <span class="n">device</span><span class="o">.</span><span class="n">type</span> <span class="ow">in</span> <span class="p">(</span><span class="s2">&quot;GPU&quot;</span><span class="p">,</span> <span class="n">backend</span><span class="p">)</span>
+                    <span class="n">device</span><span class="o">.</span><span class="n">use</span> <span class="o">=</span> <span class="n">use_flag</span>
+                    <span class="n">any_used</span> <span class="o">=</span> <span class="n">any_used</span> <span class="ow">or</span> <span class="n">use_flag</span>
+
+                <span class="k">if</span> <span class="n">any_used</span><span class="p">:</span>
+                    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;GPU&quot;</span>
+                    <span class="n">chosen</span> <span class="o">=</span> <span class="n">backend</span>
+                    <span class="k">break</span>
+            <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">RuntimeError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[GPU] Failed to configure </span><span class="si">{</span><span class="n">backend</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">chosen</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;[GPU] No supported GPU backend found; using CPU.&quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">cycles</span><span class="o">.</span><span class="n">device</span> <span class="o">=</span> <span class="s2">&quot;CPU&quot;</span>
+            <span class="k">return</span> <span class="s2">&quot;CPU&quot;</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[GPU] Using backend: </span><span class="si">{</span><span class="n">chosen</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">chosen</span></div>
+
+
+<div class="viewcode-block" id="BaseGenerator.configure_render_settings">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.BaseGenerator.configure_render_settings">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">configure_render_settings</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Configure Blender render settings based on configuration.&quot;&quot;&quot;</span>
+        <span class="n">scene</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">scene</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">engine</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">render_engine</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">resolution_x</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">resolution_y</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">resolution_percentage</span> <span class="o">=</span> <span class="mi">100</span>
+
+        <span class="c1"># Enable color management</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">view_settings</span><span class="o">.</span><span class="n">view_transform</span> <span class="o">=</span> <span class="s2">&quot;Filmic&quot;</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">view_settings</span><span class="o">.</span><span class="n">look</span> <span class="o">=</span> <span class="s2">&quot;None&quot;</span>
+            <span class="n">scene</span><span class="o">.</span><span class="n">sequencer_colorspace_settings</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Rec.709&quot;</span>
+        <span class="k">except</span> <span class="p">(</span><span class="ne">AttributeError</span><span class="p">,</span> <span class="ne">KeyError</span><span class="p">)</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;[COLOR] Using fallback color settings for older Blender version: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">file</span><span class="o">=</span><span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Configure Cycles settings</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">render_engine</span> <span class="o">==</span> <span class="s2">&quot;CYCLES&quot;</span><span class="p">:</span>
+            <span class="n">cycles</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">cycles</span>
+            <span class="n">cycles</span><span class="o">.</span><span class="n">samples</span> <span class="o">=</span> <span class="mi">64</span>  <span class="c1"># Good balance of quality/speed</span>
+
+            <span class="c1"># Enable adaptive sampling and denoising</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">cycles</span><span class="o">.</span><span class="n">use_adaptive_sampling</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">cycles</span><span class="o">.</span><span class="n">use_denoising</span> <span class="o">=</span> <span class="kc">True</span>
+                <span class="n">cycles</span><span class="o">.</span><span class="n">use_persistent_data</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="ne">AttributeError</span><span class="p">:</span>
+                <span class="k">pass</span>  <span class="c1"># Handle version differences</span>
+
+        <span class="c1"># Enable required render passes</span>
+        <span class="n">view_layer</span> <span class="o">=</span> <span class="n">scene</span><span class="o">.</span><span class="n">view_layers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">view_layer</span><span class="o">.</span><span class="n">use_pass_z</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">view_layer</span><span class="o">.</span><span class="n">use_pass_normal</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="n">view_layer</span><span class="o">.</span><span class="n">use_pass_object_index</span> <span class="o">=</span> <span class="kc">True</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PalletGenerator">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.PalletGenerator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PalletGenerator</span><span class="p">(</span><span class="n">BaseGenerator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generator for single pallet synthetic datasets.</span>
+
+<span class="sd">    Specializes in generating high-quality single pallet scenes with</span>
+<span class="sd">    configurable lighting, camera positioning, and annotation generation.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="PalletGenerator.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.PalletGenerator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">GenerationConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize pallet generator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: Generation configuration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">pallet_objects</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_find_pallet_objects</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_find_pallet_objects</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Find pallet objects in the current scene.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of pallet objects found in scene</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pallet_keywords</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;pallet&quot;</span><span class="p">,</span> <span class="s2">&quot;palet&quot;</span><span class="p">]</span>
+        <span class="n">pallets</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;MESH&quot;</span> <span class="ow">and</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">keyword</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">pallet_keywords</span>
+            <span class="p">):</span>
+                <span class="n">pallets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">pallet_objects</span> <span class="o">=</span> <span class="n">pallets</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">pallets</span><span class="p">)</span><span class="si">}</span><span class="s2"> pallet objects&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">pallets</span>
+
+<div class="viewcode-block" id="PalletGenerator.position_camera_for_side_face">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.PalletGenerator.position_camera_for_side_face">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">position_camera_for_side_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">camera_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">target_obj</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Position camera to capture pallet side faces optimally.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            camera_obj: Blender camera object</span>
+<span class="sd">            target_obj: Target pallet object to focus on</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">target_obj</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="c1"># Get target center and bounds</span>
+        <span class="n">target_center</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">target_obj</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+
+        <span class="c1"># Calculate optimal camera distance based on object size</span>
+        <span class="n">bbox</span> <span class="o">=</span> <span class="n">target_obj</span><span class="o">.</span><span class="n">bound_box</span>
+        <span class="n">max_dim</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span>
+            <span class="nb">abs</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">bbox</span><span class="p">)</span> <span class="o">-</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">bbox</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">distance</span> <span class="o">=</span> <span class="n">max_dim</span> <span class="o">*</span> <span class="mf">2.5</span>  <span class="c1"># Good distance for full object visibility</span>
+
+        <span class="c1"># Random positioning around target with preference for side faces</span>
+        <span class="n">angle_horizontal</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">)</span>  <span class="c1"># nosec B311</span>
+        <span class="n">angle_vertical</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">45</span><span class="p">)</span>  <span class="c1"># nosec B311  # Slight downward angle</span>
+
+        <span class="c1"># Convert to radians</span>
+        <span class="n">h_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle_horizontal</span><span class="p">)</span>
+        <span class="n">v_rad</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">angle_vertical</span><span class="p">)</span>
+
+        <span class="c1"># Calculate camera position</span>
+        <span class="n">cam_x</span> <span class="o">=</span> <span class="n">target_center</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">h_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">v_rad</span><span class="p">)</span>
+        <span class="n">cam_y</span> <span class="o">=</span> <span class="n">target_center</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">h_rad</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">v_rad</span><span class="p">)</span>
+        <span class="n">cam_z</span> <span class="o">=</span> <span class="n">target_center</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">distance</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">v_rad</span><span class="p">)</span>
+
+        <span class="c1"># Ensure camera is above ground</span>
+        <span class="n">ground_z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">camera_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_ground_height&quot;</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">)</span>
+        <span class="n">cam_z</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">cam_z</span><span class="p">,</span> <span class="n">ground_z</span><span class="p">)</span>
+
+        <span class="n">camera_obj</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">((</span><span class="n">cam_x</span><span class="p">,</span> <span class="n">cam_y</span><span class="p">,</span> <span class="n">cam_z</span><span class="p">))</span>
+
+        <span class="c1"># Point camera at target</span>
+        <span class="n">look_direction</span> <span class="o">=</span> <span class="n">target_center</span> <span class="o">-</span> <span class="n">camera_obj</span><span class="o">.</span><span class="n">location</span>
+        <span class="n">camera_obj</span><span class="o">.</span><span class="n">rotation_euler</span> <span class="o">=</span> <span class="n">look_direction</span><span class="o">.</span><span class="n">to_track_quat</span><span class="p">(</span><span class="s2">&quot;-Z&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_euler</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="PalletGenerator.generate_dataset">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.PalletGenerator.generate_dataset">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate complete pallet dataset.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary containing generation statistics and metadata</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">pallet_objects</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No pallet objects found in scene&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Setup rendering</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_gpu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure_render_settings</span><span class="p">()</span>
+
+        <span class="c1"># Get camera</span>
+        <span class="n">camera</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">camera</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">camera</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No camera found in scene&quot;</span><span class="p">)</span>
+
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;images_generated&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;objects_detected&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pallet_objects</span><span class="p">),</span>
+            <span class="s2">&quot;export_formats&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">export_formats</span><span class="p">,</span>
+            <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Starting generation of </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_images</span><span class="si">}</span><span class="s2"> images...&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">frame_idx</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_images</span><span class="p">):</span>
+            <span class="c1"># Position camera randomly for each frame</span>
+            <span class="n">target_pallet</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pallet_objects</span><span class="p">)</span>  <span class="c1"># nosec B311</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position_camera_for_side_face</span><span class="p">(</span><span class="n">camera</span><span class="p">,</span> <span class="n">target_pallet</span><span class="p">)</span>
+
+            <span class="c1"># Randomize lighting if enabled</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lighting_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;randomize_per_frame&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_randomize_lighting</span><span class="p">()</span>
+
+            <span class="c1"># Render frame</span>
+            <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;frame_</span><span class="si">{</span><span class="n">frame_idx</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">.png&quot;</span>
+            <span class="p">)</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">output_path</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;images_generated&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">frame_idx</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="n">frame_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_images</span><span class="si">}</span><span class="s2"> images&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Dataset generation complete! Generated </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;images_generated&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> images&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">stats</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_randomize_lighting</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Randomize scene lighting for realism.&quot;&quot;&quot;</span>
+        <span class="c1"># Remove existing generated lights</span>
+        <span class="n">existing_lights</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">obj</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;LIGHT&quot;</span> <span class="ow">and</span> <span class="s2">&quot;Generated&quot;</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">light</span> <span class="ow">in</span> <span class="n">existing_lights</span><span class="p">:</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+
+        <span class="c1"># Add new random lights</span>
+        <span class="n">light_count</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
+            <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lighting_config</span><span class="p">[</span><span class="s2">&quot;light_count_range&quot;</span><span class="p">]</span>
+        <span class="p">)</span>  <span class="c1"># nosec B311</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">light_count</span><span class="p">):</span>
+            <span class="c1"># Create light</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">light_add</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;POINT&quot;</span><span class="p">)</span>
+            <span class="n">light</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">active_object</span>
+            <span class="n">light</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Generated_Light_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="c1"># Random position around scene</span>
+            <span class="n">light</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Random energy</span>
+            <span class="n">light</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>  <span class="c1"># nosec B311</span>
+
+            <span class="c1"># Random color if enabled</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lighting_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s2">&quot;use_colored_lights&quot;</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="p">)</span> <span class="ow">and</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lighting_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>  <span class="c1"># nosec B311</span>
+                <span class="s2">&quot;colored_light_probability&quot;</span><span class="p">,</span> <span class="mf">0.5</span>
+            <span class="p">):</span>
+                <span class="n">hue</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>  <span class="c1"># nosec B311</span>
+                <span class="n">saturation</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>  <span class="c1"># nosec B311</span>
+                <span class="n">value</span> <span class="o">=</span> <span class="mf">1.0</span>
+                <span class="n">rgb</span> <span class="o">=</span> <span class="n">colorsys</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="n">hue</span><span class="p">,</span> <span class="n">saturation</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+                <span class="n">light</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">rgb</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,)</span>  <span class="c1"># Add alpha</span></div>
+
+
+
+<div class="viewcode-block" id="WarehouseGenerator">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.WarehouseGenerator">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">WarehouseGenerator</span><span class="p">(</span><span class="n">BaseGenerator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generator for warehouse scene synthetic datasets.</span>
+
+<span class="sd">    Specializes in generating complex warehouse environments with</span>
+<span class="sd">    multiple pallets, realistic camera paths, and advanced scene management.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="WarehouseGenerator.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.WarehouseGenerator.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">:</span> <span class="n">GenerationConfig</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize warehouse generator.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            config: Generation configuration</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warehouse_objects</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_analyze_warehouse_scene</span><span class="p">()</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_analyze_warehouse_scene</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">list</span><span class="p">[</span><span class="n">Any</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Analyze warehouse scene and categorize objects.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary categorizing warehouse objects by type</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">scene_objects</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;pallets&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;boxes&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;racks&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;warehouse_structure&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;all_objects&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">),</span>
+        <span class="p">}</span>
+
+        <span class="n">keywords</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;pallets&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;pallet&quot;</span><span class="p">,</span> <span class="s2">&quot;palet&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;boxes&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;box&quot;</span><span class="p">,</span> <span class="s2">&quot;cube&quot;</span><span class="p">,</span> <span class="s2">&quot;create&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;racks&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;rack&quot;</span><span class="p">,</span> <span class="s2">&quot;mezanine&quot;</span><span class="p">,</span> <span class="s2">&quot;shelf&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;warehouse_structure&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="s2">&quot;hangar&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;construction&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;roof&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;door&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;wall&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;floor&quot;</span><span class="p">,</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;MESH&quot;</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">obj_name_lower</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+            <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">category_keywords</span> <span class="ow">in</span> <span class="n">keywords</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">keyword</span> <span class="ow">in</span> <span class="n">obj_name_lower</span> <span class="k">for</span> <span class="n">keyword</span> <span class="ow">in</span> <span class="n">category_keywords</span><span class="p">):</span>
+                    <span class="n">scene_objects</span><span class="p">[</span><span class="n">category</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+                    <span class="k">break</span>
+
+        <span class="c1"># Log findings</span>
+        <span class="k">for</span> <span class="n">category</span><span class="p">,</span> <span class="n">objects</span> <span class="ow">in</span> <span class="n">scene_objects</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="n">category</span> <span class="o">!=</span> <span class="s2">&quot;all_objects&quot;</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Found </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">scene_objects</span>
+
+<div class="viewcode-block" id="WarehouseGenerator.generate_warehouse_path">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.WarehouseGenerator.generate_warehouse_path">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_warehouse_path</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">50</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Vector</span><span class="p">,</span> <span class="n">Vector</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate realistic warehouse navigation path.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_points: Number of path points to generate</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of (position, rotation) tuples for camera path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">warehouse_objects</span><span class="p">[</span><span class="s2">&quot;pallets&quot;</span><span class="p">]:</span>
+            <span class="c1"># Generate simple linear path if no pallets</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_simple_path</span><span class="p">(</span><span class="n">num_points</span><span class="p">)</span>
+
+        <span class="c1"># Generate path based on pallet positions</span>
+        <span class="n">pallet_positions</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">Vector</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">location</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">warehouse_objects</span><span class="p">[</span><span class="s2">&quot;pallets&quot;</span><span class="p">]</span>
+        <span class="p">]</span>
+
+        <span class="c1"># Create path that visits multiple pallet areas</span>
+        <span class="n">path_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">height_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">camera_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;height_range&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="p">):</span>
+            <span class="c1"># Interpolate between pallet areas</span>
+            <span class="n">progress</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_points</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="c1"># Select target pallet based on progress</span>
+            <span class="n">pallet_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">progress</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">pallet_positions</span><span class="p">))</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">pallet_positions</span><span class="p">)</span>
+            <span class="n">target_pos</span> <span class="o">=</span> <span class="n">pallet_positions</span><span class="p">[</span><span class="n">pallet_idx</span><span class="p">]</span>
+
+            <span class="c1"># Add variation for realistic movement</span>
+            <span class="n">variation</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">camera_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;path_variation&quot;</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)</span>
+            <span class="n">camera_pos</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">target_pos</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">variation</span><span class="p">,</span> <span class="n">variation</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                    <span class="n">target_pos</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">variation</span><span class="p">,</span> <span class="n">variation</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">height_range</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Calculate rotation to look at target</span>
+            <span class="n">look_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">target_pos</span> <span class="o">-</span> <span class="n">camera_pos</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+            <span class="n">rotation</span> <span class="o">=</span> <span class="n">look_dir</span><span class="o">.</span><span class="n">to_track_quat</span><span class="p">(</span><span class="s2">&quot;-Z&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_euler</span><span class="p">()</span>
+
+            <span class="n">path_points</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">camera_pos</span><span class="p">,</span> <span class="n">rotation</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">path_points</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_generate_simple_path</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">num_points</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="n">Vector</span><span class="p">,</span> <span class="n">Vector</span><span class="p">]]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate simple linear path when no specific targets available.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            num_points: Number of path points to generate</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            List of (position, rotation) tuples for camera path</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">path_points</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">height_range</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">camera_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;height_range&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.4</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_points</span><span class="p">):</span>
+            <span class="n">progress</span> <span class="o">=</span> <span class="n">i</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_points</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+
+            <span class="n">camera_pos</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">progress</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">-</span> <span class="mi">5</span><span class="p">,</span>  <span class="c1"># -5 to 5 range</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>  <span class="c1"># nosec B311  # Small Y variation</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">height_range</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Look forward with slight downward angle</span>
+            <span class="n">rotation</span> <span class="o">=</span> <span class="n">Euler</span><span class="p">((</span><span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">),</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+
+            <span class="n">path_points</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">camera_pos</span><span class="p">,</span> <span class="n">rotation</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">path_points</span>
+
+<div class="viewcode-block" id="WarehouseGenerator.generate_dataset">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.core.generator.html#palletdatagenerator.WarehouseGenerator.generate_dataset">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_dataset</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Generate complete warehouse dataset.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Dictionary containing generation statistics and metadata</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Setup rendering</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">enable_gpu</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">configure_render_settings</span><span class="p">()</span>
+
+        <span class="c1"># Get camera</span>
+        <span class="n">camera</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">camera</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">camera</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;No camera found in scene&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Generate camera path</span>
+        <span class="n">camera_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_warehouse_path</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_images</span><span class="p">)</span>
+
+        <span class="n">stats</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;images_generated&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+            <span class="s2">&quot;pallets_found&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">warehouse_objects</span><span class="p">[</span><span class="s2">&quot;pallets&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;boxes_found&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">warehouse_objects</span><span class="p">[</span><span class="s2">&quot;boxes&quot;</span><span class="p">]),</span>
+            <span class="s2">&quot;export_formats&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">export_formats</span><span class="p">,</span>
+            <span class="s2">&quot;resolution&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span>
+        <span class="p">}</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Starting warehouse dataset generation...&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Camera path with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">camera_path</span><span class="p">)</span><span class="si">}</span><span class="s2"> points&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">frame_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">camera_pos</span><span class="p">,</span> <span class="n">camera_rot</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">camera_path</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">frame_idx</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_images</span><span class="p">:</span>
+                <span class="k">break</span>
+
+            <span class="c1"># Position camera</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">camera_pos</span>
+            <span class="n">camera</span><span class="o">.</span><span class="n">rotation_euler</span> <span class="o">=</span> <span class="n">camera_rot</span>
+
+            <span class="c1"># Randomize lighting if enabled</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lighting_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;randomize_per_frame&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_randomize_lighting</span><span class="p">()</span>
+
+            <span class="c1"># Render frame</span>
+            <span class="n">output_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">output_dir</span><span class="p">,</span> <span class="s2">&quot;images&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;warehouse_</span><span class="si">{</span><span class="n">frame_idx</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">.png&quot;</span>
+            <span class="p">)</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">output_path</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="n">stats</span><span class="p">[</span><span class="s2">&quot;images_generated&quot;</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="k">if</span> <span class="n">frame_idx</span> <span class="o">%</span> <span class="mi">10</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="n">frame_idx</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">num_images</span><span class="si">}</span><span class="s2"> images&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;Warehouse dataset generation complete! Generated </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;images_generated&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> images&quot;</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">stats</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_randomize_lighting</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Randomize warehouse lighting for realism.&quot;&quot;&quot;</span>
+        <span class="c1"># Implementation similar to PalletGenerator but with warehouse-specific parameters</span>
+        <span class="n">existing_lights</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">obj</span>
+            <span class="k">for</span> <span class="n">obj</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span>
+            <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">type</span> <span class="o">==</span> <span class="s2">&quot;LIGHT&quot;</span> <span class="ow">and</span> <span class="s2">&quot;Generated&quot;</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">name</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">light</span> <span class="ow">in</span> <span class="n">existing_lights</span><span class="p">:</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">light</span><span class="p">)</span>
+
+        <span class="n">light_count</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
+            <span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lighting_config</span><span class="p">[</span><span class="s2">&quot;light_count_range&quot;</span><span class="p">]</span>
+        <span class="p">)</span>  <span class="c1"># nosec B311</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">light_count</span><span class="p">):</span>
+            <span class="c1"># Create area lights for warehouse (more realistic)</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">object</span><span class="o">.</span><span class="n">light_add</span><span class="p">(</span><span class="nb">type</span><span class="o">=</span><span class="s2">&quot;AREA&quot;</span><span class="p">)</span>
+            <span class="n">light</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">active_object</span>
+            <span class="n">light</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Generated_Warehouse_Light_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+
+            <span class="c1"># Position lights higher for warehouse scale</span>
+            <span class="n">light</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">8</span><span class="p">),</span>  <span class="c1"># nosec B311</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Higher energy for warehouse scale</span>
+            <span class="n">light</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">energy</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span>  <span class="c1"># nosec B311</span>
+            <span class="n">light</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">size</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># nosec B311  # Area light size</span>
+
+            <span class="c1"># Warehouse lighting is typically cooler</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lighting_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                <span class="s2">&quot;use_colored_lights&quot;</span><span class="p">,</span> <span class="kc">False</span>
+            <span class="p">)</span> <span class="ow">and</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">lighting_config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>  <span class="c1"># nosec B311</span>
+                <span class="s2">&quot;colored_light_probability&quot;</span><span class="p">,</span> <span class="mf">0.3</span>
+            <span class="p">):</span>
+                <span class="c1"># Cooler color temperature for warehouse</span>
+                <span class="n">temperature</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">4000</span><span class="p">,</span> <span class="mi">6500</span><span class="p">)</span>  <span class="c1"># nosec B311  # Kelvin</span>
+                <span class="c1"># Convert temperature to RGB (simplified)</span>
+                <span class="n">rgb</span> <span class="o">=</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span> <span class="k">if</span> <span class="n">temperature</span> <span class="o">&lt;</span> <span class="mi">5000</span> <span class="k">else</span> <span class="p">(</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)</span>
+                <span class="n">light</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">color</span> <span class="o">=</span> <span class="n">rgb</span> <span class="o">+</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,)</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, PalletDataGenerator Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
