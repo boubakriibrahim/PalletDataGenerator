@@ -1,0 +1,9 @@
+# Core requirements for PalletDataGenerator
+PyYAML>=6.0
+Pillow>=9.0.0
+numpy>=1.21.0
+
+# Optional Blender dependencies (when running outside Blender)
+# These are provided by Blender's Python environment when running inside Blender
+# mathutils  # Available in Blender
+# bpy        # Available in Blender

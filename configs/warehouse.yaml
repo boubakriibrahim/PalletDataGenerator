@@ -1,0 +1,25 @@
+include: "./paths.yaml"
+
+mode: "warehouse"
+output_dir: "{PROJECT_ROOT}/outputs/warehouse"
+
+render_engine: "CYCLES"
+resolution_x: 1280
+resolution_y: 720
+samples: 128
+
+frames: 100
+
+background_images_dir: null
+
+box_removal_probability: 0.7
+groups_per_run: 5
+
+randomize_lights_per_frame: true
+light_count_range: [2, 4]
+use_colored_lights: true
+colored_light_probability: 0.3
+enable_auto_exposure: true
+target_luminance: 0.18
+exposure_min: -2.0
+exposure_max: 2.0

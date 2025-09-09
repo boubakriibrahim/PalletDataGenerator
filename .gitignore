@@ -1,0 +1,17 @@
+scenes/*.blend*
+*.tmp
+*.log
+
+original_files
+
+.vscode
+.DS_Store
+
+docs/_build/
+
+__pycache__
+**/__pycache__/
+*.pyc
+
+coverage*
+.coverage

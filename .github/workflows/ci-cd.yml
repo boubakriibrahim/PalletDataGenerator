@@ -1,0 +1,462 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+# Prevent duplicate runs on the same ref
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Principle of least privilege; elevate per job as needed
+permissions:
+  contents: read
+
+env:
+  PYTHON_VERSION: "3.11"
+  PACKAGE_NAME: "palletdatagenerator"
+
+jobs:
+  # --------------------------
+  # Code Quality Checks
+  # --------------------------
+  quality-checks:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: |
+            **/pyproject.toml
+            **/requirements*.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+
+      - name: Ruff (lint)
+        run: ruff check src/ tests/
+
+      - name: Black (format check)
+        run: black --check src/ tests/
+
+      - name: MyPy (type check)
+        run: mypy src/
+
+      - name: Bandit (security)
+        run: bandit -r src/ -f json -o bandit-report.json || true
+
+      - name: Upload security report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report
+          path: bandit-report.json
+          if-no-files-found: warn
+          retention-days: 14
+
+  # --------------------------
+  # Unit Tests (matrix)
+  # --------------------------
+  test:
+    name: Tests (${{ matrix.os }} / py${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+        python-version: ["3.11"]
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+          cache-dependency-path: |
+            **/pyproject.toml
+            **/requirements*.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[test]"
+
+      - name: Run tests
+        run: |
+          pytest tests/ --cov=${{ env.PACKAGE_NAME }} --cov-report=xml --cov-report=term
+
+      - name: Upload coverage artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ matrix.os }}-py${{ matrix.python-version }}
+          path: coverage.xml
+          if-no-files-found: ignore
+          retention-days: 7
+
+      - name: Upload coverage to Codecov (ubuntu/3.11 only)
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./coverage.xml
+          flags: unittests
+          name: codecov-umbrella
+        env:
+          # For public repos, token is optional; set CODECOV_TOKEN secret if private.
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+  # --------------------------
+  # Docs build
+  # --------------------------
+  docs:
+    name: Documentation
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: |
+            **/pyproject.toml
+            **/requirements*.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[docs]"
+
+      - name: Build documentation
+        run: |
+          cd docs
+          make clean html
+
+      - name: Upload documentation site
+        uses: actions/upload-artifact@v4
+        with:
+          name: documentation-site
+          path: docs/_build/html/
+          retention-days: 7
+
+  # --------------------------
+  # Version Check (PR to main)
+  # --------------------------
+  version-check:
+    name: Version Check
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    outputs:
+      version-changed: ${{ steps.vcheck.outputs.changed }}
+      new-version: ${{ steps.vcheck.outputs.version }}
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout (full)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Check version bump
+        id: vcheck
+        shell: bash
+        run: |
+          set -euo pipefail
+          CURRENT_VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          git show origin/main:pyproject.toml > /tmp/main-pyproject.toml || true
+          if [ -s /tmp/main-pyproject.toml ]; then
+            MAIN_VERSION=$(python -c "import tomllib; print(tomllib.load(open('/tmp/main-pyproject.toml','rb'))['project']['version'])")
+          else
+            MAIN_VERSION=""
+          fi
+          echo "Current: $CURRENT_VERSION; Main: $MAIN_VERSION"
+          if [ "$CURRENT_VERSION" != "$MAIN_VERSION" ]; then
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "version=$CURRENT_VERSION" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Ensure tag does not already exist
+        if: steps.vcheck.outputs.changed == 'true'
+        run: |
+          VERSION="${{ steps.vcheck.outputs.version }}"
+          if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+            echo "::error::Tag v$VERSION already exists! Update the version in pyproject.toml."
+            exit 1
+          fi
+
+      - name: Comment on PR
+        if: steps.vcheck.outputs.changed == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const version = '${{ steps.vcheck.outputs.version }}';
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🎉 Version bump detected: **v${version}**\n\nWhen this PR merges to \`main\`, a new release will be created and published to PyPI.`
+            });
+
+      - name: Comment on PR (no bump)
+        if: steps.vcheck.outputs.changed == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "ℹ️ No version change detected. To create a release, update the version in `pyproject.toml`."
+            });
+
+  # --------------------------
+  # Build sdist/wheel on main
+  # --------------------------
+  build:
+    name: Build Package
+    runs-on: ubuntu-latest
+    needs: [quality-checks, test]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      actions: read
+      id-token: write   # (optional) for Trusted Publishing if you switch later
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+          cache-dependency-path: |
+            **/pyproject.toml
+            **/requirements*.txt
+
+      - name: Install build tooling
+        run: |
+          python -m pip install --upgrade pip
+          pip install build hatch
+
+      - name: Build
+        run: python -m build
+
+      - name: Upload dist/
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+          retention-days: 7
+
+  # --------------------------
+  # Create Release & Publish
+  # --------------------------
+  release:
+    name: Create Release and Deploy
+    runs-on: ubuntu-latest
+    needs: [build]
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: write   # create release, push gh-pages
+      id-token: write   # (optional) for Trusted Publishing
+    steps:
+      - name: Checkout (full)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Read version
+        id: ver
+        run: |
+          VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check if tag exists
+        id: tagcheck
+        run: |
+          if git rev-parse "${{ steps.ver.outputs.tag }}" >/dev/null 2>&1; then
+            echo "exists=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "exists=false" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Download build artifacts
+        if: steps.tagcheck.outputs.exists == 'false'
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+
+      - name: Generate changelog (last 20 commits)
+        if: steps.tagcheck.outputs.exists == 'false'
+        id: changelog
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          if [ -z "$PREV_TAG" ]; then
+            echo "🎉 Initial release of ${{ env.PACKAGE_NAME }}" > CHANGELOG_RELEASE.md
+          else
+            git log --pretty=format:"- %s" "$PREV_TAG"..HEAD | head -20 > CHANGELOG_RELEASE.md || echo "- Bug fixes and improvements" > CHANGELOG_RELEASE.md
+          fi
+          echo "body<<EOF" >> $GITHUB_OUTPUT
+          head -100 CHANGELOG_RELEASE.md >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Create Git tag & GitHub Release
+        if: steps.tagcheck.outputs.exists == 'false'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.ver.outputs.tag }}
+          name: Release ${{ steps.ver.outputs.version }}
+          body: ${{ steps.changelog.outputs.body }}
+          files: |
+            dist/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # --- Option A: Current token-based PyPI publishing (what you had) ---
+      - name: Publish to PyPI (token)
+        if: steps.tagcheck.outputs.exists == 'false' && env.TWINE_PASSWORD != ''
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: |
+          pip install --upgrade pip
+          pip install twine
+          twine check dist/*
+          twine upload dist/*
+
+      # --- Option B: (Recommended) PyPI Trusted Publishing via OIDC ---
+      # Enable this in your PyPI project first, then remove Option A above.
+      # - name: Publish to PyPI (Trusted Publishing)
+      #   if: steps.tagcheck.outputs.exists == 'false'
+      #   uses: pypa/gh-action-pypi-publish@release/v1
+
+      - name: Build Documentation for Deployment
+        if: steps.tagcheck.outputs.exists == 'false'
+        run: |
+          pip install -e ".[docs]"
+          cd docs
+          make html
+
+      - name: Deploy Documentation to GitHub Pages
+        if: steps.tagcheck.outputs.exists == 'false'
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs/_build/html
+          force_orphan: true
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'Deploy documentation for ${{ github.sha }}'
+
+  # --------------------------
+  # Success notification
+  # --------------------------
+  success-comment:
+    name: Success Notification
+    runs-on: ubuntu-latest
+    needs: [release]
+    if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      pull-requests: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: ver
+        run: |
+          VERSION=$(python -c "import tomllib; print(tomllib.load(open('pyproject.toml','rb'))['project']['version'])")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Find associated PR
+        id: find-pr
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed',
+              sort: 'updated',
+              direction: 'desc',
+              per_page: 20
+            });
+            const m = prs.find(pr => pr.merged_at && pr.merge_commit_sha === context.sha);
+            return m ? m.number : null;
+
+      - name: Comment on PR
+        if: steps.find-pr.outputs.result != 'null'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prNumber = ${{ steps.find-pr.outputs.result }};
+            const version = '${{ steps.ver.outputs.version }}';
+            await github.rest.issues.createComment({
+              issue_number: prNumber,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🚀 **Release v${version} Successfully Deployed!**\n\n✅ Package published to PyPI\n✅ GitHub release created\n✅ Documentation updated\n\nInstall:\n\`\`\`bash\npip install --upgrade ${{ env.PACKAGE_NAME }}\n\`\`\`\n\n[View Release](https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/v${version}) · [PyPI](https://pypi.org/project/${{ env.PACKAGE_NAME }}/)`
+            });
+
+  # --------------------------
+  # Failure notification on PRs
+  # --------------------------
+  failure-comment:
+    name: Failure Notification
+    runs-on: ubuntu-latest
+    needs: [quality-checks, test, build, release]
+    if: failure() && github.event_name == 'pull_request'
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Comment on PR failure
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const workflow_url = `https://github.com/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            await github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `❌ **CI/CD Pipeline Failed**\n\nReview errors and push fixes.\n\n[View Workflow Run](${workflow_url})\n\nCommon fixes:\n- Code formatting (run \`black src/ tests/\`)\n- Linting (run \`ruff check src/ tests/\`)\n- Types (run \`mypy src/\`)\n- Tests (run \`pytest tests/\`)\n- Security (run \`bandit -r src/\`)\n`
+            });

@@ -1,0 +1,125 @@
+name: Documentation
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'docs/**'
+      - '**/*.rst'
+      - '**/*.md'
+      - '**/conf.py'
+      - 'pyproject.toml'
+      - 'src/**/*.py'  # For autodoc changes
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - '**/*.rst'
+      - '**/*.md'
+      - '**/conf.py'
+      - 'pyproject.toml'
+      - 'src/**/*.py'  # For autodoc changes
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Only one Pages deployment at a time
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: |
+            **/pyproject.toml
+            **/requirements*.txt
+
+      # Install only what you need; drop pandoc if unused
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y graphviz
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[docs]"
+
+      - name: Configure Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Build HTML
+        env:
+          SPHINXOPTS: "-W --keep-going"  # strict on warnings (fail on PRs)
+        run: |
+          make -C docs html
+          touch docs/_build/html/.nojekyll
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/_build/html
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+  link-check:
+    # Only on PRs to avoid blocking main on flaky externals
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+          cache-dependency-path: |
+            **/pyproject.toml
+            **/requirements*.txt
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[docs]"
+
+      - name: Build HTML (non-strict)
+        env:
+          SPHINXOPTS: ""   # allow warnings here; the strictness is in the main build job
+        run: make -C docs html
+
+      - name: Link check (tolerant for externals)
+        env:
+          SPHINXOPTS: "-b linkcheck"
+        run: |
+          # Make linkcheck a bit more stable
+          export SPHINXOPTS="$SPHINXOPTS -D linkcheck_timeout=10 -D linkcheck_anchors=True -D linkcheck_ignored=['https://twitter.com/.*','https://.*github.com/.*#.*'] -D linkcheck_workers=4 -D linkcheck_retries=2 -D linkcheck_request_headers=\"{'User-Agent': 'Mozilla/5.0 (CI linkcheck)'}\""
+          make -C docs linkcheck || true  # don't fail PRs on external link flakiness

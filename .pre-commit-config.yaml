@@ -1,0 +1,87 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-json
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=1000"]
+      - id: debug-statements
+      - id: check-docstring-first
+
+  - repo: https://github.com/psf/black
+    rev: 23.12.1
+    hooks:
+      - id: black
+        language_version: python3
+        args: [--line-length=88]
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.9
+    hooks:
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    rev: v1.8.0
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - types-PyYAML
+          - types-Pillow
+        args:
+          [
+            --ignore-missing-imports,
+            --allow-untyped-defs,
+            --allow-incomplete-defs,
+            --allow-untyped-calls,
+            --no-strict-optional,
+            --disable-error-code=import,
+            --disable-error-code=no-redef,
+            --disable-error-code=attr-defined,
+            --disable-error-code=operator,
+            --disable-error-code=index,
+            --disable-error-code=call-arg,
+            --disable-error-code=assignment,
+            --disable-error-code=arg-type,
+            --disable-error-code=return-value,
+            --disable-error-code=call-overload,
+            --disable-error-code=no-untyped-def,
+            --disable-error-code=var-annotated,
+          ]
+
+  - repo: https://github.com/pycqa/bandit
+    rev: 1.7.5
+    hooks:
+      - id: bandit
+        args:
+          [
+            "-c",
+            "pyproject.toml",
+            "--skip",
+            "B101,B601,B602,B603,B604,B605,B606,B607,B608,B701",
+          ]
+        additional_dependencies: ["bandit[toml]", "pbr"]
+        exclude: ^tests/
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.2.6
+    hooks:
+      - id: codespell
+        args: [--write-changes]
+        exclude: \.min\.(js|css)$
+
+  - repo: local
+    hooks:
+      - id: pytest-check
+        name: pytest-check
+        entry: /Users/ibrahim/miniforge3/envs/blender/bin/pytest
+        language: system
+        pass_filenames: false
+        always_run: true
+        args: [tests/, -x, -v, --tb=short]
+        stages: [pre-commit]

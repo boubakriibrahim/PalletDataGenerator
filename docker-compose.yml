@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+  # Development container with full development environment
+  pallet-dev:
+    build:
+      context: .
+      target: development
+    container_name: palletdatagenerator-dev
+    volumes:
+      - .:/home/pallet/app
+      - pallet-cache:/home/pallet/.cache
+    ports:
+      - "8000:8000"  # For potential web interface
+      - "8888:8888"  # For Jupyter notebooks
+    environment:
+      - PYTHONPATH=/home/pallet/app/src
+    stdin_open: true
+    tty: true
+    command: bash
+
+  # Production container
+  pallet-prod:
+    build:
+      context: .
+      target: production
+    container_name: palletdatagenerator-prod
+    volumes:
+      - ./output:/home/pallet/app/output
+      - ./configs:/home/pallet/app/configs
+    environment:
+      - PYTHONPATH=/home/pallet/app/src
+
+  # Blender development container
+  pallet-blender:
+    build:
+      context: .
+      target: blender
+    container_name: palletdatagenerator-blender
+    volumes:
+      - .:/home/pallet/app
+      - pallet-cache:/home/pallet/.cache
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw  # For X11 forwarding
+    ports:
+      - "8000:8000"
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+      - PYTHONPATH=/home/pallet/app/src
+      - BLENDER_USER_SCRIPTS=/home/pallet/app/scripts
+    stdin_open: true
+    tty: true
+    command: bash
+
+  # Testing container for CI/CD
+  pallet-test:
+    build:
+      context: .
+      target: development
+    container_name: palletdatagenerator-test
+    volumes:
+      - .:/home/pallet/app
+    environment:
+      - PYTHONPATH=/home/pallet/app/src
+    command: |
+      bash -c "
+        echo '🧪 Running tests...' &&
+        pytest tests/ -v --tb=short --cov=src/palletdatagenerator --cov-report=xml &&
+        echo '🔍 Running code quality checks...' &&
+        pre-commit run --all-files &&
+        echo '✅ All checks passed!'
+      "
+
+  # Documentation building container
+  pallet-docs:
+    build:
+      context: .
+      target: development
+    container_name: palletdatagenerator-docs
+    volumes:
+      - .:/home/pallet/app
+      - ./docs/_build:/home/pallet/app/docs/_build
+    ports:
+      - "8080:8080"  # For serving docs
+    working_dir: /home/pallet/app/docs
+    command: |
+      bash -c "
+        echo '📚 Building documentation...' &&
+        make clean &&
+        make html &&
+        echo '🌐 Serving documentation on port 8080...' &&
+        cd _build/html &&
+        python -m http.server 8080 --bind 0.0.0.0
+      "
+
+volumes:
+  pallet-cache:
+    driver: local
+
+networks:
+  default:
+    name: pallet-network
