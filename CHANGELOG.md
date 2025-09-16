@@ -2,32 +2,60 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/0.1.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
+## [0.1.2] - 2025-09-15
 
 ### Added
-- Initial library structure and core functionality
-- Support for single pallet and warehouse scene generation
-- Multiple annotation format exporters (YOLO, COCO, PASCAL VOC)
-- GPU-accelerated rendering support
-- Comprehensive test suite with >90% coverage
-- CLI interface for command-line usage
-- Configuration file support (YAML)
-- Automated CI/CD pipeline with GitHub Actions
-- Pre-commit hooks for code quality
-- Professional documentation and examples
+- **Unit Test Suite**: Comprehensive test coverage for core functionality
+- **Improved Documentation**: Updated documentation with current version and comprehensive changelog
+- **Code Quality**: Enhanced pre-commit hooks and code quality tools
+- **Version Consistency**: Aligned version numbers across all files
 
-### Features
-- **Core Generation Engine**: Modular generator system supporting different scene types
-- **Multi-format Export**: Support for YOLO, COCO, and PASCAL VOC annotation formats
-- **Flexible Configuration**: YAML-based configuration with command-line overrides
-- **Quality Assurance**: Automated testing, linting, and formatting
-- **Easy Installation**: Available on PyPI with simple pip installation
-- **Professional Documentation**: Comprehensive docs with examples and API reference
+### Changed
+- **Documentation Updates**: Refreshed README, docs structure, and API documentation
+- **Pre-commit Configuration**: Updated hooks to handle acceptable security warnings
+- **Error Handling**: Improved error messages and exception handling
 
-## [0.1.0] - 2024-01-15
+### Fixed
+- **Version Mismatch**: Synchronized version numbers across package files
+- **Documentation Generation**: Fixed Sphinx configuration for proper version detection
+- **Code Style**: Applied consistent formatting and fixed linting issues
+
+## [0.1.1] - 2025-09-15
+
+### Added
+- **Unified Generator Architecture**: Complete refactor with a single `PalletDataGenerator` class
+- **Embedded Configuration System**: Built-in configuration management with `DefaultConfig`
+- **Auto-batch Management**: Automatic creation of `generated_XXXXXX` folders with proper sequencing
+- **Comprehensive Error Handling**: Robust error reporting and recovery mechanisms
+- **Professional Logging**: Structured logging with different verbosity levels
+- **Type Annotations**: Full type hints throughout the codebase for better IDE support
+- **Modular Mode System**: Clean separation between single pallet and warehouse generation modes
+- **Enhanced CLI Interface**: Improved command-line interface with better help and validation
+- **Docker Support**: Complete Docker containerization for easy deployment
+- **Development Tools**: Pre-commit hooks, code formatting, and quality checks
+
+### Changed
+- **BREAKING**: Simplified API from separate mode classes to unified generator
+- **BREAKING**: Changed default output structure to use batch folders
+- **BREAKING**: Updated configuration system to use embedded defaults
+- **Improved**: Better Blender executable detection and validation
+- **Enhanced**: More robust scene file validation and error messages
+- **Optimized**: Faster rendering with improved Blender settings
+- **Updated**: Dependencies updated to latest stable versions
+
+### Fixed
+- Fixed memory leaks in long-running generation sessions
+- Corrected annotation precision issues in YOLO format
+- Fixed camera positioning edge cases in warehouse mode
+- Resolved path handling issues on different operating systems
+- Fixed depth map generation inconsistencies
+
+### Removed
+- **BREAKING**: Removed legacy separate generator classes (use unified `PalletDataGenerator`)
+- Removed deprecated configuration parameters
+- Cleaned up redundant utility functions
+
+## [0.1.0] - 2025-09-08
 
 ### Added
 - Initial release of Pallet Data Generator
@@ -67,10 +95,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Development setup instructions
 - Configuration reference
 - Example configurations and scripts
-
----
-
-## Release Notes
 
 ### Version 0.1.0 - Initial Release
 
@@ -120,23 +144,13 @@ config = GenerationConfig(
 results = generator.generate_dataset(config)
 ```
 
-For more information, see the [documentation](README.md) and [examples](examples/).
+## Contributing
 
----
+For information about contributing to this project, see [CONTRIBUTING.md](CONTRIBUTING.md).
 
-## Future Roadmap
+## Support
 
-### Planned Features
-- Advanced scene randomization options
-- Support for additional object types
-- Integration with popular ML frameworks
-- Real-time preview capabilities
-- Cloud rendering support
-- Advanced material and lighting systems
-
-### Community
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to the project.
-
----
-
-*For the complete list of changes, see the [commit history](https://github.com/boubakriibrahim/PalletDataGenerator/commits/main).*
+- 📖 **Documentation**: https://boubakriibrahim.github.io/PalletDataGenerator
+- 🐛 **Issues**: https://github.com/boubakriibrahim/PalletDataGenerator/issues
+- 💬 **Discussions**: https://github.com/boubakriibrahim/PalletDataGenerator/discussions
+- 📦 **PyPI**: https://pypi.org/project/palletdatagenerator/

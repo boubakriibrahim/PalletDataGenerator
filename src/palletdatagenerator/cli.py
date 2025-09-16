@@ -1,382 +1,474 @@
-"""Command Line Interface for PalletDataGenerator.
-
-This module provides the main CLI entry point for the PalletDataGenerator,
-allowing users to generate synthetic datasets through command-line commands.
+#!/usr/bin/env python3
+"""
+Simplified CLI for the Unified Pallet Data Generator.
+Only includes essential arguments as requested.
 """
 
-import logging
+import argparse
 import os
-import platform
+import shutil
+import subprocess
 import sys
 from pathlib import Path
-from typing import Any
 
-# Import our modules
-from .args_parser import create_parser, get_desktop_path
-from .core.config_loader import ConfigLoader
-from .core.generator import GenerationConfig
-from .utils import setup_logging
+# Check if we're running in Blender
+try:
+    import bpy
 
-# Setup logging
-logger = logging.getLogger(__name__)
+    RUNNING_IN_BLENDER = True
+except ImportError:
+    RUNNING_IN_BLENDER = False
+    bpy = None
+
+from .generator import PalletDataGenerator
 
 
-def print_banner():
-    """Print the application banner."""
-    print(
-        """
-╔═══════════════════════════════════════════════════════════════╗
-║                   PALLETDATAGENERATOR                        ║
-║               Professional Blender Dataset Library            ║
-╠═══════════════════════════════════════════════════════════════╣
-║  🎬 Multi-Scene Generation  │  📊 Multiple Export Formats    ║
-║  ⚡ GPU-Accelerated         │  🔧 YAML Configuration         ║
-║  🐍 Professional Code       │  📦 Batch Processing           ║
-╚═══════════════════════════════════════════════════════════════╝
-    """
+def find_blender_executable():
+    """Find Blender executable on the system (Windows, Linux, macOS)."""
+    import glob
+    import platform
+
+    system = platform.system().lower()
+
+    # Common Blender executable names
+    if system == "windows":
+        executable_names = ["blender.exe"]
+        # Windows common installation paths
+        common_paths = [
+            "C:\\Program Files\\Blender Foundation\\Blender*\\blender.exe",
+            "C:\\Program Files (x86)\\Blender Foundation\\Blender*\\blender.exe",
+            "C:\\Users\\*\\AppData\\Local\\Programs\\Blender Foundation\\Blender*\\blender.exe",
+            "%PROGRAMFILES%\\Blender Foundation\\Blender*\\blender.exe",
+            "%PROGRAMFILES(X86)%\\Blender Foundation\\Blender*\\blender.exe",
+        ]
+    elif system == "darwin":  # macOS
+        executable_names = ["blender", "Blender"]
+        # macOS common installation paths
+        common_paths = [
+            "/Applications/Blender.app/Contents/MacOS/Blender",
+            "/Applications/blender.app/Contents/MacOS/blender",
+            "/usr/local/bin/blender",
+            "/opt/homebrew/bin/blender",  # Apple Silicon Homebrew
+            "/usr/local/Cellar/blender/*/bin/blender",  # Intel Homebrew
+            "~/Applications/Blender.app/Contents/MacOS/Blender",
+        ]
+    else:  # Linux and other Unix-like systems
+        executable_names = ["blender"]
+        # Linux common installation paths
+        common_paths = [
+            "/usr/bin/blender",
+            "/usr/local/bin/blender",
+            "/opt/blender*/blender",
+            "/snap/bin/blender",  # Snap package
+            "/var/lib/flatpak/exports/bin/org.blender.Blender",  # Flatpak
+            "~/.local/bin/blender",
+            "/usr/share/blender*/blender",
+        ]
+
+    print(f"🔍 Searching for Blender on {system.title()}...")
+
+    # Method 1: Try to find blender in PATH
+    for name in executable_names:
+        blender_path = shutil.which(name)
+        if blender_path and Path(blender_path).exists():
+            return blender_path
+
+    # Method 2: Try common installation paths
+    for path_pattern in common_paths:
+        # Expand environment variables and user home
+        expanded_path = os.path.expandvars(os.path.expanduser(path_pattern))
+
+        if "*" in expanded_path:
+            # Handle wildcards for version directories
+            try:
+                matches = glob.glob(expanded_path)
+                for match in sorted(matches, reverse=True):  # Get latest version first
+                    if Path(match).exists() and Path(match).is_file():
+                        print(f"✅ Found Blender: {match}")
+                        return match
+            except Exception:
+                continue
+        else:
+            path = Path(expanded_path)
+            if path.exists() and path.is_file():
+                print(f"✅ Found Blender: {path}")
+                return str(path)
+
+    # Method 3: Try some additional system-specific searches
+    if system == "windows":
+        # Check Windows Registry (if available)
+        try:
+            import winreg
+
+            registry_paths = [
+                (winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\BlenderFoundation\Blender"),
+                (winreg.HKEY_CURRENT_USER, r"SOFTWARE\BlenderFoundation\Blender"),
+            ]
+
+            for hkey, subkey in registry_paths:
+                try:
+                    with winreg.OpenKey(hkey, subkey) as key:
+                        install_dir = winreg.QueryValueEx(key, "InstallDir")[0]
+                        blender_exe = Path(install_dir) / "blender.exe"
+                        if blender_exe.exists():
+                            print(f"✅ Found Blender via registry: {blender_exe}")
+                            return str(blender_exe)
+                except (FileNotFoundError, OSError):
+                    continue
+        except ImportError:
+            pass  # winreg not available
+
+    elif system == "linux":
+        # Check for AppImage files
+        appimage_locations = [
+            "~/Downloads/Blender*.AppImage",
+            "~/Applications/Blender*.AppImage",
+            "/opt/*/Blender*.AppImage",
+        ]
+
+        for pattern in appimage_locations:
+            expanded = os.path.expanduser(pattern)
+            matches = glob.glob(expanded)
+            for match in sorted(matches, reverse=True):
+                if Path(match).exists() and os.access(match, os.X_OK):
+                    print(f"✅ Found Blender AppImage: {match}")
+                    return match
+
+    # Method 4: Try to find using 'locate' command on Unix systems
+    if system != "windows":
+        try:
+            result = subprocess.run(
+                ["locate", "blender"], capture_output=True, text=True, timeout=10
+            )
+            if result.returncode == 0:
+                for line in result.stdout.strip().split("\n"):
+                    if line.endswith("/blender") or line.endswith("/Blender"):
+                        path = Path(line)
+                        if (
+                            path.exists()
+                            and path.is_file()
+                            and os.access(path, os.X_OK)
+                        ):
+                            print(f"✅ Found Blender via locate: {path}")
+                            return str(path)
+        except (subprocess.TimeoutExpired, FileNotFoundError):
+            pass  # locate command not available or timed out
+
+    print("❌ Blender executable not found!")
+    print("💡 Installation suggestions:")
+    if system == "windows":
+        print("   • Download from https://www.blender.org/download/")
+        print("   • Or install via Chocolatey: choco install blender")
+        print("   • Or install via Winget: winget install BlenderFoundation.Blender")
+    elif system == "darwin":
+        print("   • Download from https://www.blender.org/download/")
+        print("   • Or install via Homebrew: brew install --cask blender")
+        print("   • Or install from Mac App Store")
+    else:  # Linux
+        print("   • Download from https://www.blender.org/download/")
+        print("   • Or install via package manager:")
+        print("     - Ubuntu/Debian: sudo apt install blender")
+        print("     - Fedora: sudo dnf install blender")
+        print("     - Arch: sudo pacman -S blender")
+        print("     - Snap: sudo snap install blender --classic")
+        print("     - Flatpak: flatpak install flathub org.blender.Blender")
+
+    return None
+
+
+def run_in_blender(scene_path, mode, frames, resolution, output):
+    """Execute the generator within Blender."""
+    blender_exe = find_blender_executable()
+    if not blender_exe:
+        print("❌ Error: Blender executable not found!")
+        print("💡 Please ensure Blender is installed and accessible in PATH")
+        print("   Or install Blender from: https://www.blender.org/download/")
+        sys.exit(1)
+
+    print(f"🎬 Found Blender: {blender_exe}")
+    print("🚀 Launching Blender to run generation...")
+
+    # Create a temporary script that will run inside Blender
+    script_content = f"""
+import sys
+from pathlib import Path
+
+# Add package to path
+package_dir = Path("{Path(__file__).parent}")
+if str(package_dir.parent) not in sys.path:
+    sys.path.insert(0, str(package_dir.parent))
+
+from palletdatagenerator.generator import PalletDataGenerator
+
+try:
+    # Create generator
+    generator = PalletDataGenerator(mode="{mode}")
+
+    # Generate dataset (all parameters are passed to generate method)
+    result = generator.generate(
+        scene_path=Path("{scene_path}"),
+        num_frames={frames},
+        output_dir={f'Path("{output}")' if output else None},
+        resolution={resolution}
     )
 
+    print("✅ Generation completed successfully!")
+    print(f"   Output: {{result.get('output_path', 'Unknown')}}")
+    print(f"   Frames: {{result.get('frames', 'Unknown')}}")
+    print(f"   Mode: {{result.get('mode', 'Unknown')}}")
 
-def check_blender_environment() -> bool:
-    """Check if running inside Blender environment.
+except Exception as e:
+    print(f"❌ Error during generation: {{e}}")
+    import traceback
+    traceback.print_exc()
+"""
 
-    Returns:
-        True if Blender is available, False otherwise
-    """
+    # Write script to temporary file
+    script_path = Path.cwd() / "temp_blender_script.py"
+    with open(script_path, "w") as f:
+        f.write(script_content)
+
     try:
-        import importlib.util
+        # Run Blender in background with our script
+        cmd = [
+            blender_exe,
+            str(scene_path),  # Load the scene file
+            "--background",  # Run without UI
+            "--python",
+            str(script_path),  # Run our script
+        ]
 
-        return importlib.util.find_spec("bpy") is not None
-    except ImportError:
-        return False
+        print(f"🎬 Executing: {' '.join(cmd)}")
 
+        # Run Blender with output filtering
+        import re
 
-def print_system_info():
-    """Print system information."""
-    print("🖥️  SYSTEM INFORMATION")
-    print("=" * 50)
-    print(f"Platform: {platform.system()} {platform.release()}")
-    print(f"Architecture: {platform.machine()}")
-    print(f"Python: {sys.version.split()[0]} ({platform.python_implementation()})")
-    print(f"Working Directory: {os.getcwd()}")
-
-    # Check Blender availability
-    if check_blender_environment():
-        import bpy
-
-        print(f"Blender: {bpy.app.version_string} ✅")
-    else:
-        print("Blender: Not available (run within Blender for full functionality) ⚠️")
-
-    print()
-
-
-def handle_info_command(args) -> int:
-    """Handle the info command.
-
-    Args:
-        args: Parsed command line arguments
-
-    Returns:
-        Exit code (0 for success)
-    """
-    if hasattr(args, "version") and args.version:
-        from . import __version__
-
-        print(f"PalletDataGenerator v{__version__}")
-        return 0
-
-    if hasattr(args, "system_info") and args.system_info:
-        print_system_info()
-        return 0
-
-    # Default info command
-    print_banner()
-    print_system_info()
-    return 0
-
-
-def handle_config_command(args) -> int:
-    """Handle the config command.
-
-    Args:
-        args: Parsed command line arguments
-
-    Returns:
-        Exit code (0 for success, 1 for error)
-    """
-    if hasattr(args, "config_action"):
-        if args.config_action == "create":
-            return create_sample_config(args.output_path)
-        elif args.config_action == "validate":
-            return validate_config_file(args.config_path)
-
-    print("❌ No config action specified. Use --help for available options.")
-    return 1
-
-
-def create_sample_config(config_path: str) -> int:
-    """Create a sample configuration file.
-
-    Args:
-        config_path: Path where to create the config file
-
-    Returns:
-        Exit code (0 for success, 1 for error)
-    """
-    try:
-        config_path = Path(config_path)
-
-        # Create sample configuration
-        sample_config = {
-            "generation": {
-                "scene_type": "single_pallet",
-                "num_frames": 100,
-                "resolution": [1280, 720],
-                "output_dir": str(get_desktop_path() + "/pallet_dataset"),
-                "export_formats": ["yolo", "coco"],
-                "use_gpu": True,
-                "samples": 128,
-            },
-            "rendering": {"engine": "CYCLES", "denoiser": "AUTO", "use_gpu": True},
-            "camera": {"focal_mm": 35.0, "sensor_mm": 36.0, "height_range": [1.0, 3.0]},
-            "lighting": {
-                "randomize_per_frame": True,
-                "light_count_range": [2, 4],
-                "use_colored_lights": True,
-            },
-            "dataset": {"train_ratio": 0.7, "val_ratio": 0.2, "test_ratio": 0.1},
-        }
-
-        # Save to YAML file
-        import yaml
-
-        with open(config_path, "w") as f:
-            yaml.dump(sample_config, f, default_flow_style=False, indent=2)
-
-        print(f"✅ Sample configuration created: {config_path}")
-        print("📝 Edit the file to customize your dataset generation settings.")
-        return 0
-
-    except Exception as e:
-        print(f"❌ Error creating config file: {e}")
-        return 1
-
-
-def validate_config_file(config_path: str) -> int:
-    """Validate a configuration file.
-
-    Args:
-        config_path: Path to config file to validate
-
-    Returns:
-        Exit code (0 for valid, 1 for invalid)
-    """
-    try:
-        config_loader = ConfigLoader(config_path)
-        config = config_loader.load_config()
-
-        print(f"✅ Configuration file is valid: {config_path}")
-        print(f"📊 Found {len(config)} main sections")
-
-        # Show summary
-        if "generation" in config:
-            gen_config = config["generation"]
-            print(f"   • Scene type: {gen_config.get('scene_type', 'single_pallet')}")
-            print(f"   • Frames: {gen_config.get('num_frames', 100)}")
-            print(f"   • Resolution: {gen_config.get('resolution', [1280, 720])}")
-            print(f"   • Output: {gen_config.get('output_dir', './output')}")
-
-        return 0
-
-    except Exception as e:
-        print(f"❌ Configuration validation failed: {e}")
-        return 1
-
-
-def merge_config_with_args(config_dict: dict[str, Any], args) -> dict[str, Any]:
-    """Merge configuration file with command line arguments.
-
-    Command line arguments take precedence over config file values.
-
-    Args:
-        config_dict: Configuration dictionary from file
-        args: Parsed command line arguments
-
-    Returns:
-        Merged configuration dictionary
-    """
-    # Start with config file values
-    merged_config = config_dict.copy()
-
-    # Override with command line arguments if provided
-    if hasattr(args, "output") and args.output:
-        merged_config.setdefault("generation", {})["output_dir"] = args.output
-
-    if hasattr(args, "num_frames") and args.num_frames:
-        merged_config.setdefault("generation", {})["num_frames"] = args.num_frames
-
-    if hasattr(args, "resolution") and args.resolution:
-        merged_config.setdefault("generation", {})["resolution"] = args.resolution
-
-    if hasattr(args, "scene_type") and args.scene_type:
-        merged_config.setdefault("generation", {})["scene_type"] = args.scene_type
-
-    if hasattr(args, "export_format") and args.export_format:
-        merged_config.setdefault("generation", {})[
-            "export_formats"
-        ] = args.export_format
-
-    if hasattr(args, "gpu") and args.gpu:
-        merged_config.setdefault("generation", {})["use_gpu"] = True
-        merged_config.setdefault("rendering", {})["use_gpu"] = True
-
-    if hasattr(args, "samples") and args.samples:
-        merged_config.setdefault("generation", {})["samples"] = args.samples
-
-    if hasattr(args, "engine") and args.engine:
-        merged_config.setdefault("rendering", {})["engine"] = args.engine
-
-    return merged_config
-
-
-def handle_generate_command(args) -> int:
-    """Handle the generate command.
-
-    Args:
-        args: Parsed command line arguments
-
-    Returns:
-        Exit code (0 for success, 1 for error)
-    """
-    try:
-        print("🚀 Starting dataset generation...")
-
-        # Load configuration if provided
-        config_dict = {}
-        if hasattr(args, "config") and args.config:
-            print(f"📁 Loading configuration from: {args.config}")
-            config_loader = ConfigLoader(args.config)
-            config_dict = config_loader.load_config()
-
-        # Merge config with command line arguments
-        merged_config = merge_config_with_args(config_dict, args)
-
-        # Check if we're running in Blender
-        if not check_blender_environment():
-            print("⚠️  WARNING: Blender not detected!")
-            print("💡 For full functionality, run within Blender:")
-            print(
-                "   blender scene.blend --python -m palletdatagenerator.cli -- generate --output ./dataset"
-            )
-            print("🔄 Falling back to configuration validation only...")
-
-            # Just validate and show what would be generated
-            gen_config = merged_config.get("generation", {})
-            print("✅ Configuration validated successfully:")
-            print(f"   • Scene: {gen_config.get('scene_type', 'single_pallet')}")
-            print(f"   • Frames: {gen_config.get('num_frames', 100)}")
-            print(f"   • Output: {gen_config.get('output_dir', './output')}")
-            print(f"   • Formats: {gen_config.get('export_formats', ['yolo'])}")
-
-            return 0
-
-        # Import Blender-specific modules
-        from .blender_runner import BlenderEnvironmentManager
-        from .core.generator import PalletGenerator, WarehouseGenerator
-
-        # Validate Blender environment
-        env_manager = BlenderEnvironmentManager()
-        if not env_manager.validate_blender_environment():
-            print("❌ Blender environment validation failed!")
-            print("💡 Ensure your scene has:")
-            print("   • Objects named with 'pallet' prefix")
-            print("   • Box template objects named 'box1', 'box2', etc.")
-            return 1
-
-        # Create generation configuration
-        gen_params = merged_config.get("generation", {})
-        generation_config = GenerationConfig(
-            output_dir=gen_params.get("output_dir", "./output"),
-            num_images=gen_params.get("num_frames", 100),
-            resolution=tuple(gen_params.get("resolution", [1280, 720])),
-            render_engine=merged_config.get("rendering", {}).get("engine", "CYCLES"),
-            export_formats=gen_params.get("export_formats", ["yolo"]),
-            camera_config=merged_config.get("camera", {}),
-            lighting_config=merged_config.get("lighting", {}),
+        # Start the process
+        process = subprocess.Popen(
+            cmd,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+            bufsize=0,  # Unbuffered for real-time output
         )
 
-        # Choose generator based on scene type
-        scene_type = gen_params.get("scene_type", "single_pallet")
+        frame_pattern = re.compile(r"Fra:(\d+)")
+        current_frame = None
 
-        if scene_type == "single_pallet":
-            print("🎯 Initializing Single Pallet Generator")
-            generator = PalletGenerator(generation_config)
-        elif scene_type == "warehouse":
-            print("🏭 Initializing Warehouse Generator")
-            generator = WarehouseGenerator(generation_config)
-        else:
-            print(f"❌ Unknown scene type: {scene_type}")
-            return 1
+        # Filter and display relevant output in real-time
+        for line in iter(process.stdout.readline, ""):
+            line = line.strip()
+            if not line:
+                continue
 
-        # Setup GPU if requested
-        if merged_config.get("rendering", {}).get("use_gpu", False):
-            env_manager.setup_blender_preferences(use_gpu=True)
+            # Skip verbose Blender memory and timing lines
+            if any(
+                skip_pattern in line
+                for skip_pattern in [
+                    "Fra:",
+                    "Mem:",
+                    "Peak:",
+                    "Time:",
+                    "Scene, View Layer",
+                    "Updating",
+                    "Loading",
+                    "Synchronizing",
+                    "Building",
+                    "Copying",
+                    "Computing",
+                    "Writing",
+                    "Elapsed",
+                    "Remaining",
+                ]
+            ):
+                # Only show frame progress for single_pallet mode
+                # (warehouse mode has its own progress messages)
+                if "Fra:" in line and current_frame is not None:
+                    frame_match = frame_pattern.search(line)
+                    if frame_match:
+                        new_frame = int(frame_match.group(1))
+                        if new_frame != current_frame:
+                            current_frame = new_frame
+                            # Only show this for single pallet mode
+                            # Warehouse mode shows its own "📸 Rendering frame" messages
+                continue
 
-        # Generate dataset
-        print(f"🎬 Generating {generation_config.num_images} frames...")
-        generator.generate_dataset()
+            # Show important messages immediately
+            if any(
+                important in line
+                for important in [
+                    "[DEBUG]",
+                    "✅",
+                    "❌",
+                    "⚠️",
+                    "📊",
+                    "Error",
+                    "error",
+                    "Saved:",
+                    "Analysis",
+                    "YOLO",
+                    "COCO",
+                    "VOC",
+                    "blender",
+                    "PIL",
+                    "generation",
+                    "🚀",
+                    "📁",
+                    "📸",
+                    "🏭",
+                    "save_frame",
+                    "SCENE",
+                    "warehouse",
+                    "Rendering frame",
+                ]
+            ):
+                print(line)
+                sys.stdout.flush()  # Force immediate output
 
-        print("✅ Dataset generation completed successfully!")
-        print(f"📁 Output directory: {generation_config.output_dir}")
+        # Wait for process to complete
+        return_code = process.wait()
 
-        return 0
+        if return_code != 0:
+            raise subprocess.CalledProcessError(return_code, cmd)
 
-    except Exception as e:
-        print(f"❌ Generation failed: {e}")
-        if hasattr(args, "verbose") and args.verbose:
-            import traceback
+        print("✅ Blender execution completed!")
 
-            traceback.print_exc()
-        return 1
-
-
-def main() -> int:
-    """Main CLI entry point.
-
-    Returns:
-        Exit code (0 for success, non-zero for error)
-    """
-    try:
-        # Create argument parser
-        parser = create_parser()
-
-        # Parse arguments
-        args = parser.parse_args()
-
-        # Setup logging
-        log_level = "DEBUG" if hasattr(args, "verbose") and args.verbose else "INFO"
-        setup_logging(level=log_level)
-
-        # Handle different commands
-        if args.command == "info":
-            return handle_info_command(args)
-        elif args.command == "config":
-            return handle_config_command(args)
-        elif args.command == "generate":
-            return handle_generate_command(args)
-        else:
-            print(f"❌ Unknown command: {args.command}")
-            parser.print_help()
-            return 1
+    except subprocess.CalledProcessError as e:
+        print(f"❌ Blender execution failed with exit code {e.returncode}")
+        sys.exit(e.returncode)
 
     except KeyboardInterrupt:
-        print("\n🛑 Operation cancelled by user")
-        return 1
+        print("\n⚠️  Generation interrupted by user")
+        sys.exit(1)
+
+    finally:
+        # Clean up temporary script
+        if script_path.exists():
+            script_path.unlink()
+
+
+def create_parser():
+    """Create argument parser with only essential arguments."""
+    parser = argparse.ArgumentParser(
+        description="Generate synthetic pallet datasets with Blender",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  # Generate single pallet dataset (default mode)
+  palletgen scenes/one_pallet.blend --frames 100
+
+  # Generate warehouse dataset
+  palletgen scenes/warehouse_objects.blend --mode warehouse --frames 200 --resolution 1920 1080
+        """,
+    )
+
+    # Scene path (required)
+    parser.add_argument(
+        "scene_path", type=Path, help="Path to Blender scene file (.blend)"
+    )
+
+    # Mode selection (optional, defaults to single_pallet)
+    parser.add_argument(
+        "--mode",
+        "-m",
+        choices=["single_pallet", "warehouse"],
+        default="single_pallet",
+        help="Generation mode: single_pallet (default) or warehouse",
+    )
+
+    # Essential arguments only
+    parser.add_argument(
+        "--frames",
+        "-f",
+        type=int,
+        default=50,
+        help="Number of frames to generate (default: 50)",
+    )
+
+    parser.add_argument(
+        "--resolution",
+        "-r",
+        nargs=2,
+        type=int,
+        metavar=("WIDTH", "HEIGHT"),
+        default=[1024, 768],
+        help="Image resolution (default: 1024 768)",
+    )
+
+    parser.add_argument(
+        "--output",
+        "-o",
+        type=Path,
+        help="Output directory (default: output/{mode}/generated_XXXXXX)",
+    )
+
+    return parser
+
+
+def main():
+    """Main CLI entry point."""
+    parser = create_parser()
+    args = parser.parse_args()
+
+    # Validate scene file
+    if not args.scene_path.exists():
+        print(f"❌ Error: Scene file not found: {args.scene_path}")
+        sys.exit(1)
+
+    if args.scene_path.suffix != ".blend":
+        print(f"❌ Error: Scene file must be a .blend file: {args.scene_path}")
+        sys.exit(1)
+
+    print("🚀 Starting Pallet Data Generator")
+    print(f"   Mode: {args.mode}")
+    print(f"   Scene: {args.scene_path}")
+    print(f"   Frames: {args.frames}")
+    print(f"   Resolution: {args.resolution[0]}x{args.resolution[1]}")
+
+    # Check if we're running inside Blender or outside
+    if not RUNNING_IN_BLENDER:
+        print("🎬 Not running in Blender - launching Blender automatically...")
+        run_in_blender(
+            scene_path=args.scene_path,
+            mode=args.mode,
+            frames=args.frames,
+            resolution=args.resolution,
+            output=args.output,
+        )
+        return
+
+    # If we're here, we're running inside Blender
+    try:
+        # Create generator
+        generator = PalletDataGenerator(mode=args.mode)
+
+        # Generate dataset (all parameters are passed to generate method)
+        result = generator.generate(
+            scene_path=args.scene_path,
+            num_frames=args.frames,
+            output_dir=args.output,
+            resolution=args.resolution,
+        )
+
+        print("✅ Generation completed successfully!")
+        print(f"   Output: {result['output_path']}")
+        print(f"   Frames: {result['frames']}")
+        print(f"   Mode: {result['mode']}")
+
+        if "pallets_detected" in result:
+            print(f"   Pallets detected: {result['pallets_detected']}")
+
+    except KeyboardInterrupt:
+        print("\n⚠️  Generation interrupted by user")
+        sys.exit(1)
+
     except Exception as e:
-        print(f"❌ Unexpected error: {e}")
-        return 1
+        print(f"❌ Error during generation: {e}")
+        import traceback
+
+        traceback.print_exc()
+        sys.exit(1)
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

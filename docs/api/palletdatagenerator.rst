@@ -7,8 +7,7 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   palletdatagenerator.core
-   palletdatagenerator.exporters
+   palletdatagenerator.modes
 
 Submodules
 ----------
@@ -16,9 +15,10 @@ Submodules
 .. toctree::
    :maxdepth: 4
 
-   palletdatagenerator.args_parser
    palletdatagenerator.blender_runner
    palletdatagenerator.cli
+   palletdatagenerator.config
+   palletdatagenerator.generator
    palletdatagenerator.utils
 
 Module contents

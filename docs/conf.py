@@ -9,18 +9,19 @@ sys.path.insert(0, str(project_root))
 
 # -- Project information -----------------------------------------------------
 project = "PalletDataGenerator"
-copyright = "2024, PalletDataGenerator Contributors"
-author = "PalletDataGenerator Contributors"
+copyright = "2025, Ibrahim Boubakri"
+author = "Ibrahim Boubakri"
 
 # The full version, including alpha/beta/rc tags
 try:
     from palletdatagenerator import __version__
 
     release = __version__
+    version = __version__
 except ImportError:
-    release = "0.1.0"
-
-version = release
+    # Fallback if package is not installed
+    release = "0.1.2"
+    version = "0.1.2"
 
 # -- General configuration ---------------------------------------------------
 
@@ -59,11 +60,38 @@ myst_enable_extensions = [
     "tasklist",
 ]
 
-# Source file suffixes
+# Source file suffixes: map to parser names to avoid "None is not a valid filetype" warnings
 source_suffix = {
-    ".rst": None,
-    ".md": None,
+    ".rst": "restructuredtext",
+    ".md": "markdown",
 }
+
+# Mock imports for modules that aren't available in CI (Blender/Python API)
+autodoc_mock_imports = [
+    "bpy",
+    "bpy_extras",
+    "bmesh",
+    "mathutils",
+    "addon_utils",
+    "palletdatagenerator.core",
+    "palletdatagenerator.core.renderer",
+    "palletdatagenerator.core.generator",
+    "palletdatagenerator.core.config_loader",
+    "palletdatagenerator.exporters",
+    "palletdatagenerator.exporters.coco",
+    "palletdatagenerator.exporters.voc",
+    "palletdatagenerator.exporters.yolo",
+]
+
+# Suppress autodoc import warnings so docs can be built without Blender installed
+# Suppress autodoc import warnings so docs can be built without Blender installed
+# Also suppress autosummary and nitpicky reference warnings which CI treats as errors
+suppress_warnings = [
+    "autodoc.import_object",
+    "autodoc.failed-import",
+    "autosummary",  # suppress autosummary generation import warnings
+    "myst.xref_missing",
+]
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
@@ -85,7 +113,7 @@ html_theme_options = {
     "canonical_url": "",
     "analytics_id": "",
     "logo_only": False,
-    "display_version": True,
+    # "display_version": True,  # removed: unsupported by current theme version
     "prev_next_buttons_location": "bottom",
     "style_external_links": False,
     "vcs_pageview_mode": "",

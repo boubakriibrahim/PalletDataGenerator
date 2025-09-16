@@ -15,6 +15,8 @@ help:
 
 # Auto-generate API documentation
 apidoc:
+	# Remove any previously generated API rst files to avoid stale references
+	@rm -rf api || true
 	sphinx-apidoc -o api ../src/palletdatagenerator --force --separate
 
 # Clean build directory

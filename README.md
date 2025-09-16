@@ -1,331 +1,329 @@
 # PalletDataGenerator
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://badge.fury.io/py/palletdatagenerator.svg)](https://badge.fury.io/py/palletdatagenerator)
+[![Build Status](https://github.com/boubakriibrahim/PalletDataGenerator/actions/workflows/ci-cd.yml/badge.svg)](https://github.com/boubakriibrahim/PalletDataGenerator/actions)
+[![Coverage Status](https://coveralls.io/repos/github/boubakriibrahim/PalletDataGenerator/badge.svg?branch=main)](https://coveralls.io/github/boubakriibrahim/PalletDataGenerator?branch=main)
+[![Documentation Status](https://boubakriibrahim.github.io/PalletDataGenerator/badge.svg)](https://boubakriibrahim.github.io/PalletDataGenerator)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/palletdatagenerator.svg)](https://pypistats.org/packages/palletdatagenerator)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
+[![Blender 4.5+](https://img.shields.io/badge/blender-4.5+-orange.svg)](https://www.blender.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
-**Professional Blender library for synthetic pallet and warehouse dataset generation with advanced rendering capabilities and comprehensive annotation support.**
+> **A professional Python library for generating high-quality synthetic pallet datasets using Blender for computer vision and machine learning applications.**
 
-## 🌟 Features
+---
 
-- **🎯 Multi-Generator Support**: Single pallet and complex warehouse scene generation
-- **🎨 Advanced Rendering**: GPU-accelerated Cycles rendering with Filmic color management
-- **📊 Multiple Export Formats**: YOLO, COCO, PASCAL VOC annotation formats
-- **🔧 Professional Architecture**: Clean, modular, and extensible codebase
-- **⚡ High Performance**: Optimized for batch processing and large dataset generation
-- **🛡️ Robust Quality Assurance**: Comprehensive testing, linting, and type checking
-- **📚 Complete Documentation**: Detailed API docs and usage examples
-- **� Docker Support**: Containerized development and deployment
-- **🚀 Multi-Platform**: Windows, macOS, Linux support with automated setup
+## 🎯 Overview
+
+PalletDataGenerator is a comprehensive, production-ready solution for creating photorealistic synthetic datasets of pallets and warehouse environments. Designed with professional computer vision workflows in mind, it bridges the gap between research needs and industry-grade dataset generation.
+
+### ✨ Key Features
+
+- 🎬 **Dual Generation Modes**: Single pallet focus and complex warehouse scenarios
+- 📊 **Multiple Export Formats**: YOLO, COCO JSON, and PASCAL VOC XML annotations
+- ⚡ **GPU-Accelerated Rendering**: High-performance generation with Blender Cycles
+- 🔧 **Flexible Configuration**: YAML configs with CLI parameter overrides
+- 📦 **Professional Output Structure**: Organized `generated_XXXX` batch folders
+- 🏗️ **Modular Architecture**: Clean, extensible, and thoroughly tested codebase
+- 🌟 **Photorealistic Results**: Advanced lighting, materials, and post-processing
 
 ## 🚀 Quick Start
 
-### Option 1: Quick Installation (Recommended for Users)
+### Prerequisites
+
+- **Python 3.11+**
+- **Blender 4.5+** (automatically detected or manually specified)
+- **NVIDIA GPU** (recommended for optimal performance)
+
+### Installation
 
 ```bash
-# Install from PyPI (coming soon)
+# Install from PyPI (recommended)
 pip install palletdatagenerator
 
-# Or install from source
-pip install git+https://github.com/boubakriibrahim/PalletDataGenerator.git
-```
-
-### Option 2: Development Setup (Recommended for Contributors)
-
-**Choose your platform:**
-
-#### 🖥️ **Windows (Command Prompt/PowerShell)**
-```cmd
-# Clone repository
+# Or install from source for latest features
 git clone https://github.com/boubakriibrahim/PalletDataGenerator.git
 cd PalletDataGenerator
-
-# Run setup script
-scripts\setup-dev.bat
-# or for PowerShell
-powershell -ExecutionPolicy Bypass -File scripts\setup-dev.ps1
-```
-
-#### 🍎 **macOS / 🐧 Linux**
-```bash
-# Clone repository
-git clone https://github.com/boubakriibrahim/PalletDataGenerator.git
-cd PalletDataGenerator
-
-# Run setup script
-./scripts/setup-dev.sh
-```
-
-#### 🐳 **Docker (All Platforms)**
-```bash
-# Clone repository
-git clone https://github.com/boubakriibrahim/PalletDataGenerator.git
-cd PalletDataGenerator
-
-# Start development environment
-./scripts/docker-dev.sh dev
-
-# Open shell in container
-./scripts/docker-dev.sh shell
+pip install -e .
 ```
 
 ### Basic Usage
 
-```python
-import bpy
-from palletdatagenerator import PalletGenerator, GenerationConfig
+#### Generate Warehouse Dataset
+```bash
+# Generate 50 warehouse scene images with multiple pallets and boxes
+palletgen -m warehouse scenes/warehouse_objects.blend
 
-# Configure dataset generation
-config = GenerationConfig(
-    output_dir="outputs/my_dataset",
-    num_images=100,
-    resolution=(1280, 720),
-    export_formats=["yolo", "coco"]
-)
-
-# Initialize generator
-generator = PalletGenerator(config)
-
-# Generate dataset
-stats = generator.generate_dataset()
-print(f"Generated {stats['images_generated']} images")
+# Custom configuration
+palletgen -m warehouse scenes/warehouse_objects.blend \
+    --frames 100 \
+    --resolution 1920 1080 \
+    --output custom_output_dir
 ```
 
-### Advanced Example
+#### Generate Single Pallet Dataset
+```bash
+# Generate focused single pallet images
+palletgen -m single_pallet scenes/one_pallet.blend
 
-```python
-from palletdatagenerator import WarehouseGenerator, GenerationConfig
-from palletdatagenerator.utils import setup_logging
-
-# Setup logging
-setup_logging(level="INFO", log_file="generation.log")
-
-# Advanced configuration
-config = GenerationConfig(
-    output_dir="outputs/warehouse_dataset",
-    num_images=500,
-    resolution=(1920, 1080),
-    render_engine="CYCLES",
-    camera_config={
-        "focal_mm": 35.0,
-        "height_range": (1.4, 2.0),
-        "path_variation": 0.3
-    },
-    lighting_config={
-        "randomize_per_frame": True,
-        "light_count_range": (2, 4),
-        "use_colored_lights": True,
-        "colored_light_probability": 0.3
-    },
-    export_formats=["yolo", "coco", "voc"]
-)
-
-# Generate warehouse dataset
-generator = WarehouseGenerator(config)
-
-# Enable GPU rendering
-gpu_backend = generator.enable_gpu()
-print(f"Using GPU backend: {gpu_backend}")
-
-# Generate dataset with progress tracking
-stats = generator.generate_dataset()
-
-# Print generation statistics
-print("Generation Complete!")
-print(f"Images: {stats['images_generated']}")
-print(f"Pallets found: {stats['pallets_found']}")
-print(f"Boxes found: {stats['boxes_found']}")
+# High-resolution batch
+palletgen -m single_pallet scenes/one_pallet.blend \
+    --frames 200 \
+    --resolution 2048 1536
 ```
 
-## 📁 Project Structure
+## 📸 Example Outputs
+
+### Warehouse Mode
+Generate complex warehouse scenes with multiple pallets, stacked boxes, and realistic lighting:
+
+<div align="center">
+<img src="readme_images/examples/warehouse_example_1.png" width="400" alt="Warehouse Example 1">
+<img src="readme_images/examples/warehouse_example_2.png" width="400" alt="Warehouse Example 2">
+</div>
+
+### Single Pallet Mode
+Generate focused single pallet scenes with detailed box arrangements:
+
+<div align="center">
+<img src="readme_images/examples/single_pallet_example_1.png" width="400" alt="Single Pallet Example 1">
+<img src="readme_images/examples/single_pallet_example_2.png" width="400" alt="Single Pallet Example 2">
+</div>
+
+### Multi-Modal Outputs
+Each frame generates comprehensive data for training:
+
+| RGB Image | Analysis Overlay | Depth Map | Normal Map |
+|-----------|------------------|-----------|------------|
+| <img src="readme_images/outputs/single_pallet_example.png" width="200"> | <img src="readme_images/outputs/analysis_example.png" width="200"> | <img src="readme_images/outputs/depth_example.png" width="200"> | <img src="readme_images/outputs/normal_example.png" width="200"> |
+| <img src="readme_images/outputs/warehouse_example.png" width="200"> | <img src="readme_images/outputs/analysis_example_2.png" width="200"> | <img src="readme_images/outputs/warehouse_depth_example.png" width="200"> | <img src="readme_images/outputs/warehouse_normal_example.png" width="200"> |
+
+## 🏗️ Architecture & Features
+
+### Generation Modes
+
+#### 🏭 **Warehouse Mode**
+- **Multi-pallet scenes** with realistic warehouse layouts
+- **Dynamic box stacking** with collection-aware placement
+- **Procedural lighting** and environment variations
+- **Complex occlusion scenarios** for robust model training
+
+#### 📦 **Single Pallet Mode**
+- **Focused pallet detection** with controlled backgrounds
+- **Precise annotation quality** for fine-grained training
+- **Camera angle variations** including side and corner views
+- **Configurable cropping and occlusion levels**
+
+### Export Formats
+
+#### 🎯 **YOLO Format**
+```
+# Example: 000000.txt
+0 0.475345 0.595753 0.247050 0.102537
+```
+
+#### 📋 **COCO JSON**
+```json
+{
+    "images": [{"id": 1, "file_name": "000000.png", "width": 1024, "height": 768}],
+    "annotations": [{"id": 1, "image_id": 1, "category_id": 1, "bbox": [...]}],
+    "categories": [{"id": 1, "name": "pallet", "supercategory": "object"}]
+}
+```
+
+#### 📄 **PASCAL VOC XML**
+```xml
+<annotation>
+    <object>
+        <name>pallet</name>
+        <bndbox>
+            <xmin>123</xmin><ymin>456</ymin>
+            <xmax>789</xmax><ymax>654</ymax>
+        </bndbox>
+    </object>
+</annotation>
+```
+
+### Output Structure
+
+```
+output/
+├── warehouse/
+│   ├── generated_000001/
+│   │   ├── images/          # RGB images (PNG)
+│   │   ├── analysis/        # Overlay analysis images
+│   │   ├── depth/           # Depth maps (PNG)
+│   │   ├── normals/         # Normal maps (PNG)
+│   │   ├── index/           # Index/segmentation maps
+│   │   ├── yolo_labels/     # YOLO format annotations
+│   │   ├── voc_xml/         # PASCAL VOC annotations
+│   │   └── coco/            # COCO JSON annotations
+│   └── generated_000002/    # Next batch...
+└── single_pallet/
+    └── generated_000001/    # Same structure
+```
+
+## ⚙️ Configuration
+
+### CLI Parameters
+
+```bash
+palletgen --help
+
+usage: palletgen [-h] [-m {single_pallet,warehouse}] [-f FRAMES]
+                 [-r WIDTH HEIGHT] [-o OUTPUT] scene_path
+
+Generate synthetic pallet datasets using Blender
+
+positional arguments:
+  scene_path            Path to Blender scene file (.blend)
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -m, --mode           Generation mode: single_pallet or warehouse (default: single_pallet)
+  -f, --frames         Number of frames to generate (default: 50)
+  -r, --resolution     Image resolution as WIDTH HEIGHT (default: 1024 768)
+  -o, --output         Output directory (default: output/{mode}/generated_XXXXXX)
+```
+
+### Advanced Configuration
+
+The system supports extensive customization through internal configuration:
+
+```python
+# Single Pallet Configuration
+SINGLE_PALLET_CONFIG = {
+    "num_images": 50,
+    "resolution_x": 1024,
+    "resolution_y": 768,
+    "render_engine": "CYCLES",
+    "camera_focal_mm": 35.0,
+    "side_face_probability": 0.9,
+    "allow_cropping": True,
+    "min_visible_area_ratio": 0.3,
+    "add_floor": True,
+    "depth_scale": 1000.0,
+    # ... many more options
+}
+
+# Warehouse Configuration
+WAREHOUSE_CONFIG = {
+    "num_images": 50,
+    "resolution_x": 1024,
+    "resolution_y": 768,
+    "max_boxes_per_pallet": 8,
+    "stacking_probability": 0.7,
+    "lighting_variations": True,
+    "camera_movement_range": 5.0,
+    # ... extensive warehouse-specific options
+}
+```
+
+## 🛠️ Development Setup
+
+### Development Installation
+
+```bash
+# Clone and setup development environment
+git clone https://github.com/boubakriibrahim/PalletDataGenerator.git
+cd PalletDataGenerator
+
+# Install in development mode with all dependencies
+pip install -e ".[dev,docs,test]"
+
+# Install pre-commit hooks for code quality
+pre-commit install
+```
+
+### Code Quality Tools
+
+```bash
+# Run code formatting
+black src/ tests/
+
+# Run linting
+ruff check src/ tests/
+
+# Run type checking
+mypy src/
+
+# Run all tests with coverage
+pytest --cov=palletdatagenerator --cov-report=html
+```
+
+### Project Structure
 
 ```
 PalletDataGenerator/
 ├── src/palletdatagenerator/
-│   ├── __init__.py           # Main package interface
-│   ├── core/                 # Core generation functionality
-│   │   ├── generator.py      # Main generator classes
-│   │   └── renderer.py       # Blender rendering interface
-│   ├── exporters/            # Annotation exporters
-│   │   ├── yolo.py          # YOLO format exporter
-│   │   ├── coco.py          # COCO format exporter
-│   │   └── voc.py           # PASCAL VOC exporter
-│   └── utils.py             # Utility functions
-├── tests/                   # Comprehensive test suite
-├── docs/                    # Documentation
-├── .github/workflows/       # CI/CD automation
-└── configs/                 # Configuration examples
+│   ├── __init__.py
+│   ├── cli.py                    # Command-line interface
+│   ├── generator.py              # Main generator class
+│   ├── config.py                 # Configuration management
+│   ├── blender_runner.py         # Blender execution handler
+│   ├── utils.py                  # Shared utilities
+│   └── modes/
+│       ├── base_generator.py     # Abstract base class
+│       ├── single_pallet.py      # Single pallet mode
+│       └── warehouse.py          # Warehouse mode
+├── tests/                        # Comprehensive test suite
+├── docs/                         # Sphinx documentation
+├── scenes/                       # Example Blender scenes
+├── original_files/               # Legacy reference implementations
+├── scripts/                      # Development scripts
+└── readme_images/               # README assets
 ```
 
-## 🎯 Use Cases
+## 📚 API Reference
 
-### Computer Vision Research
-- **Object Detection**: Generate labeled datasets for pallet detection models
-- **Pose Estimation**: Create datasets with precise 3D pose annotations
-- **Segmentation**: Generate pixel-perfect segmentation masks
-- **Domain Adaptation**: Bridge sim-to-real gap with photorealistic rendering
+### Core Classes
 
-### Industrial Applications
-- **Warehouse Automation**: Train robots for pallet handling and navigation
-- **Quality Control**: Generate datasets for automated inspection systems
-- **Logistics Optimization**: Create data for warehouse layout optimization
-- **Safety Systems**: Train models for accident prevention in warehouses
+#### `PalletDataGenerator`
 
-### Academic Research
-- **Synthetic Data Studies**: Investigate effectiveness of synthetic vs real data
-- **Benchmark Creation**: Generate standardized evaluation datasets
-- **Algorithm Development**: Rapid prototyping with unlimited labeled data
-
-## 🔧 Configuration
-
-### Generation Config
+Main generator class that orchestrates the entire generation process.
 
 ```python
-config = GenerationConfig(
-    # Basic settings
-    output_dir="outputs/dataset",
-    num_images=100,
-    resolution=(1280, 720),
-    render_engine="CYCLES",
+from palletdatagenerator import PalletDataGenerator
 
-    # Camera settings
-    camera_config={
-        "focal_mm": 35.0,        # Focal length
-        "sensor_mm": 36.0,       # Sensor size
-        "height_range": (1.0, 3.0),  # Camera height range
-    },
-
-    # Lighting settings
-    lighting_config={
-        "randomize_per_frame": True,
-        "light_count_range": (2, 4),
-        "use_colored_lights": True,
-        "colored_light_probability": 0.6,
-    },
-
-    # Export formats
-    export_formats=["yolo", "coco", "voc"]
+generator = PalletDataGenerator(
+    scene_path="scenes/warehouse_objects.blend",
+    mode="warehouse",
+    output_dir="custom_output"
 )
+
+# Generate dataset
+generator.generate_dataset(num_frames=100)
 ```
 
-### YAML Configuration
+#### Mode-Specific Generators
 
-```yaml
-# config.yaml
-output_dir: "outputs/my_dataset"
-num_images: 200
-resolution: [1920, 1080]
-render_engine: "CYCLES"
+```python
+from palletdatagenerator.modes import WarehouseMode, SinglePalletMode
 
-camera_config:
-  focal_mm: 50.0
-  height_range: [1.2, 2.5]
+# Warehouse mode with custom configuration
+warehouse = WarehouseMode(config=custom_warehouse_config)
+warehouse.generate_scene(frame_number=0)
 
-lighting_config:
-  randomize_per_frame: true
-  light_count_range: [3, 6]
-  use_colored_lights: true
-
-export_formats:
-  - "yolo"
-  - "coco"
+# Single pallet mode
+single = SinglePalletMode(config=custom_single_config)
+single.generate_scene(frame_number=0)
 ```
 
-## 📊 Output Formats
+### Utility Functions
 
-### Directory Structure
-```
-outputs/
-└── my_dataset/
-    ├── images/              # RGB images
-    ├── depth/               # Depth maps (16-bit PNG)
-    ├── normals/             # Surface normal maps
-    ├── index/               # Object index maps
-    ├── yolo_labels/         # YOLO format annotations
-    ├── voc_xml/            # PASCAL VOC XML files
-    ├── annotations.json     # COCO format annotations
-    └── dataset_manifest.json # Complete dataset metadata
-```
+```python
+from palletdatagenerator.utils import (
+    find_blender_executable,
+    setup_logging,
+    validate_scene_file
+)
 
-### YOLO Format
-```
-# frame_000001.txt
-0 0.5123 0.3456 0.2345 0.1678  # class_id center_x center_y width height
-1 0.7234 0.6789 0.1234 0.0987
-```
+# Auto-detect Blender installation
+blender_path = find_blender_executable()
 
-### COCO Format
-```json
-{
-  "images": [{"id": 1, "file_name": "frame_000001.png", "width": 1280, "height": 720}],
-  "annotations": [{"id": 1, "image_id": 1, "category_id": 1, "bbox": [100, 200, 150, 120]}],
-  "categories": [{"id": 1, "name": "pallet", "supercategory": "logistics"}]
-}
-```
-
-## 🧪 Development
-
-### Setup Development Environment
-
-```bash
-# Clone repository
-git clone https://github.com/boubakriibrahim/PalletDataGenerator.git
-cd PalletDataGenerator
-
-# Create virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\\Scripts\\activate
-
-# Install in development mode
-pip install -e ".[dev]"
-
-# Install pre-commit hooks
-pre-commit install
-```
-
-### Running Tests
-
-```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=palletdatagenerator --cov-report=html
-
-# Run specific test categories
-pytest -m "not slow"          # Skip slow tests
-pytest -m "unit"              # Only unit tests
-pytest -m "integration"       # Only integration tests
-```
-
-### Code Quality
-
-```bash
-# Format code
-black src/ tests/
-
-# Lint code
-ruff check src/ tests/
-
-# Type checking
-mypy src/
-
-# Security scan
-bandit -r src/
-```
-
-### Building Documentation
-
-```bash
-# Install docs dependencies
-pip install -e ".[docs]"
-
-# Build and serve docs locally
-cd docs && make html && open _build/html/index.html
-
-# Build for deployment
-cd docs && make html
+# Validate scene compatibility
+is_valid = validate_scene_file("path/to/scene.blend")
 ```
 
 ## 🤝 Contributing
@@ -334,230 +332,54 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ### Development Workflow
 
-1. **Fork** the repository
-2. **Create** a feature branch (`git checkout -b feature/amazing-feature`)
-3. **Make** your changes with proper tests and documentation
-4. **Run** quality checks (`pre-commit run --all-files`)
-5. **Commit** your changes (`git commit -m 'Add amazing feature'`)
-6. **Push** to your branch (`git push origin feature/amazing-feature`)
-7. **Open** a Pull Request
+1. **Fork the repository** and create a feature branch
+2. **Make your changes** with proper testing
+3. **Run quality checks**: `black`, `ruff`, `mypy`, `pytest`
+4. **Update documentation** if needed
+5. **Submit a Pull Request** with clear description
 
-### Code Standards
+## 📄 License & Citation
 
-- **Black** for code formatting
-- **Ruff** for linting
-- **MyPy** for type checking
-- **Pytest** for testing (>90% coverage required)
-- **Conventional Commits** for commit messages
+### License
 
-### Command Line Interface
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-Once installed, you can use the CLI:
+### Citation
 
-```bash
-# Get version info
-palletgen info --version
+If you use PalletDataGenerator in your research, please cite:
 
-# Create config file
-palletgen config create --output configs/my_config.yaml
-
-# Generate dataset
-palletgen generate --config configs/my_config.yaml --output datasets/my_dataset
-
-# Validate config
-palletgen config validate --config configs/my_config.yaml
+```bibtex
+@software{palletdatagenerator2025,
+  title={PalletDataGenerator: Professional Synthetic Pallet Dataset Generation},
+  author={Ibrahim Boubakri},
+  year={2025},
+  url={https://github.com/boubakriibrahim/PalletDataGenerator},
+  version={0.1.2}
+}
 ```
 
-### Available Aliases (After Development Setup)
+## 🔗 Links & Resources
 
-The setup scripts create convenient aliases:
-
-```bash
-pgen info --version          # Short version of palletgen
-pgen-test                   # Run all tests
-pgen-lint                   # Run code quality checks
-pgen-docs                   # Build documentation
-pgen-format                 # Format code with Black and Ruff
-pgen-clean                  # Clean Python cache files
-```
-
-## 🐳 Docker Usage
-
-### Development with Docker
-
-```bash
-# Build and start development environment
-./scripts/docker-dev.sh dev
-
-# Open shell in development container
-./scripts/docker-dev.sh shell
-
-# Run tests in container
-./scripts/docker-dev.sh test
-
-# Build and serve documentation
-./scripts/docker-dev.sh docs  # Available at http://localhost:8080
-
-# Start Blender development environment (with GUI support)
-./scripts/docker-dev.sh blender
-```
-
-### Docker Compose Services
-
-| Service | Purpose | Ports |
-|---------|---------|-------|
-| `pallet-dev` | Development environment | 8000, 8888 |
-| `pallet-prod` | Production container | - |
-| `pallet-blender` | Blender development | 8000 |
-| `pallet-test` | Testing and CI/CD | - |
-| `pallet-docs` | Documentation server | 8080 |
-
-### Production Deployment
-
-```bash
-# Build production image
-docker build --target production -t palletgenerator:latest .
-
-# Run production container
-docker run -v $(pwd)/output:/home/pallet/app/output \
-           -v $(pwd)/configs:/home/pallet/app/configs \
-           palletgenerator:latest generate --config configs/production.yaml
-```
-
-## 🛠️ Development
-
-### Development Setup (Automatic)
-
-The setup scripts handle everything automatically:
-- Python environment (conda or venv)
-- Dependencies installation
-- Pre-commit hooks
-- Shell aliases
-- Development tools
-
-**After running setup scripts:**
-```bash
-# Activate environment (if using conda)
-conda activate blender
-
-# Or activate venv (if using venv)
-source venv/bin/activate  # Linux/macOS
-venv\Scripts\activate     # Windows
-
-# Start developing!
-pgen-test    # Run tests
-pgen-lint    # Check code quality
-```
-
-### Manual Development Setup
-
-If you prefer manual setup:
-
-```bash
-# Create environment
-conda create -n blender python=3.11 -y
-conda activate blender
-
-# Install dependencies
-pip install -r requirements-dev.txt
-
-# Install package in development mode
-pip install -e .
-
-# Setup pre-commit
-pre-commit install
-
-# Run tests
-pytest tests/ -v
-```
-
-### Project Structure
-
-```
-PalletDataGenerator/
-├── src/palletdatagenerator/   # Main package
-│   ├── core/                     # Core generation logic
-│   ├── exporters/                # Format exporters (YOLO, COCO, VOC)
-│   ├── cli.py                    # Command-line interface
-│   └── utils.py                  # Utilities
-├── tests/                        # Test suite
-├── docs/                         # Documentation
-├── configs/                      # Configuration templates
-├── scripts/                      # Development and deployment scripts
-├── requirements*.txt             # Dependencies
-├── Dockerfile                    # Docker configuration
-├── docker-compose.yml           # Docker services
-└── pyproject.toml               # Project configuration
-```
-
-### Code Quality
-
-This project maintains high code quality standards:
-
-- **Black** for code formatting
-- **Ruff** for linting and code quality
-- **Pre-commit hooks** for automated checks
-- **Pytest** for comprehensive testing
-- **Type hints** throughout codebase
-- **Documentation** for all public APIs
-
-```bash
-# Run all quality checks
-pgen-lint
-
-# Format code
-pgen-format
-
-# Run tests with coverage
-pgen-test
-```
-
-## 📈 Performance
-
-### Optimization Tips
-
-- **Use GPU rendering** for 5-10x speedup
-- **Enable persistent data** for batch rendering
-- **Adjust sample count** based on quality needs
-- **Use adaptive sampling** for automatic optimization
-
-## 🛠️ Requirements
-
-### System Requirements
-- **Python**: 3.11+ (3.11 recommended)
-- **Blender**: 4.5+ (4.5 recommended)
-- **Memory**: 8GB RAM minimum, 16GB+ recommended
-- **Storage**: SSD recommended for large datasets
-
-### GPU Support
-- **NVIDIA**: CUDA/OptiX (RTX series recommended)
-- **AMD**: HIP/OpenCL
-- **Apple**: Metal (M series)
-- **Intel**: OneAPI (Arc series)
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+- 📖 **[Documentation](https://boubakriibrahim.github.io/PalletDataGenerator)** - Comprehensive guides and API reference
+- 🐛 **[Issue Tracker](https://github.com/boubakriibrahim/PalletDataGenerator/issues)** - Report bugs and request features
+- 💬 **[Discussions](https://github.com/boubakriibrahim/PalletDataGenerator/discussions)** - Community support and ideas
+- 📦 **[PyPI Package](https://pypi.org/project/palletdatagenerator/)** - Latest releases and installation
+- 🎬 **[Blender](https://www.blender.org/)** - 3D rendering engine
+- 🤖 **[Computer Vision Datasets](https://github.com/topics/computer-vision)** - Related projects
 
 ## 🙏 Acknowledgments
 
-- **Blender Foundation** for the amazing 3D creation suite
-- **Computer Vision Community** for inspiration and best practices
-- **Open Source Contributors** who make projects like this possible
-
-## 📞 Support
-
-- **📖 Documentation**: [https://boubakriibrahim.github.io/PalletDataGenerator/](https://boubakriibrahim.github.io/PalletDataGenerator/)
-- **🐛 Bug Reports**: [GitHub Issues](https://github.com/boubakriibrahim/PalletDataGenerator/issues)
-- **💬 Discussions**: [GitHub Discussions](https://github.com/boubakriibrahim/PalletDataGenerator/discussions)
-- **📧 Email**: [ibrahim@example.com](mailto:ibrahim@example.com)
+- **Blender Foundation** for the incredible open-source 3D suite
+- **Computer Vision Community** for inspiration and feedback
+- **Contributors** who help improve this project
+- **Warehouse Industry Partners** for real-world validation
 
 ---
 
 <div align="center">
 
-**[⭐ Star this project](https://github.com/boubakriibrahim/PalletDataGenerator) if you find it useful!**
+**Made with ❤️ for the Computer Vision Community**
 
-Made with ❤️ by [Ibrahim Boubakri](https://github.com/boubakriibrahim)
+⭐ **Star this repo** if you find it useful! ⭐
 
 </div>

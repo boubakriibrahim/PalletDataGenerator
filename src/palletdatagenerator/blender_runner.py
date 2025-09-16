@@ -4,15 +4,38 @@ This module provides the interface for running the PalletDataGenerator
 within Blender's Python environment.
 """
 
+import importlib
+import os
+import subprocess
 import sys
 from pathlib import Path
 from typing import Any
 
 # Add the package to sys.path if running in Blender
-current_dir = Path(__file__).parent
-package_root = current_dir.parent.parent
-if str(package_root) not in sys.path:
-    sys.path.insert(0, str(package_root))
+current_dir = Path(__file__).parent  # .../src/palletdatagenerator
+src_dir = current_dir.parent  # .../src
+project_root = src_dir.parent  # project root
+
+# Ensure 'src' directory (containing the package) is on sys.path
+if str(src_dir) not in sys.path:
+    sys.path.insert(0, str(src_dir))
+
+# (Optional) also keep project root for relative resource access
+if str(project_root) not in sys.path:
+    sys.path.append(str(project_root))
+
+# If running from an activated virtual environment, add its site-packages so
+# dependencies installed there are visible inside Blender's Python.
+venv_path = os.environ.get("VIRTUAL_ENV")
+if venv_path:
+    candidate = (
+        Path(venv_path)
+        / "lib"
+        / f"python{sys.version_info.major}.{sys.version_info.minor}"
+        / "site-packages"
+    )
+    if candidate.exists() and str(candidate) not in sys.path:
+        sys.path.insert(0, str(candidate))
 
 try:
     import bpy
@@ -23,6 +46,112 @@ except ImportError:
     BLENDER_AVAILABLE = False
     bpy = None
     Vector = None
+
+
+def _pip_install(packages: list[str]) -> None:
+    for pkg in packages:
+        try:
+            print(f"📦 Installing: {pkg}")
+            # Use a visible install (not fully quiet) so user sees potential build errors
+            result = subprocess.run(
+                [sys.executable, "-m", "pip", "install", pkg],
+                check=False,
+                capture_output=True,
+                text=True,
+            )
+            if result.returncode != 0:
+                print(f"⚠️  Install stderr for {pkg}:\n{result.stderr.strip()[:500]}")
+            else:
+                print(f"✅ Installed {pkg}")
+        except Exception as e:  # noqa: BLE001
+            print(f"⚠️  Failed installing {pkg}: {e}")
+
+
+try:
+    if importlib.util.find_spec("palletdatagenerator") is None:
+        project_pyproject = project_root / "pyproject.toml"
+        if project_pyproject.exists():
+            print("📦 Editable install of project into Blender env")
+            _pip_install([f"-e{project_root}"])
+        if importlib.util.find_spec("palletdatagenerator") is None:
+            _pip_install(["palletdatagenerator"])
+
+    deps_map = [
+        ("yaml", "pyyaml"),
+        ("PIL", "pillow"),
+        ("numpy", "numpy"),
+        ("pascal_voc_writer", "pascal-voc-writer"),
+    ]
+    missing_pkgs: list[str] = []
+    for mod, pkg in deps_map:
+        if importlib.util.find_spec(mod) is None:
+            missing_pkgs.append(pkg)
+    if missing_pkgs:
+        # Install pillow first so later imports (analysis) work
+        pkgs_sorted = sorted(missing_pkgs, key=lambda p: (p != "pillow", p))
+        print(
+            f"📦 Installing missing runtime deps inside Blender: {' '.join(pkgs_sorted)}"
+        )
+        _pip_install(pkgs_sorted)
+
+    # Explicit pillow fallback target if still not importable (common on some mac builds)
+    if importlib.util.find_spec("PIL") is None:
+        fallback_dir = project_root / ".palletgen_blender_deps"
+        try:
+            print("⚠️  Pillow still missing; attempting target fallback install.")
+            fallback_dir.mkdir(exist_ok=True)
+            subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "pip",
+                    "install",
+                    "--upgrade",
+                    "--no-cache-dir",
+                    "--target",
+                    str(fallback_dir),
+                    "pillow",
+                ],
+                check=False,
+            )
+            if str(fallback_dir) not in sys.path:
+                sys.path.insert(0, str(fallback_dir))
+        except Exception as e:  # noqa: BLE001
+            print(f"⚠️  Pillow fallback install failed: {e}")
+        if importlib.util.find_spec("PIL") is None:
+            print("❌ Pillow still not importable; analysis images will be skipped.")
+
+    if importlib.util.find_spec("yaml") is None:
+        print("⚠️  PyYAML missing; attempting --target fallback install.")
+        fallback_dir = project_root / ".palletgen_blender_deps"
+        try:
+            fallback_dir.mkdir(exist_ok=True)
+            subprocess.run(
+                [
+                    sys.executable,
+                    "-m",
+                    "pip",
+                    "install",
+                    "--quiet",
+                    "--no-cache-dir",
+                    "--upgrade",
+                    "--target",
+                    str(fallback_dir),
+                    "pyyaml",
+                ],
+                check=False,
+            )
+            if str(fallback_dir) not in sys.path:
+                sys.path.insert(0, str(fallback_dir))
+        except Exception as e:  # noqa: BLE001
+            print(f"⚠️  Fallback PyYAML target install failed: {e}")
+        if importlib.util.find_spec("yaml") is None:
+            print(
+                "❌ PyYAML still not importable after fallback. Run manually:"
+                f" {sys.executable} -m pip install pyyaml"
+            )
+except Exception as e:  # noqa: BLE001
+    print(f"⚠️  Auto-install sequence failed: {e}")
 
 
 class BlenderEnvironmentManager:

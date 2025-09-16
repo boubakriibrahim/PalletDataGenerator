@@ -1,33 +1,25 @@
-"""PalletDataGenerator - Professional Blender Synthetic Dataset Library
+"""
+PalletDataGenerator - Unified Blender library for synthetic pallet dataset generation.
 
-A comprehensive library for generating synthetic pallet and warehouse datasets
-using Blender with advanced rendering capabilities, annotation generation,
-and export functionalities.
-
-Features:
-- Single pallet and warehouse scene generation
-- Advanced lighting and camera systems
-- Multiple annotation formats (YOLO, COCO, VOC)
-- GPU-accelerated rendering
-- Professional packaging and CI/CD
+This library provides a simplified, unified approach to generating synthetic pallet datasets
+with embedded configuration and auto-batch management.
 """
 
-__version__ = "0.1.0"
+from .config import DefaultConfig
+from .generator import PalletDataGenerator
+from .utils import setup_logging
+
+__version__ = "0.1.2"
 __author__ = "Ibrahim Boubakri"
-__email__ = "ibrahim@example.com"
-__license__ = "MIT"
+__email__ = "ibrahimbouakri1@gmail.com"
 
-from .core.generator import PalletGenerator, WarehouseGenerator
-from .core.renderer import BlenderRenderer
-from .exporters.coco import COCOExporter
-from .exporters.voc import VOCExporter
-from .exporters.yolo import YOLOExporter
-
+# Main exports
 __all__ = [
-    "PalletGenerator",
-    "WarehouseGenerator",
-    "BlenderRenderer",
-    "YOLOExporter",
-    "COCOExporter",
-    "VOCExporter",
+    "PalletDataGenerator",
+    "DefaultConfig",
+    "setup_logging",
 ]
+
+# Convenience aliases for backward compatibility
+Generator = PalletDataGenerator  # Alias for main generator class
+Config = DefaultConfig  # Alias for config class

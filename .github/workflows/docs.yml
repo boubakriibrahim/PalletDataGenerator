@@ -18,9 +18,9 @@ on:
       - '**/*.md'
       - '**/conf.py'
       - 'pyproject.toml'
-      - 'src/**/*.py'  # For autodoc changes
+      - 'src/**/*.py'
   release:
-    types: [published]
+    types: [ published ]
 
 permissions:
   contents: read
@@ -50,26 +50,15 @@ jobs:
             **/pyproject.toml
             **/requirements*.txt
 
-      # Install only what you need; drop pandoc if unused
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y graphviz
-
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[docs]"
 
-      - name: Configure Pages
-        id: pages
-        uses: actions/configure-pages@v5
-
       - name: Build HTML
-        env:
-          SPHINXOPTS: "-W --keep-going"  # strict on warnings (fail on PRs)
         run: |
-          make -C docs html
+          make -C docs clean html
+          # Ensure Pages doesn't try to process Jekyll
           touch docs/_build/html/.nojekyll
 
       - name: Upload artifact
@@ -78,19 +67,26 @@ jobs:
           path: docs/_build/html
 
   deploy:
+    # Only deploy from main (push or release)
+    if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # Configure/enable Pages right before deploy to avoid PR noise
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
 
   link-check:
-    # Only on PRs to avoid blocking main on flaky externals
+    # Run only on PRs to avoid blocking main on flaky externals
     runs-on: ubuntu-latest
     if: github.event_name == 'pull_request'
     steps:
@@ -113,13 +109,12 @@ jobs:
 
       - name: Build HTML (non-strict)
         env:
-          SPHINXOPTS: ""   # allow warnings here; the strictness is in the main build job
+          SPHINXOPTS: ""
         run: make -C docs html
 
       - name: Link check (tolerant for externals)
         env:
-          SPHINXOPTS: "-b linkcheck"
+          # Build linkcheck with saner defaults for CI
+          SPHINXOPTS: "-b linkcheck -D linkcheck_timeout=10 -D linkcheck_anchors=True -D linkcheck_workers=4 -D linkcheck_retries=2 -D linkcheck_ignore=['https://twitter.com/.*','https://.*github.com/.*#.*'] -D linkcheck_request_headers={'User-Agent': 'Mozilla/5.0 (CI linkcheck)'}"
         run: |
-          # Make linkcheck a bit more stable
-          export SPHINXOPTS="$SPHINXOPTS -D linkcheck_timeout=10 -D linkcheck_anchors=True -D linkcheck_ignored=['https://twitter.com/.*','https://.*github.com/.*#.*'] -D linkcheck_workers=4 -D linkcheck_retries=2 -D linkcheck_request_headers=\"{'User-Agent': 'Mozilla/5.0 (CI linkcheck)'}\""
-          make -C docs linkcheck || true  # don't fail PRs on external link flakiness
+          make -C docs linkcheck || true

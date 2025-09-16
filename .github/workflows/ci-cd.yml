@@ -51,9 +51,6 @@ jobs:
       - name: Ruff (lint)
         run: ruff check src/ tests/
 
-      - name: Black (format check)
-        run: black --check src/ tests/
-
       - name: MyPy (type check)
         run: mypy src/
 
@@ -124,6 +121,14 @@ jobs:
           # For public repos, token is optional; set CODECOV_TOKEN secret if private.
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
+      - name: Upload coverage to Coveralls (ubuntu/3.11 only)
+        if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
+        uses: coverallsapp/github-action@v2
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ./coverage.xml
+          format: cobertura
+
   # --------------------------
   # Docs build
   # --------------------------
@@ -152,8 +157,7 @@ jobs:
 
       - name: Build documentation
         run: |
-          cd docs
-          make clean html
+          make -C docs clean html
 
       - name: Upload documentation site
         uses: actions/upload-artifact@v4

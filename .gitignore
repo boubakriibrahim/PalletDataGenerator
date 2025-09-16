@@ -15,3 +15,10 @@ __pycache__
 
 coverage*
 .coverage
+assets
+htmlcov/
+
+.palletgen_blender_deps
+dataset*
+
+output
