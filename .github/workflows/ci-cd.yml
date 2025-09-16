@@ -117,9 +117,6 @@ jobs:
           files: ./coverage.xml
           flags: unittests
           name: codecov-umbrella
-        env:
-          # For public repos, token is optional; set CODECOV_TOKEN secret if private.
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload coverage to Coveralls (ubuntu/3.11 only)
         if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.11'
@@ -329,19 +326,7 @@ jobs:
           name: dist
           path: dist/
 
-      - name: Generate changelog (last 20 commits)
-        if: steps.tagcheck.outputs.exists == 'false'
-        id: changelog
-        run: |
-          PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-          if [ -z "$PREV_TAG" ]; then
-            echo "🎉 Initial release of ${{ env.PACKAGE_NAME }}" > CHANGELOG_RELEASE.md
-          else
-            git log --pretty=format:"- %s" "$PREV_TAG"..HEAD | head -20 > CHANGELOG_RELEASE.md || echo "- Bug fixes and improvements" > CHANGELOG_RELEASE.md
-          fi
-          echo "body<<EOF" >> $GITHUB_OUTPUT
-          head -100 CHANGELOG_RELEASE.md >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+      # (Removed changelog step)
 
       - name: Create Git tag & GitHub Release
         if: steps.tagcheck.outputs.exists == 'false'
@@ -349,13 +334,13 @@ jobs:
         with:
           tag_name: ${{ steps.ver.outputs.tag }}
           name: Release ${{ steps.ver.outputs.version }}
-          body: ${{ steps.changelog.outputs.body }}
+          generate_release_notes: true
           files: |
             dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # --- Option A: Current token-based PyPI publishing (what you had) ---
+      # --- Option A: Current token-based PyPI publishing ---
       - name: Publish to PyPI (token)
         if: steps.tagcheck.outputs.exists == 'false' && env.TWINE_PASSWORD != ''
         env:
