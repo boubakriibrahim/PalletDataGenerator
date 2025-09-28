@@ -1,0 +1,95 @@
+Frame 0 - 3D Coordinates Debug
+Object: pallet
+Camera Position: (0.944, 2.536, 1.366)
+Selected Faces: face_3, face_1
+
+Pallet Corner Points (8 corners):
+  Corner 0: (-0.384, -0.600, 0.020) - Distance: 3.663
+  Corner 1: (-0.384, -0.600, 0.165) - Distance: 3.612
+  Corner 2: (-0.384, 0.600, 0.165) - Distance: 2.637
+  Corner 3: (-0.384, 0.600, 0.020) - Distance: 2.706
+  Corner 4: (0.400, -0.600, 0.020) - Distance: 3.457
+  Corner 5: (0.400, -0.600, 0.165) - Distance: 3.403
+  Corner 6: (0.400, 0.600, 0.165) - Distance: 2.342
+  Corner 7: (0.400, 0.600, 0.020) - Distance: 2.420
+
+All Face Definitions (6 faces total):
+  face_0 (corners [0, 1, 2, 3]):
+    Center: (-0.384, 0.000, 0.093) - Distance: 3.134
+    Status: not selected
+    Corner Points:
+      Corner 0: (-0.384, -0.600, 0.020) - Distance: 3.663
+      Corner 1: (-0.384, -0.600, 0.165) - Distance: 3.612
+      Corner 2: (-0.384, 0.600, 0.165) - Distance: 2.637
+      Corner 3: (-0.384, 0.600, 0.020) - Distance: 2.706
+
+  face_1 (corners [4, 5, 6, 7]):
+    Center: (0.400, 0.000, 0.093) - Distance: 2.890
+    Status: SELECTED
+    Corner Points:
+      Corner 4: (0.400, -0.600, 0.020) - Distance: 3.457
+      Corner 5: (0.400, -0.600, 0.165) - Distance: 3.403
+      Corner 6: (0.400, 0.600, 0.165) - Distance: 2.342
+      Corner 7: (0.400, 0.600, 0.020) - Distance: 2.420
+
+  face_2 (corners [0, 1, 5, 4]):
+    Center: (0.008, -0.600, 0.093) - Distance: 3.513
+    Status: not selected
+    Corner Points:
+      Corner 0: (-0.384, -0.600, 0.020) - Distance: 3.663
+      Corner 1: (-0.384, -0.600, 0.165) - Distance: 3.612
+      Corner 5: (0.400, -0.600, 0.165) - Distance: 3.403
+      Corner 4: (0.400, -0.600, 0.020) - Distance: 3.457
+
+  face_3 (corners [2, 3, 7, 6]):
+    Center: (0.008, 0.600, 0.093) - Distance: 2.499
+    Status: SELECTED
+    Corner Points:
+      Corner 2: (-0.384, 0.600, 0.165) - Distance: 2.637
+      Corner 3: (-0.384, 0.600, 0.020) - Distance: 2.706
+      Corner 7: (0.400, 0.600, 0.020) - Distance: 2.420
+      Corner 6: (0.400, 0.600, 0.165) - Distance: 2.342
+
+  face_4 (corners [0, 3, 7, 4]):
+    Center: (0.008, 0.000, 0.020) - Distance: 3.020
+    Status: not selected
+    Corner Points:
+      Corner 0: (-0.384, -0.600, 0.020) - Distance: 3.663
+      Corner 3: (-0.384, 0.600, 0.020) - Distance: 2.706
+      Corner 7: (0.400, 0.600, 0.020) - Distance: 2.420
+      Corner 4: (0.400, -0.600, 0.020) - Distance: 3.457
+
+  face_5 (corners [1, 2, 6, 5]):
+    Center: (0.008, 0.000, 0.165) - Distance: 2.958
+    Status: not selected
+    Corner Points:
+      Corner 1: (-0.384, -0.600, 0.165) - Distance: 3.612
+      Corner 2: (-0.384, 0.600, 0.165) - Distance: 2.637
+      Corner 6: (0.400, 0.600, 0.165) - Distance: 2.342
+      Corner 5: (0.400, -0.600, 0.165) - Distance: 3.403
+
+Selected Face Details:
+  face_3 (index 3):
+    Center Position: (0.008, 0.600, 0.093)
+    Distance from Camera: 2.499
+    Corner Indices: [2, 3, 7, 6]
+    Corner Positions:
+      Corner 2: (-0.384, 0.600, 0.165) - Distance: 2.637
+      Corner 3: (-0.384, 0.600, 0.020) - Distance: 2.706
+      Corner 7: (0.400, 0.600, 0.020) - Distance: 2.420
+      Corner 6: (0.400, 0.600, 0.165) - Distance: 2.342
+    2D Bounding Box: x_min=441.3, y_min=437.6, x_max=732.5, y_max=544.6
+    3D Bounding Box: {'corners': [[-0.38432031869888306, -0.6004551649093628, 0.019999999552965164], [-0.38432031869888306, -0.6004551649093628, 0.16510964930057526], [-0.38432031869888306, 0.6004551649093628, 0.16510964930057526], [-0.38432031869888306, 0.6004551649093628, 0.019999999552965164], [0.3995389938354492, -0.6004551649093628, 0.019999999552965164], [0.3995389938354492, -0.6004551649093628, 0.16510964930057526], [0.3995389938354492, 0.6004551649093628, 0.16510964930057526], [0.3995389938354492, 0.6004551649093628, 0.019999999552965164]], 'center': [0.007609337568283081, 0.0, 0.09255482256412506], 'size': [0.783859372138977, 1.2009103298187256, 0.1451096534729004]}
+
+  face_1 (index 1):
+    Center Position: (0.400, 0.000, 0.093)
+    Distance from Camera: 2.890
+    Corner Indices: [4, 5, 6, 7]
+    Corner Positions:
+      Corner 4: (0.400, -0.600, 0.020) - Distance: 3.457
+      Corner 5: (0.400, -0.600, 0.165) - Distance: 3.403
+      Corner 6: (0.400, 0.600, 0.165) - Distance: 2.342
+      Corner 7: (0.400, 0.600, 0.020) - Distance: 2.420
+    2D Bounding Box: x_min=338.2, y_min=319.1, x_max=443.1, y_max=544.6
+    3D Bounding Box: {'corners': [[-0.38432031869888306, -0.6004551649093628, 0.019999999552965164], [-0.38432031869888306, -0.6004551649093628, 0.16510964930057526], [-0.38432031869888306, 0.6004551649093628, 0.16510964930057526], [-0.38432031869888306, 0.6004551649093628, 0.019999999552965164], [0.3995389938354492, -0.6004551649093628, 0.019999999552965164], [0.3995389938354492, -0.6004551649093628, 0.16510964930057526], [0.3995389938354492, 0.6004551649093628, 0.16510964930057526], [0.3995389938354492, 0.6004551649093628, 0.019999999552965164]], 'center': [0.007609337568283081, 0.0, 0.09255482256412506], 'size': [0.783859372138977, 1.2009103298187256, 0.1451096534729004]}
+

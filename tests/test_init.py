@@ -26,7 +26,7 @@ class TestPackageInit:
 
         assert isinstance(__version__, str)
         assert len(__version__) > 0
-        assert "." in __version__  # Should be in format like "0.1.2"
+        assert "." in __version__  # Should be in format like "0.1.3"
 
     def test_author_info(self):
         """Test that author information is available."""

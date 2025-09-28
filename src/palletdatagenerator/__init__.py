@@ -9,7 +9,7 @@ from .config import DefaultConfig
 from .generator import PalletDataGenerator
 from .utils import setup_logging
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 __author__ = "Ibrahim Boubakri"
 __email__ = "ibrahimbouakri1@gmail.com"
 

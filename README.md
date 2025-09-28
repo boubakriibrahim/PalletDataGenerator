@@ -22,9 +22,11 @@ PalletDataGenerator is a comprehensive, production-ready solution for creating p
 
 - 🎬 **Dual Generation Modes**: Single pallet focus and complex warehouse scenarios
 - 📊 **Multiple Export Formats**: YOLO, COCO JSON, and PASCAL VOC XML annotations
+- 🎯 **Advanced Keypoints Generation**: Automatic face detection with 6 keypoints per face, visibility tracking, and 3D debug visualization
+- 🔍 **3D Debug Visualization**: Interactive HTML figures and coordinate tracking for keypoints analysis
 - ⚡ **GPU-Accelerated Rendering**: High-performance generation with Blender Cycles
 - 🔧 **Flexible Configuration**: YAML configs with CLI parameter overrides
-- 📦 **Professional Output Structure**: Organized `generated_XXXX` batch folders
+- 📦 **Professional Output Structure**: Organized `generated_XXXX` batch folders with comprehensive metadata
 - 🏗️ **Modular Architecture**: Clean, extensible, and thoroughly tested codebase
 - 🌟 **Photorealistic Results**: Advanced lighting, materials, and post-processing
 
@@ -99,6 +101,36 @@ Each frame generates comprehensive data for training:
 | <img src="readme_images/outputs/single_pallet_example.png" width="200"> | <img src="readme_images/outputs/analysis_example.png" width="200"> | <img src="readme_images/outputs/depth_example.png" width="200"> | <img src="readme_images/outputs/normal_example.png" width="200"> |
 | <img src="readme_images/outputs/warehouse_example.png" width="200"> | <img src="readme_images/outputs/analysis_example_2.png" width="200"> | <img src="readme_images/outputs/warehouse_depth_example.png" width="200"> | <img src="readme_images/outputs/warehouse_normal_example.png" width="200"> |
 
+### 🎯 Keypoints Generation Examples
+Advanced face detection and keypoints tracking with 3D visualization:
+
+| Original Image | Keypoints Analysis | 3D Debug Visualization |
+|----------------|-------------------|------------------------|
+| <img src="readme_images/examples/single_pallet_keypoints_example.png" width="200"> | <img src="readme_images/outputs/keypoints_analysis_example.png" width="200"> | <img src="readme_images/outputs/debug_3d_example.png" width="200"> |
+
+**Keypoints Features:**
+- **Selective face detection**: 1-2 most visible faces per pallet (not all faces)
+- **6 keypoints per selected face** with precise 2D/3D coordinates
+- **Visibility tracking** using ray casting for occlusion detection
+- **Interactive 3D HTML figures** for detailed analysis
+- **Comprehensive debug information** including face selection criteria
+- **YOLO format compatibility** for seamless integration with training pipelines
+
+### 🔍 3D Debug Visualization
+Advanced debugging tools for keypoints analysis and face detection:
+
+| Interactive 3D Figure | Debug Coordinates | 3D Visualization |
+|----------------------|-------------------|------------------|
+| [🎯 Open Interactive 3D](readme_images/outputs/debug_3d_interactive_example.html) | [📄 View Coordinates](readme_images/outputs/debug_3d_coordinates_example.txt) | <img src="readme_images/outputs/debug_3d_example.png" width="200"> |
+
+**Debug Features:**
+- **Interactive 3D visualization** with Plotly.js for real-time exploration
+- **Face selection analysis** showing which faces were chosen and why
+- **Camera positioning** with distance calculations to each face
+- **Pallet corner visualization** with camera-to-corner distance lines
+- **Comprehensive coordinate tracking** for debugging and validation
+- **Note:** Keypoints are only visible in 2D analysis images, not in 3D visualization
+
 ## 🏗️ Architecture & Features
 
 ### Generation Modes
@@ -115,6 +147,17 @@ Each frame generates comprehensive data for training:
 - **Camera angle variations** including side and corner views
 - **Configurable cropping and occlusion levels**
 
+### 🎯 **Advanced Keypoints Generation**
+- **Automatic face detection** by scanning for objects with "face" in their name
+- **Selective face detection**: Detects 1-2 most visible faces from the pallet (not all faces)
+- **6 keypoints per selected face**: 2 middle (top-down), 2 left (top-down), 2 right (top-down)
+- **Visibility tracking** using ray casting to detect obstacles between face and camera
+- **YOLO format output** with normalized coordinates and visibility flags
+- **Analysis visualization** showing keypoints with different colors for visible/hidden states
+- **3D coordinate tracking** with detailed debug information for each selected face
+- **Interactive HTML figures** for 3D visualization and analysis
+- **Comprehensive metadata** including face selection criteria and camera positioning
+
 ### Export Formats
 
 #### 🎯 **YOLO Format**
@@ -122,6 +165,16 @@ Each frame generates comprehensive data for training:
 # Example: 000000.txt
 0 0.475345 0.595753 0.247050 0.102537
 ```
+
+#### 🎯 **Keypoints Labels (YOLO Format)**
+```
+# Example: keypoints_labels/000000.txt
+0 0.573150 0.639442 0.284453 0.139362 0.580366 0.603590 2 0.578420 0.669213 2 0.715376 0.569761 2 0.710409 0.633069 2 0.430924 0.641035 2 0.432683 0.709123 2
+```
+Format: `class_id x_center y_center width height kp1_x kp1_y kp1_v kp2_x kp2_y kp2_v ...`
+- Visibility: `2`=visible, `0`=hidden
+- 6 keypoints per face: middle (top/bottom), left (top/bottom), right (top/bottom)
+- **Real example** from generated dataset with actual face detection results
 
 #### 📋 **COCO JSON**
 ```json
@@ -152,16 +205,109 @@ output/
 ├── warehouse/
 │   ├── generated_000001/
 │   │   ├── images/          # RGB images (PNG)
-│   │   ├── analysis/        # Overlay analysis images
+│   │   ├── analysis/        # Overlay analysis images with keypoints
 │   │   ├── depth/           # Depth maps (PNG)
 │   │   ├── normals/         # Normal maps (PNG)
 │   │   ├── index/           # Index/segmentation maps
 │   │   ├── yolo_labels/     # YOLO format annotations
+│   │   ├── keypoints_labels/ # Keypoints annotations (YOLO format)
+│   │   ├── face_2d_boxes/   # 2D bounding boxes for detected faces
+│   │   ├── face_3d_coordinates/ # 3D coordinates for keypoints
+│   │   ├── debug_3d/        # 3D debug visualization
+│   │   │   ├── coordinates/ # Detailed coordinate information
+│   │   │   ├── figures/     # Interactive HTML 3D figures
+│   │   │   └── images/      # 3D debug visualization images
 │   │   ├── voc_xml/         # PASCAL VOC annotations
 │   │   └── coco/            # COCO JSON annotations
 │   └── generated_000002/    # Next batch...
 └── single_pallet/
     └── generated_000001/    # Same structure
+```
+
+### 🔍 Debug 3D Output Details
+
+The `debug_3d/` folder contains comprehensive debugging information:
+
+#### **Interactive HTML Figures** (`figures/`)
+- **Real-time 3D visualization** using Plotly.js
+- **Interactive controls**: rotate, zoom, pan, reset view
+- **Face highlighting**: selected faces in red, unselected in blue
+- **Keypoint visualization**: 6 keypoints per selected face
+- **Camera position**: green diamond showing camera location
+- **Distance calculations**: real-time distance from camera to each face
+
+#### **Coordinate Files** (`coordinates/`)
+Detailed text files containing:
+```
+Frame 0 - 3D Coordinates Debug
+Object: pallet
+Camera Position: (0.944, 2.536, 1.366)
+Selected Faces: face_3, face_1
+
+Pallet Corner Points (8 corners):
+  Corner 0: (-0.384, -0.600, 0.020) - Distance: 3.663
+  Corner 1: (-0.384, -0.600, 0.165) - Distance: 3.612
+  ...
+
+All Face Definitions (6 faces total):
+  face_0 (corners [0, 1, 2, 3]):
+    Center: (-0.384, 0.000, 0.093) - Distance: 3.134
+    Status: not selected
+  face_1 (corners [4, 5, 6, 7]):
+    Center: (0.400, 0.000, 0.093) - Distance: 2.890
+    Status: SELECTED
+  ...
+
+Selected Face Details:
+  face_3 (index 3):
+    Center Position: (0.008, 0.600, 0.093)
+    Distance from Camera: 2.499
+    2D Bounding Box: x_min=441.3, y_min=437.6, x_max=732.5, y_max=544.6
+    3D Bounding Box: {...}
+```
+
+#### **Debug Images** (`images/`)
+- **Static 3D visualization** for quick reference
+- **Face selection visualization** showing which faces were chosen
+- **Coordinate system reference** for debugging
+
+### 🎮 Using Debug 3D Features
+
+#### **Interactive HTML Visualization**
+1. **Open the HTML file** in any modern web browser
+2. **Navigate the 3D scene**:
+   - **Rotate**: Click and drag to rotate the view
+   - **Zoom**: Use mouse wheel to zoom in/out
+   - **Pan**: Right-click and drag to pan the view
+   - **Reset**: Double-click to reset to default view
+3. **Analyze face selection**:
+   - **Red circles**: Pallet corners (8 corners total)
+   - **Blue diamond**: Camera position
+   - **Gray dashed lines**: Camera-to-corner distance visualization
+   - **Green/Orange faces**: Selected faces for keypoints generation (face_3, face_1)
+   - **Note**: Keypoints are only visible in 2D analysis images, not in 3D visualization
+
+#### **Coordinate Analysis**
+The coordinate files provide detailed information for debugging:
+- **Face selection criteria**: Why certain faces were chosen
+- **Distance calculations**: Camera-to-face distances for selection
+- **Bounding box data**: Both 2D and 3D bounding box information
+- **Keypoint positions**: Exact 3D coordinates of all keypoints
+
+#### **Example Usage**
+```bash
+# Generate dataset with debug 3D enabled
+palletgen -m single_pallet scenes/one_pallet.blend --frames 10
+
+# View debug files
+ls output/single_pallet/generated_XXXXXX/debug_3d/
+# coordinates/  figures/  images/
+
+# Open interactive 3D visualization
+open output/single_pallet/generated_XXXXXX/debug_3d/figures/frame_000000_3d_interactive.html
+
+# View coordinate details
+cat output/single_pallet/generated_XXXXXX/debug_3d/coordinates/frame_000000_coordinates.txt
 ```
 
 ## ⚙️ Configuration
@@ -204,6 +350,15 @@ SINGLE_PALLET_CONFIG = {
     "min_visible_area_ratio": 0.3,
     "add_floor": True,
     "depth_scale": 1000.0,
+    # Keypoints Generation Options
+    "generate_keypoints": True,
+    "keypoints_min_face_area": 80,
+    "keypoints_visibility_check": False,
+    "keypoints_show_3d_labels": False,
+    "keypoints_show_2d_labels": False,
+    "analysis_show_keypoints": True,
+    "analysis_show_2d_boxes": True,
+    "analysis_show_3d_coordinates": True,
     # ... many more options
 }
 
@@ -216,6 +371,13 @@ WAREHOUSE_CONFIG = {
     "stacking_probability": 0.7,
     "lighting_variations": True,
     "camera_movement_range": 5.0,
+    # Keypoints Generation Options (same as single pallet)
+    "generate_keypoints": True,
+    "keypoints_min_face_area": 80,
+    "keypoints_visibility_check": False,
+    "analysis_show_keypoints": True,
+    "analysis_show_2d_boxes": True,
+    "analysis_show_3d_coordinates": True,
     # ... extensive warehouse-specific options
 }
 ```
@@ -354,7 +516,7 @@ If you use PalletDataGenerator in your research, please cite:
   author={Ibrahim Boubakri},
   year={2025},
   url={https://github.com/boubakriibrahim/PalletDataGenerator},
-  version={0.1.2}
+  version={0.1.3}
 }
 ```
 

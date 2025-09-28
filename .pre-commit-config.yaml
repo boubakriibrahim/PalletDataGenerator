@@ -65,14 +65,6 @@ repos:
         additional_dependencies: ["bandit[toml]", "pbr"]
         exclude: ^tests/
 
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.6
-    hooks:
-      - id: codespell
-        # check-only at commit
-        args: []
-        exclude: \.min\.(js|css)$
-
   - repo: local
     hooks:
       - id: pytest-check
@@ -109,11 +101,4 @@ repos:
     hooks:
       - id: black
         args: [--line-length=88]
-        stages: [pre-push]
-
-  - repo: https://github.com/codespell-project/codespell
-    rev: v2.2.6
-    hooks:
-      - id: codespell
-        args: [--write-changes]
         stages: [pre-push]

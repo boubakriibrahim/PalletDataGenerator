@@ -8,11 +8,11 @@ from pathlib import Path
 from typing import Any, Optional
 
 # Setup logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-def setup_logging(level: str = "INFO", log_file: str | None = None) -> None:
+def setup_logging(level: str = "DEBUG", log_file: str = "output.log") -> None:
     """Setup logging configuration.
 
     Args:
