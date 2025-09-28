@@ -12,10 +12,10 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-```{admonition} Version 0.1.2 Release 🎉
+```{admonition} Version 0.1.3 Release 🎉
 :class: tip
 
-This documentation covers **PalletDataGenerator v0.1.2**, featuring a completely redesigned unified architecture, embedded configuration system, and enhanced batch processing capabilities.
+This documentation covers **PalletDataGenerator v0.1.3**, featuring a completely redesigned unified architecture, embedded configuration system, and enhanced batch processing capabilities.
 
 [See the full changelog →](https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/CHANGELOG.md)
 ```
@@ -28,6 +28,8 @@ PalletDataGenerator is a comprehensive, production-ready solution for creating p
 
 - 🎬 **Dual Generation Modes**: Single pallet focus and complex warehouse scenarios
 - 📊 **Multiple Export Formats**: YOLO, COCO JSON, and PASCAL VOC XML annotations
+- 🎯 **Advanced Keypoints Generation**: Automatic face detection with 6 keypoints per face, visibility tracking, and 3D debug visualization
+- 🔍 **3D Debug Visualization**: Interactive HTML figures and coordinate tracking for keypoints analysis
 - ⚡ **GPU-Accelerated Rendering**: High-performance generation with Blender Cycles
 - 🔧 **Unified Architecture**: Single `PalletDataGenerator` class with embedded configuration
 - 📦 **Auto-Batch Management**: Organized `generated_XXXX` batch folders with sequencing
@@ -76,7 +78,7 @@ palletgen -m single_pallet scenes/one_pallet.blend \
     --resolution 2048 1536
 ```
 
-#### Using Python API (New in v0.1.2)
+#### Using Python API
 ```python
 from palletdatagenerator import PalletDataGenerator
 
@@ -99,6 +101,7 @@ generator.generate_dataset(num_frames=50)
 
 installation
 quickstart
+keypoints_generation
 ```
 
 ```{toctree}
@@ -114,8 +117,6 @@ api/modules
 ```
 
 ## 🏗️ Architecture Overview
-
-PalletDataGenerator v0.1.2 introduces a unified architecture:
 
 ```
 ┌─────────────────────────────────────┐
@@ -145,6 +146,30 @@ PalletDataGenerator v0.1.2 introduces a unified architecture:
 └─────────────────────────────────────┘
 ```
 
+## 🚀 Key Features v0.1.3
+
+### 🎯 Advanced Keypoints Generation
+- **Selective face detection**: Detects 1-2 most visible faces from the pallet (not all faces)
+- **6 keypoints per selected face**: 2 middle (top-down), 2 left (top-down), 2 right (top-down)
+- **Visibility tracking**: Ray casting for occlusion detection between face and camera
+- **YOLO format output**: Normalized coordinates with visibility flags (2=visible, 0=hidden)
+- **Analysis visualization**: Keypoints with different colors for visible/hidden states
+
+### 🔍 3D Debug Visualization
+- **Interactive HTML figures**: Real-time 3D visualization using Plotly.js
+- **Face selection analysis**: Shows which faces were chosen and why
+- **Camera positioning**: Distance calculations to each face with visual lines
+- **Coordinate tracking**: Detailed 3D coordinate information for debugging
+- **Debug output structure**: `debug_3d/` folder with coordinates, figures, and images
+
+### 📁 Enhanced Output Structure
+- **keypoints_labels/**: YOLO format keypoints annotations
+- **face_2d_boxes/**: 2D bounding boxes for detected faces
+- **face_3d_coordinates/**: 3D coordinates for keypoints
+- **debug_3d/coordinates/**: Detailed coordinate information
+- **debug_3d/figures/**: Interactive HTML 3D figures
+- **debug_3d/images/**: 3D debug visualization images
+
 ## 🚀 Key Features v0.1.2
 
 ### 🔄 Unified Generator
@@ -165,17 +190,20 @@ output/
 ```
 
 ### 🎯 Export Formats
-- **YOLO**: `.txt` files with normalized bounding boxes
+- **YOLO**: `.txt` files with normalized bounding boxes and keypoints
 - **COCO**: `.json` with comprehensive metadata
 - **PASCAL VOC**: `.xml` files for compatibility
 
 ### 🖼️ Multi-Modal Outputs
 Each generated frame includes:
 - RGB images (`images/`)
-- Analysis overlays (`analysis/`)
+- Analysis overlays (`analysis/`) with keypoints visualization
 - Depth maps (`depth/`)
 - Normal maps (`normals/`)
 - Index maps (`index/`)
+- Keypoints labels (`keypoints_labels/`) in YOLO format
+- 3D debug visualization (`debug_3d/`) with interactive HTML figures
+- Face coordinate tracking (`face_2d_boxes/`, `face_3d_coordinates/`)
 
 ## 💡 Quick Examples
 
@@ -212,6 +240,7 @@ generator.generate_dataset(
 
 - **🚀 [Quick Start Guide](quickstart.md)**: Get up and running in minutes
 - **📋 [Installation Guide](installation.md)**: Detailed setup instructions
+- **🎯 [Keypoints Generation Guide](keypoints_generation.md)**: Advanced face detection and keypoints tracking
 - **🔧 [API Reference](api/palletdatagenerator.html)**: Complete API documentation
 - **📝 [Changelog](https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/CHANGELOG.md)**: Version history and migration guides
 
@@ -223,17 +252,24 @@ generator.generate_dataset(
 
 ---
 
-```{admonition} 🎉 What's New in v0.1.2
+```{admonition} 🎉 What's New in v0.1.3
 :class: note
 
-- **Unified API**: Single `PalletDataGenerator` class replaces separate mode classes
-- **Embedded Config**: No more external YAML files required
-- **Auto-Batching**: Automatic `generated_XXXXXX` folder creation
-- **Better Error Handling**: Comprehensive validation and error reporting
-- **Type Safety**: Full type annotations throughout
-- **Docker Ready**: Production deployment support
+- **🎯 Advanced Keypoints Generation**: Automatic face detection with 6 keypoints per selected face
+  - Selective face detection (1-2 most visible faces, not all faces)
+  - Visibility tracking with ray casting for occlusion detection
+  - YOLO format output with visibility flags
+- **🔍 3D Debug Visualization**: Interactive HTML figures and coordinate tracking
+  - Real-time 3D visualization using Plotly.js
+  - Face selection analysis and camera positioning
+  - Comprehensive debug output structure
+- **📊 Enhanced Output Structure**: New directories for comprehensive debugging
+  - `keypoints_labels/`, `face_2d_boxes/`, `face_3d_coordinates/`
+  - `debug_3d/` with coordinates, figures, and images
+- **📚 Improved Documentation**: Updated guides and examples with real data
+```
 
-[View Full Changelog →](https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/CHANGELOG.md#020---2025-09-15)
+[View Full Changelog →](https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/CHANGELOG.md#013---2025-01-15)
 ```
 - **Storage**: 1GB+ free space per 1000 generated images
 

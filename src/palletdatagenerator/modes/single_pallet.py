@@ -170,6 +170,24 @@ class SinglePalletMode(BaseGenerator):
             # Get detections for all visible pallets
             b2d_list, b3d_list, pockets_list = self.get_detections(pallets, cam_obj, sc)
 
+            # Detect faces and generate keypoints
+            keypoints_data = self.generate_keypoints_for_frame(cam_obj, sc, valid)
+
+            # Debug output for keypoints
+            if keypoints_data:
+                print(
+                    f"🎯 Frame {valid}: Detected {len(keypoints_data)} faces with keypoints"
+                )
+                for face_data in keypoints_data:
+                    visible_kp = sum(
+                        1 for kp in face_data["keypoints"] if kp["visible"]
+                    )
+                    print(
+                        f"   - {face_data['face_name']} face: {visible_kp}/6 keypoints visible"
+                    )
+            else:
+                print(f"🎯 Frame {valid}: No faces detected for keypoints")
+
             if not b2d_list:
                 print(f"[skip] frame {valid} - no visible pallets")
                 valid += 1
@@ -199,6 +217,7 @@ class SinglePalletMode(BaseGenerator):
                 ann_id,
                 meta,
                 pallets,
+                keypoints_data,
             )
 
             print(
@@ -619,6 +638,7 @@ class SinglePalletMode(BaseGenerator):
         ann_id,
         meta,
         pallets,
+        keypoints_data=None,
     ):
         """Save all outputs for a single frame: analysis, YOLO, VOC, COCO, metadata - EXACT from original."""
 
@@ -663,6 +683,7 @@ class SinglePalletMode(BaseGenerator):
                     sc,
                     ana_path,
                     valid,
+                    keypoints_data,
                 )
                 if success:
                     print(f"📊 Analysis image saved: analysis_{fn}.png")
@@ -710,6 +731,10 @@ class SinglePalletMode(BaseGenerator):
                 pockets, cam_obj, sc, self.paths["yolo"], fn, coco, ann_id, img_w, img_h
             )
 
+        # Save keypoints labels
+        if keypoints_data:
+            self.save_keypoints_labels(keypoints_data, valid, img_w, img_h)
+
         # VOC (all pallets) - EXACT from original
         if PIL_AVAILABLE:
             try:
@@ -738,6 +763,20 @@ class SinglePalletMode(BaseGenerator):
                 "boxes_2d": len(b2d_list),
                 "boxes_3d": len(b3d_list),
                 "pockets": len(pockets_list),
+                "faces_detected": len(keypoints_data) if keypoints_data else 0,
+                "keypoints_total": (
+                    sum(len(face_data["keypoints"]) for face_data in keypoints_data)
+                    if keypoints_data
+                    else 0
+                ),
+                "keypoints_visible": (
+                    sum(
+                        sum(1 for kp in face_data["keypoints"] if kp["visible"])
+                        for face_data in keypoints_data
+                    )
+                    if keypoints_data
+                    else 0
+                ),
                 "pallets": [
                     {
                         "name": po.name,
@@ -748,6 +787,31 @@ class SinglePalletMode(BaseGenerator):
                     }
                     for po in pallets
                 ],
+                "faces": (
+                    [
+                        {
+                            "object_name": face_data["face_object"].name,
+                            "face_name": face_data["face_name"],
+                            "face_index": face_data["face_index"],
+                            "keypoints_count": len(face_data["keypoints"]),
+                            "visible_keypoints": sum(
+                                1 for kp in face_data["keypoints"] if kp["visible"]
+                            ),
+                            "keypoints": [
+                                {
+                                    "name": kp["name"],
+                                    "visible": kp["visible"],
+                                    "position_2d": kp["position_2d"],
+                                    "position_3d": kp["position_3d"],
+                                }
+                                for kp in face_data["keypoints"]
+                            ],
+                        }
+                        for face_data in keypoints_data
+                    ]
+                    if keypoints_data
+                    else []
+                ),
             }
         )
 

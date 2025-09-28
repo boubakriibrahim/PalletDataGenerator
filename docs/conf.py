@@ -20,8 +20,8 @@ try:
     version = __version__
 except ImportError:
     # Fallback if package is not installed
-    release = "0.1.2"
-    version = "0.1.2"
+    release = "0.1.3"
+    version = "0.1.3"
 
 # -- General configuration ---------------------------------------------------
 

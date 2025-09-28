@@ -176,7 +176,7 @@ def find_blender_executable():
     return None
 
 
-def run_in_blender(scene_path, mode, frames, resolution, output):
+def run_in_blender(scene_path, mode, frames, resolution, output, debug=False):
     """Execute the generator within Blender."""
     blender_exe = find_blender_executable()
     if not blender_exe:
@@ -199,8 +199,13 @@ if str(package_dir.parent) not in sys.path:
     sys.path.insert(0, str(package_dir.parent))
 
 from palletdatagenerator.generator import PalletDataGenerator
+from palletdatagenerator.utils import setup_logging
 
 try:
+    # Setup logging based on debug flag
+    log_level = "DEBUG" if {debug} else "INFO"
+    setup_logging(level=log_level, log_file="output.log")
+
     # Create generator
     generator = PalletDataGenerator(mode="{mode}")
 
@@ -226,7 +231,35 @@ except Exception as e:
     # Write script to temporary file
     script_path = Path.cwd() / "temp_blender_script.py"
     with open(script_path, "w") as f:
-        f.write(script_content)
+        # Use string replacement instead of format to avoid KeyError issues
+        formatted_script = script_content
+
+        # Replace all template variables
+        formatted_script = formatted_script.replace("{debug}", str(debug))
+        formatted_script = formatted_script.replace("{mode}", mode)
+        formatted_script = formatted_script.replace("{scene_path}", str(scene_path))
+        formatted_script = formatted_script.replace("{frames}", str(frames))
+        formatted_script = formatted_script.replace(
+            "{output}", str(output) if output else "None"
+        )
+        formatted_script = formatted_script.replace("{resolution}", str(resolution))
+
+        # Fix the Path(__file__).parent issue
+        formatted_script = formatted_script.replace(
+            "{Path(__file__).parent}", "__file__"
+        )
+
+        # Fix the f-string issue for output
+        if output:
+            formatted_script = formatted_script.replace(
+                "{f'Path(\"{output}\")' if output else None}", f'Path("{output}")'
+            )
+        else:
+            formatted_script = formatted_script.replace(
+                "{f'Path(\"{output}\")' if output else None}", "None"
+            )
+
+        f.write(formatted_script)
 
     try:
         # Run Blender in background with our script
@@ -402,6 +435,12 @@ Examples:
         help="Output directory (default: output/{mode}/generated_XXXXXX)",
     )
 
+    parser.add_argument(
+        "--debug",
+        action="store_true",
+        help="Enable debug logging for detailed output",
+    )
+
     return parser
 
 
@@ -409,6 +448,12 @@ def main():
     """Main CLI entry point."""
     parser = create_parser()
     args = parser.parse_args()
+
+    # Setup logging based on debug flag
+    from .utils import setup_logging
+
+    log_level = "DEBUG" if args.debug else "INFO"
+    setup_logging(level=log_level, log_file="output.log")
 
     # Validate scene file
     if not args.scene_path.exists():
@@ -424,6 +469,8 @@ def main():
     print(f"   Scene: {args.scene_path}")
     print(f"   Frames: {args.frames}")
     print(f"   Resolution: {args.resolution[0]}x{args.resolution[1]}")
+    if args.debug:
+        print("   Debug: Enabled")
 
     # Check if we're running inside Blender or outside
     if not RUNNING_IN_BLENDER:
@@ -434,6 +481,7 @@ def main():
             frames=args.frames,
             resolution=args.resolution,
             output=args.output,
+            debug=args.debug,
         )
         return
 

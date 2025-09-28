@@ -87,6 +87,21 @@ def ensure_dependencies():
     except ModuleNotFoundError:
         _pip_install(["install", "pascal_voc_writer"])
 
+    # Install matplotlib for 3D visualization
+    try:
+        import matplotlib.pyplot as plt  # noqa: F401
+        import numpy as np  # noqa: F401
+        from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
+    except ModuleNotFoundError:
+        _pip_install(["install", "matplotlib>=3.5.0"])
+
+    # Install plotly for interactive 3D figures
+    try:
+        import plotly.graph_objects as go  # noqa: F401
+        import plotly.offline as pyo  # noqa: F401
+    except ModuleNotFoundError:
+        _pip_install(["install", "plotly>=5.0.0"])
+
     print("✅ Dependencies ready")
     return PIL_AVAILABLE
 
@@ -258,6 +273,7 @@ def build_folders(root):
         "analysis": ensure(os.path.join(root, "analysis")),
         "yolo": ensure(os.path.join(root, "yolo_labels")),
         "voc": ensure(os.path.join(root, "voc_xml")),
+        "keypoints": ensure(os.path.join(root, "keypoints_labels")),
     }
     return sub
 

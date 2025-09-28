@@ -129,11 +129,12 @@ SINGLE_PALLET_CONFIG = {
     # --------- Realism helpers to prevent dark frames ---------
     "force_key_light": True,  # ensure at least one bright white key light (Default True in original)
     "min_key_light_energy": 500.0,  # watts-ish (for SPOT/AREA); SUN uses small strengths
+    "min_total_light_energy": 300.0,  # minimum total lighting energy to prevent dark frames
     "world_min_strength": 0.2,  # minimum background light strength (Filmic + low key)
     # --------- Auto exposure (per-frame) ----------
     "enable_auto_exposure": True,
     "target_luminance": 0.18,  # aim for 18% gray average luminance
-    "exposure_min": -4.0,  # EV clamp
+    "exposure_min": -2.0,  # EV clamp - more conservative to prevent very dark frames
     "exposure_max": 4.0,
     "exposure_smooth": 0.6,  # 0..1 how strongly to apply EV correction
     "preview_samples": 4,  # quick preview render for measurement
@@ -151,6 +152,18 @@ SINGLE_PALLET_CONFIG = {
     "attached_box_stack_probability": 0.6,
     "attached_box_stack_layers_range": (2, 4),
     "attached_box_stack_offset_factor": 0.05,
+    # --------------- Keypoints Generation ---------------
+    "generate_keypoints": True,
+    "keypoints_min_face_area": 80,  # Minimum face area to generate keypoints
+    "keypoints_visibility_check": False,  # Enable ray casting for visibility
+    "keypoints_face_detection_threshold": 0.5,  # Confidence threshold for face detection
+    "keypoints_show_3d_labels": False,  # Show 3D coordinate labels in analysis images
+    "keypoints_show_2d_labels": False,  # Show 2D coordinate labels in analysis images
+    "keypoints_show_labels": True,  # Show all keypoint labels (names, coordinates) in analysis images
+    "analysis_show_all_labels": False,  # Show all labels in analysis images (YOLO boxes, 3D structures)
+    "analysis_show_keypoints": True,  # Show keypoints in analysis images
+    "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
+    "analysis_show_3d_coordinates": True,  # Show 3D coordinates of selected faces in analysis images
 }
 
 
@@ -185,7 +198,7 @@ WAREHOUSE_CONFIG = {
     # Generation options
     "generate_analysis": True,
     "generate_segmentation": True,
-    "save_scene_before_render": True,
+    "save_scene_before_render": False,
     # Detection
     "max_faces_per_pallet": 2,
     "min_pallet_area": 100,
@@ -207,6 +220,18 @@ WAREHOUSE_CONFIG = {
     "target_luminance": 0.18,
     "exposure_min": -2.0,
     "exposure_max": 2.0,
+    # --------------- Keypoints Generation ---------------
+    "generate_keypoints": True,
+    "keypoints_min_face_area": 80,  # Minimum face area to generate keypoints
+    "keypoints_visibility_check": False,  # Enable ray casting for visibility
+    "keypoints_face_detection_threshold": 0.5,  # Confidence threshold for face detection
+    "keypoints_show_3d_labels": False,  # Show 3D coordinate labels in analysis images
+    "keypoints_show_2d_labels": False,  # Show 2D coordinate labels in analysis images
+    "keypoints_show_labels": True,  # Show all keypoint labels (names, coordinates) in analysis images
+    "analysis_show_all_labels": False,  # Show all labels in analysis images (YOLO boxes, 3D structures)
+    "analysis_show_keypoints": True,  # Show keypoints in analysis images
+    "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
+    "analysis_show_3d_coordinates": True,  # Show 3D coordinates of selected faces in analysis images
 }
 
 
