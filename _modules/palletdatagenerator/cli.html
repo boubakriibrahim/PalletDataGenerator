@@ -1,0 +1,817 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.cli &mdash; PalletDataGenerator 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/_modules/palletdatagenerator/cli.html" />
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=360bc84d"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../keypoints_generation.html">Keypoints Generation Feature</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#keypoints-layout">Keypoints Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#output-format">Output Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#keypoints-labels-yolo-format">Keypoints Labels (YOLO Format)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#example-keypoints-file">Example Keypoints File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#analysis-images">Analysis Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#face-detection">Face Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#visibility-detection">Visibility Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#d-debug-visualization">3D Debug Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#debug-output-structure">Debug Output Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#coordinate-files">Coordinate Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#interactive-html-figures">Interactive HTML Figures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#debug-images">Debug Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#using-debug-3d-features">Using Debug 3D Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#interactive-html-visualization">Interactive HTML Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#coordinate-analysis">Coordinate Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#example-usage">Example Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#integration-with-existing-features">Integration with Existing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#no-keypoints-generated">No keypoints generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#all-keypoints-marked-as-hidden">All keypoints marked as hidden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../keypoints_generation.html#keypoints-in-wrong-positions">Keypoints in wrong positions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../keypoints_generation.html#advanced-configuration">Advanced Configuration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../api/modules.html">palletdatagenerator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../api/palletdatagenerator.html">palletdatagenerator package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../api/palletdatagenerator.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.modes.html">palletdatagenerator.modes package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/palletdatagenerator.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.blender_runner.html">palletdatagenerator.blender_runner module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.cli.html">palletdatagenerator.cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.config.html">palletdatagenerator.config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.generator.html">palletdatagenerator.generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.utils.html">palletdatagenerator.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../api/palletdatagenerator.html#module-palletdatagenerator">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.html#palletdatagenerator.PalletDataGenerator"><code class="docutils literal notranslate"><span class="pre">PalletDataGenerator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.html#palletdatagenerator.DefaultConfig"><code class="docutils literal notranslate"><span class="pre">DefaultConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../api/palletdatagenerator.html#palletdatagenerator.setup_logging"><code class="docutils literal notranslate"><span class="pre">setup_logging()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.cli</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for palletdatagenerator.cli</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python3</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Simplified CLI for the Unified Pallet Data Generator.</span>
+<span class="sd">Only includes essential arguments as requested.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">argparse</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">shutil</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Check if we&#39;re running in Blender</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+
+    <span class="n">RUNNING_IN_BLENDER</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">RUNNING_IN_BLENDER</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="n">bpy</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.generator</span><span class="w"> </span><span class="kn">import</span> <span class="n">PalletDataGenerator</span>
+
+
+<div class="viewcode-block" id="find_blender_executable">
+<a class="viewcode-back" href="../../api/palletdatagenerator.cli.html#palletdatagenerator.cli.find_blender_executable">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">find_blender_executable</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Find Blender executable on the system (Windows, Linux, macOS).&quot;&quot;&quot;</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">glob</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">platform</span>
+
+    <span class="n">system</span> <span class="o">=</span> <span class="n">platform</span><span class="o">.</span><span class="n">system</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+
+    <span class="c1"># Common Blender executable names</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;windows&quot;</span><span class="p">:</span>
+        <span class="n">executable_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;blender.exe&quot;</span><span class="p">]</span>
+        <span class="c1"># Windows common installation paths</span>
+        <span class="n">common_paths</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Program Files</span><span class="se">\\</span><span class="s2">Blender Foundation</span><span class="se">\\</span><span class="s2">Blender*</span><span class="se">\\</span><span class="s2">blender.exe&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Program Files (x86)</span><span class="se">\\</span><span class="s2">Blender Foundation</span><span class="se">\\</span><span class="s2">Blender*</span><span class="se">\\</span><span class="s2">blender.exe&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;C:</span><span class="se">\\</span><span class="s2">Users</span><span class="se">\\</span><span class="s2">*</span><span class="se">\\</span><span class="s2">AppData</span><span class="se">\\</span><span class="s2">Local</span><span class="se">\\</span><span class="s2">Programs</span><span class="se">\\</span><span class="s2">Blender Foundation</span><span class="se">\\</span><span class="s2">Blender*</span><span class="se">\\</span><span class="s2">blender.exe&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;%PROGRAMFILES%</span><span class="se">\\</span><span class="s2">Blender Foundation</span><span class="se">\\</span><span class="s2">Blender*</span><span class="se">\\</span><span class="s2">blender.exe&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;%PROGRAMFILES(X86)%</span><span class="se">\\</span><span class="s2">Blender Foundation</span><span class="se">\\</span><span class="s2">Blender*</span><span class="se">\\</span><span class="s2">blender.exe&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>  <span class="c1"># macOS</span>
+        <span class="n">executable_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;blender&quot;</span><span class="p">,</span> <span class="s2">&quot;Blender&quot;</span><span class="p">]</span>
+        <span class="c1"># macOS common installation paths</span>
+        <span class="n">common_paths</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;/Applications/Blender.app/Contents/MacOS/Blender&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/Applications/blender.app/Contents/MacOS/blender&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/usr/local/bin/blender&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/opt/homebrew/bin/blender&quot;</span><span class="p">,</span>  <span class="c1"># Apple Silicon Homebrew</span>
+            <span class="s2">&quot;/usr/local/Cellar/blender/*/bin/blender&quot;</span><span class="p">,</span>  <span class="c1"># Intel Homebrew</span>
+            <span class="s2">&quot;~/Applications/Blender.app/Contents/MacOS/Blender&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># Linux and other Unix-like systems</span>
+        <span class="n">executable_names</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;blender&quot;</span><span class="p">]</span>
+        <span class="c1"># Linux common installation paths</span>
+        <span class="n">common_paths</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;/usr/bin/blender&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/usr/local/bin/blender&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/opt/blender*/blender&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/snap/bin/blender&quot;</span><span class="p">,</span>  <span class="c1"># Snap package</span>
+            <span class="s2">&quot;/var/lib/flatpak/exports/bin/org.blender.Blender&quot;</span><span class="p">,</span>  <span class="c1"># Flatpak</span>
+            <span class="s2">&quot;~/.local/bin/blender&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/usr/share/blender*/blender&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔍 Searching for Blender on </span><span class="si">{</span><span class="n">system</span><span class="o">.</span><span class="n">title</span><span class="p">()</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Method 1: Try to find blender in PATH</span>
+    <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">executable_names</span><span class="p">:</span>
+        <span class="n">blender_path</span> <span class="o">=</span> <span class="n">shutil</span><span class="o">.</span><span class="n">which</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">blender_path</span> <span class="ow">and</span> <span class="n">Path</span><span class="p">(</span><span class="n">blender_path</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">return</span> <span class="n">blender_path</span>
+
+    <span class="c1"># Method 2: Try common installation paths</span>
+    <span class="k">for</span> <span class="n">path_pattern</span> <span class="ow">in</span> <span class="n">common_paths</span><span class="p">:</span>
+        <span class="c1"># Expand environment variables and user home</span>
+        <span class="n">expanded_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expandvars</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">path_pattern</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="s2">&quot;*&quot;</span> <span class="ow">in</span> <span class="n">expanded_path</span><span class="p">:</span>
+            <span class="c1"># Handle wildcards for version directories</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">matches</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">expanded_path</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>  <span class="c1"># Get latest version first</span>
+                    <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">match</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">Path</span><span class="p">(</span><span class="n">match</span><span class="p">)</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Found Blender: </span><span class="si">{</span><span class="n">match</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                        <span class="k">return</span> <span class="n">match</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">expanded_path</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Found Blender: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+
+    <span class="c1"># Method 3: Try some additional system-specific searches</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;windows&quot;</span><span class="p">:</span>
+        <span class="c1"># Check Windows Registry (if available)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">winreg</span>
+
+            <span class="n">registry_paths</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="p">(</span><span class="n">winreg</span><span class="o">.</span><span class="n">HKEY_LOCAL_MACHINE</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;SOFTWARE\BlenderFoundation\Blender&quot;</span><span class="p">),</span>
+                <span class="p">(</span><span class="n">winreg</span><span class="o">.</span><span class="n">HKEY_CURRENT_USER</span><span class="p">,</span> <span class="sa">r</span><span class="s2">&quot;SOFTWARE\BlenderFoundation\Blender&quot;</span><span class="p">),</span>
+            <span class="p">]</span>
+
+            <span class="k">for</span> <span class="n">hkey</span><span class="p">,</span> <span class="n">subkey</span> <span class="ow">in</span> <span class="n">registry_paths</span><span class="p">:</span>
+                <span class="k">try</span><span class="p">:</span>
+                    <span class="k">with</span> <span class="n">winreg</span><span class="o">.</span><span class="n">OpenKey</span><span class="p">(</span><span class="n">hkey</span><span class="p">,</span> <span class="n">subkey</span><span class="p">)</span> <span class="k">as</span> <span class="n">key</span><span class="p">:</span>
+                        <span class="n">install_dir</span> <span class="o">=</span> <span class="n">winreg</span><span class="o">.</span><span class="n">QueryValueEx</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;InstallDir&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+                        <span class="n">blender_exe</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">install_dir</span><span class="p">)</span> <span class="o">/</span> <span class="s2">&quot;blender.exe&quot;</span>
+                        <span class="k">if</span> <span class="n">blender_exe</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Found Blender via registry: </span><span class="si">{</span><span class="n">blender_exe</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">blender_exe</span><span class="p">)</span>
+                <span class="k">except</span> <span class="p">(</span><span class="ne">FileNotFoundError</span><span class="p">,</span> <span class="ne">OSError</span><span class="p">):</span>
+                    <span class="k">continue</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="k">pass</span>  <span class="c1"># winreg not available</span>
+
+    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;linux&quot;</span><span class="p">:</span>
+        <span class="c1"># Check for AppImage files</span>
+        <span class="n">appimage_locations</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s2">&quot;~/Downloads/Blender*.AppImage&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;~/Applications/Blender*.AppImage&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;/opt/*/Blender*.AppImage&quot;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">pattern</span> <span class="ow">in</span> <span class="n">appimage_locations</span><span class="p">:</span>
+            <span class="n">expanded</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">expanduser</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+            <span class="n">matches</span> <span class="o">=</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">expanded</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">match</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">matches</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">Path</span><span class="p">(</span><span class="n">match</span><span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">match</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">):</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Found Blender AppImage: </span><span class="si">{</span><span class="n">match</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                    <span class="k">return</span> <span class="n">match</span>
+
+    <span class="c1"># Method 4: Try to find using &#39;locate&#39; command on Unix systems</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">!=</span> <span class="s2">&quot;windows&quot;</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>
+                <span class="p">[</span><span class="s2">&quot;locate&quot;</span><span class="p">,</span> <span class="s2">&quot;blender&quot;</span><span class="p">],</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">result</span><span class="o">.</span><span class="n">returncode</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">):</span>
+                    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/blender&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;/Blender&quot;</span><span class="p">):</span>
+                        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="p">(</span>
+                            <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+                            <span class="ow">and</span> <span class="n">path</span><span class="o">.</span><span class="n">is_file</span><span class="p">()</span>
+                            <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">)</span>
+                        <span class="p">):</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Found Blender via locate: </span><span class="si">{</span><span class="n">path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                            <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
+        <span class="k">except</span> <span class="p">(</span><span class="n">subprocess</span><span class="o">.</span><span class="n">TimeoutExpired</span><span class="p">,</span> <span class="ne">FileNotFoundError</span><span class="p">):</span>
+            <span class="k">pass</span>  <span class="c1"># locate command not available or timed out</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ Blender executable not found!&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 Installation suggestions:&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;windows&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Download from https://www.blender.org/download/&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Or install via Chocolatey: choco install blender&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Or install via Winget: winget install BlenderFoundation.Blender&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">system</span> <span class="o">==</span> <span class="s2">&quot;darwin&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Download from https://www.blender.org/download/&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Or install via Homebrew: brew install --cask blender&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Or install from Mac App Store&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>  <span class="c1"># Linux</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Download from https://www.blender.org/download/&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   • Or install via package manager:&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     - Ubuntu/Debian: sudo apt install blender&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     - Fedora: sudo dnf install blender&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     - Arch: sudo pacman -S blender&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     - Snap: sudo snap install blender --classic&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;     - Flatpak: flatpak install flathub org.blender.Blender&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+
+<div class="viewcode-block" id="run_in_blender">
+<a class="viewcode-back" href="../../api/palletdatagenerator.cli.html#palletdatagenerator.cli.run_in_blender">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">run_in_blender</span><span class="p">(</span><span class="n">scene_path</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">frames</span><span class="p">,</span> <span class="n">resolution</span><span class="p">,</span> <span class="n">output</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute the generator within Blender.&quot;&quot;&quot;</span>
+    <span class="n">blender_exe</span> <span class="o">=</span> <span class="n">find_blender_executable</span><span class="p">()</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">blender_exe</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;❌ Error: Blender executable not found!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 Please ensure Blender is installed and accessible in PATH&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Or install Blender from: https://www.blender.org/download/&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎬 Found Blender: </span><span class="si">{</span><span class="n">blender_exe</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🚀 Launching Blender to run generation...&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Create a temporary script that will run inside Blender</span>
+    <span class="n">script_content</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">import sys</span>
+<span class="s2">from pathlib import Path</span>
+
+<span class="s2"># Add package to path</span>
+<span class="s2">package_dir = Path(&quot;</span><span class="si">{</span><span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="si">}</span><span class="s2">&quot;)</span>
+<span class="s2">if str(package_dir.parent) not in sys.path:</span>
+<span class="s2">    sys.path.insert(0, str(package_dir.parent))</span>
+
+<span class="s2">from palletdatagenerator.generator import PalletDataGenerator</span>
+<span class="s2">from palletdatagenerator.utils import setup_logging</span>
+
+<span class="s2">try:</span>
+<span class="s2">    # Setup logging based on debug flag</span>
+<span class="s2">    log_level = &quot;DEBUG&quot; if </span><span class="si">{</span><span class="n">debug</span><span class="si">}</span><span class="s2"> else &quot;INFO&quot;</span>
+<span class="s2">    setup_logging(level=log_level, log_file=&quot;output.log&quot;)</span>
+
+<span class="s2">    # Create generator</span>
+<span class="s2">    generator = PalletDataGenerator(mode=&quot;</span><span class="si">{</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;)</span>
+
+<span class="s2">    # Generate dataset (all parameters are passed to generate method)</span>
+<span class="s2">    result = generator.generate(</span>
+<span class="s2">        scene_path=Path(&quot;</span><span class="si">{</span><span class="n">scene_path</span><span class="si">}</span><span class="s2">&quot;),</span>
+<span class="s2">        num_frames=</span><span class="si">{</span><span class="n">frames</span><span class="si">}</span><span class="s2">,</span>
+<span class="s2">        output_dir=</span><span class="si">{</span><span class="sa">f</span><span class="s1">&#39;Path(&quot;</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s1">&quot;)&#39;</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="n">output</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="kc">None</span><span class="si">}</span><span class="s2">,</span>
+<span class="s2">        resolution=</span><span class="si">{</span><span class="n">resolution</span><span class="si">}</span>
+<span class="s2">    )</span>
+
+<span class="s2">    print(&quot;✅ Generation completed successfully!&quot;)</span>
+<span class="s2">    print(f&quot;   Output: </span><span class="se">{{</span><span class="s2">result.get(&#39;output_path&#39;, &#39;Unknown&#39;)</span><span class="se">}}</span><span class="s2">&quot;)</span>
+<span class="s2">    print(f&quot;   Frames: </span><span class="se">{{</span><span class="s2">result.get(&#39;frames&#39;, &#39;Unknown&#39;)</span><span class="se">}}</span><span class="s2">&quot;)</span>
+<span class="s2">    print(f&quot;   Mode: </span><span class="se">{{</span><span class="s2">result.get(&#39;mode&#39;, &#39;Unknown&#39;)</span><span class="se">}}</span><span class="s2">&quot;)</span>
+
+<span class="s2">except Exception as e:</span>
+<span class="s2">    print(f&quot;❌ Error during generation: </span><span class="se">{{</span><span class="s2">e</span><span class="se">}}</span><span class="s2">&quot;)</span>
+<span class="s2">    import traceback</span>
+<span class="s2">    traceback.print_exc()</span>
+<span class="s2">&quot;&quot;&quot;</span>
+
+    <span class="c1"># Write script to temporary file</span>
+    <span class="n">script_path</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;temp_blender_script.py&quot;</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">script_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="c1"># Use string replacement instead of format to avoid KeyError issues</span>
+        <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">script_content</span>
+
+        <span class="c1"># Replace all template variables</span>
+        <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{debug}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">debug</span><span class="p">))</span>
+        <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{mode}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+        <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{scene_path}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">scene_path</span><span class="p">))</span>
+        <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{frames}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">frames</span><span class="p">))</span>
+        <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s2">&quot;</span><span class="si">{output}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">output</span><span class="p">)</span> <span class="k">if</span> <span class="n">output</span> <span class="k">else</span> <span class="s2">&quot;None&quot;</span>
+        <span class="p">)</span>
+        <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{resolution}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">resolution</span><span class="p">))</span>
+
+        <span class="c1"># Fix the Path(__file__).parent issue</span>
+        <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+            <span class="s2">&quot;{Path(__file__).parent}&quot;</span><span class="p">,</span> <span class="s2">&quot;__file__&quot;</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Fix the f-string issue for output</span>
+        <span class="k">if</span> <span class="n">output</span><span class="p">:</span>
+            <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                <span class="s2">&quot;{f&#39;Path(</span><span class="se">\&quot;</span><span class="si">{output}</span><span class="se">\&quot;</span><span class="s2">)&#39; if output else None}&quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Path(&quot;</span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s1">&quot;)&#39;</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formatted_script</span> <span class="o">=</span> <span class="n">formatted_script</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span>
+                <span class="s2">&quot;{f&#39;Path(</span><span class="se">\&quot;</span><span class="si">{output}</span><span class="se">\&quot;</span><span class="s2">)&#39; if output else None}&quot;</span><span class="p">,</span> <span class="s2">&quot;None&quot;</span>
+            <span class="p">)</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">formatted_script</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Run Blender in background with our script</span>
+        <span class="n">cmd</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">blender_exe</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">scene_path</span><span class="p">),</span>  <span class="c1"># Load the scene file</span>
+            <span class="s2">&quot;--background&quot;</span><span class="p">,</span>  <span class="c1"># Run without UI</span>
+            <span class="s2">&quot;--python&quot;</span><span class="p">,</span>
+            <span class="nb">str</span><span class="p">(</span><span class="n">script_path</span><span class="p">),</span>  <span class="c1"># Run our script</span>
+        <span class="p">]</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎬 Executing: </span><span class="si">{</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Run Blender with output filtering</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+        <span class="c1"># Start the process</span>
+        <span class="n">process</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">(</span>
+            <span class="n">cmd</span><span class="p">,</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">stderr</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">STDOUT</span><span class="p">,</span>
+            <span class="n">universal_newlines</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">bufsize</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>  <span class="c1"># Unbuffered for real-time output</span>
+        <span class="p">)</span>
+
+        <span class="n">frame_pattern</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;Fra:(\d+)&quot;</span><span class="p">)</span>
+        <span class="n">current_frame</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1"># Filter and display relevant output in real-time</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="nb">iter</span><span class="p">(</span><span class="n">process</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">readline</span><span class="p">,</span> <span class="s2">&quot;&quot;</span><span class="p">):</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Skip verbose Blender memory and timing lines</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">skip_pattern</span> <span class="ow">in</span> <span class="n">line</span>
+                <span class="k">for</span> <span class="n">skip_pattern</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="s2">&quot;Fra:&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Mem:&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Peak:&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Time:&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Scene, View Layer&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Updating&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Loading&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Synchronizing&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Building&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Copying&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Computing&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Writing&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Elapsed&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Remaining&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">):</span>
+                <span class="c1"># Only show frame progress for single_pallet mode</span>
+                <span class="c1"># (warehouse mode has its own progress messages)</span>
+                <span class="k">if</span> <span class="s2">&quot;Fra:&quot;</span> <span class="ow">in</span> <span class="n">line</span> <span class="ow">and</span> <span class="n">current_frame</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                    <span class="n">frame_match</span> <span class="o">=</span> <span class="n">frame_pattern</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">frame_match</span><span class="p">:</span>
+                        <span class="n">new_frame</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">frame_match</span><span class="o">.</span><span class="n">group</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+                        <span class="k">if</span> <span class="n">new_frame</span> <span class="o">!=</span> <span class="n">current_frame</span><span class="p">:</span>
+                            <span class="n">current_frame</span> <span class="o">=</span> <span class="n">new_frame</span>
+                            <span class="c1"># Only show this for single pallet mode</span>
+                            <span class="c1"># Warehouse mode shows its own &quot;📸 Rendering frame&quot; messages</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Show important messages immediately</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span>
+                <span class="n">important</span> <span class="ow">in</span> <span class="n">line</span>
+                <span class="k">for</span> <span class="n">important</span> <span class="ow">in</span> <span class="p">[</span>
+                    <span class="s2">&quot;[DEBUG]&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;✅&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;❌&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;⚠️&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;📊&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Error&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;error&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Saved:&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Analysis&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;YOLO&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;COCO&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;VOC&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;blender&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;PIL&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;generation&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;🚀&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;📁&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;📸&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;🏭&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;save_frame&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;SCENE&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;warehouse&quot;</span><span class="p">,</span>
+                    <span class="s2">&quot;Rendering frame&quot;</span><span class="p">,</span>
+                <span class="p">]</span>
+            <span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+                <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>  <span class="c1"># Force immediate output</span>
+
+        <span class="c1"># Wait for process to complete</span>
+        <span class="n">return_code</span> <span class="o">=</span> <span class="n">process</span><span class="o">.</span><span class="n">wait</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="n">return_code</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span><span class="p">(</span><span class="n">return_code</span><span class="p">,</span> <span class="n">cmd</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Blender execution completed!&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Blender execution failed with exit code </span><span class="si">{</span><span class="n">e</span><span class="o">.</span><span class="n">returncode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="n">e</span><span class="o">.</span><span class="n">returncode</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚠️  Generation interrupted by user&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">finally</span><span class="p">:</span>
+        <span class="c1"># Clean up temporary script</span>
+        <span class="k">if</span> <span class="n">script_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">script_path</span><span class="o">.</span><span class="n">unlink</span><span class="p">()</span></div>
+
+
+
+<div class="viewcode-block" id="create_parser">
+<a class="viewcode-back" href="../../api/palletdatagenerator.cli.html#palletdatagenerator.cli.create_parser">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">create_parser</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Create argument parser with only essential arguments.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">argparse</span><span class="o">.</span><span class="n">ArgumentParser</span><span class="p">(</span>
+        <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Generate synthetic pallet datasets with Blender&quot;</span><span class="p">,</span>
+        <span class="n">formatter_class</span><span class="o">=</span><span class="n">argparse</span><span class="o">.</span><span class="n">RawDescriptionHelpFormatter</span><span class="p">,</span>
+        <span class="n">epilog</span><span class="o">=</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Examples:</span>
+<span class="s2">  # Generate single pallet dataset (default mode)</span>
+<span class="s2">  palletgen scenes/one_pallet.blend --frames 100</span>
+
+<span class="s2">  # Generate warehouse dataset</span>
+<span class="s2">  palletgen scenes/warehouse_objects.blend --mode warehouse --frames 200 --resolution 1920 1080</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Scene path (required)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;scene_path&quot;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span> <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Path to Blender scene file (.blend)&quot;</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Mode selection (optional, defaults to single_pallet)</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--mode&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-m&quot;</span><span class="p">,</span>
+        <span class="n">choices</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;single_pallet&quot;</span><span class="p">,</span> <span class="s2">&quot;warehouse&quot;</span><span class="p">],</span>
+        <span class="n">default</span><span class="o">=</span><span class="s2">&quot;single_pallet&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Generation mode: single_pallet (default) or warehouse&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Essential arguments only</span>
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--frames&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-f&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">default</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Number of frames to generate (default: 50)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--resolution&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-r&quot;</span><span class="p">,</span>
+        <span class="n">nargs</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="nb">int</span><span class="p">,</span>
+        <span class="n">metavar</span><span class="o">=</span><span class="p">(</span><span class="s2">&quot;WIDTH&quot;</span><span class="p">,</span> <span class="s2">&quot;HEIGHT&quot;</span><span class="p">),</span>
+        <span class="n">default</span><span class="o">=</span><span class="p">[</span><span class="mi">1024</span><span class="p">,</span> <span class="mi">768</span><span class="p">],</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Image resolution (default: 1024 768)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--output&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;-o&quot;</span><span class="p">,</span>
+        <span class="nb">type</span><span class="o">=</span><span class="n">Path</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Output directory (default: output/</span><span class="si">{mode}</span><span class="s2">/generated_XXXXXX)&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">parser</span><span class="o">.</span><span class="n">add_argument</span><span class="p">(</span>
+        <span class="s2">&quot;--debug&quot;</span><span class="p">,</span>
+        <span class="n">action</span><span class="o">=</span><span class="s2">&quot;store_true&quot;</span><span class="p">,</span>
+        <span class="n">help</span><span class="o">=</span><span class="s2">&quot;Enable debug logging for detailed output&quot;</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">parser</span></div>
+
+
+
+<div class="viewcode-block" id="main">
+<a class="viewcode-back" href="../../api/palletdatagenerator.cli.html#palletdatagenerator.cli.main">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Main CLI entry point.&quot;&quot;&quot;</span>
+    <span class="n">parser</span> <span class="o">=</span> <span class="n">create_parser</span><span class="p">()</span>
+    <span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">()</span>
+
+    <span class="c1"># Setup logging based on debug flag</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_logging</span>
+
+    <span class="n">log_level</span> <span class="o">=</span> <span class="s2">&quot;DEBUG&quot;</span> <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span> <span class="k">else</span> <span class="s2">&quot;INFO&quot;</span>
+    <span class="n">setup_logging</span><span class="p">(</span><span class="n">level</span><span class="o">=</span><span class="n">log_level</span><span class="p">,</span> <span class="n">log_file</span><span class="o">=</span><span class="s2">&quot;output.log&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Validate scene file</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">args</span><span class="o">.</span><span class="n">scene_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Error: Scene file not found: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">scene_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">scene_path</span><span class="o">.</span><span class="n">suffix</span> <span class="o">!=</span> <span class="s2">&quot;.blend&quot;</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Error: Scene file must be a .blend file: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">scene_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🚀 Starting Pallet Data Generator&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Mode: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Scene: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">scene_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Frames: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">frames</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Resolution: </span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">resolution</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">x</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">resolution</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Debug: Enabled&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Check if we&#39;re running inside Blender or outside</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">RUNNING_IN_BLENDER</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎬 Not running in Blender - launching Blender automatically...&quot;</span><span class="p">)</span>
+        <span class="n">run_in_blender</span><span class="p">(</span>
+            <span class="n">scene_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">scene_path</span><span class="p">,</span>
+            <span class="n">mode</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="p">,</span>
+            <span class="n">frames</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">frames</span><span class="p">,</span>
+            <span class="n">resolution</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span>
+            <span class="n">output</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+            <span class="n">debug</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">debug</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="c1"># If we&#39;re here, we&#39;re running inside Blender</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="c1"># Create generator</span>
+        <span class="n">generator</span> <span class="o">=</span> <span class="n">PalletDataGenerator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">mode</span><span class="p">)</span>
+
+        <span class="c1"># Generate dataset (all parameters are passed to generate method)</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+            <span class="n">scene_path</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">scene_path</span><span class="p">,</span>
+            <span class="n">num_frames</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">frames</span><span class="p">,</span>
+            <span class="n">output_dir</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">output</span><span class="p">,</span>
+            <span class="n">resolution</span><span class="o">=</span><span class="n">args</span><span class="o">.</span><span class="n">resolution</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Generation completed successfully!&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Output: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;output_path&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Frames: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;frames&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Mode: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="s2">&quot;pallets_detected&quot;</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Pallets detected: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;pallets_detected&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">KeyboardInterrupt</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">⚠️  Generation interrupted by user&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Error during generation: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+
+        <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">main</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Ibrahim Boubakri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

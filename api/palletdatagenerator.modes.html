@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="palletdatagenerator.modes package" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="api/palletdatagenerator.modes.html" />
+<meta property="og:site_name" content="PalletDataGenerator" />
+<meta property="og:description" content="Submodules: palletdatagenerator.modes.base_generator module- BaseGenerator- BaseGenerator.__init__(), BaseGenerator.setup_folders(), BaseGenerator.configure_render(), BaseGenerator.setup_compositor..." />
+<meta name="description" content="Submodules: palletdatagenerator.modes.base_generator module- BaseGenerator- BaseGenerator.__init__(), BaseGenerator.setup_folders(), BaseGenerator.configure_render(), BaseGenerator.setup_compositor..." />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.modes package &mdash; PalletDataGenerator 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/api/palletdatagenerator.modes.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=360bc84d"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="palletdatagenerator.modes.base_generator module" href="palletdatagenerator.modes.base_generator.html" />
+    <link rel="prev" title="palletdatagenerator package" href="palletdatagenerator.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../keypoints_generation.html">Keypoints Generation Feature</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#keypoints-layout">Keypoints Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#output-format">Output Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#keypoints-labels-yolo-format">Keypoints Labels (YOLO Format)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#example-keypoints-file">Example Keypoints File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#analysis-images">Analysis Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#face-detection">Face Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#visibility-detection">Visibility Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#d-debug-visualization">3D Debug Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#debug-output-structure">Debug Output Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#coordinate-files">Coordinate Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#interactive-html-figures">Interactive HTML Figures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#debug-images">Debug Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#using-debug-3d-features">Using Debug 3D Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#interactive-html-visualization">Interactive HTML Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#coordinate-analysis">Coordinate Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#example-usage">Example Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#integration-with-existing-features">Integration with Existing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#no-keypoints-generated">No keypoints generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#all-keypoints-marked-as-hidden">All keypoints marked as hidden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#keypoints-in-wrong-positions">Keypoints in wrong positions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#advanced-configuration">Advanced Configuration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">palletdatagenerator</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="palletdatagenerator.html">palletdatagenerator package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="palletdatagenerator.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="current reference internal" href="#">palletdatagenerator.modes package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.blender_runner.html">palletdatagenerator.blender_runner module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.cli.html">palletdatagenerator.cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.config.html">palletdatagenerator.config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.generator.html">palletdatagenerator.generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.utils.html">palletdatagenerator.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.html#module-palletdatagenerator">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.html#palletdatagenerator.PalletDataGenerator"><code class="docutils literal notranslate"><span class="pre">PalletDataGenerator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.html#palletdatagenerator.DefaultConfig"><code class="docutils literal notranslate"><span class="pre">DefaultConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.html#palletdatagenerator.setup_logging"><code class="docutils literal notranslate"><span class="pre">setup_logging()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">palletdatagenerator</a></li>
+          <li class="breadcrumb-item"><a href="palletdatagenerator.html">palletdatagenerator package</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.modes package</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/docs/api/palletdatagenerator.modes.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="palletdatagenerator-modes-package">
+<h1>palletdatagenerator.modes package<a class="headerlink" href="#palletdatagenerator-modes-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html">palletdatagenerator.modes.base_generator module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator"><code class="docutils literal notranslate"><span class="pre">BaseGenerator</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.__init__"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.setup_folders"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.setup_folders()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.configure_render"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.configure_render()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.setup_compositor_nodes"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.setup_compositor_nodes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.setup_environment"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.setup_environment()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.setup_random_background"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.setup_random_background()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.create_floor_plane"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.create_floor_plane()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.randomize_object_material"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.randomize_object_material()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.draw_3d_bbox_edges"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.draw_3d_bbox_edges()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.project_points_accurate"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.project_points_accurate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.create_analysis_image_multi"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.create_analysis_image_multi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.create_random_lights"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.create_random_lights()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.get_bbox_2d_accurate"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.get_bbox_2d_accurate()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.bbox_3d_oriented"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.bbox_3d_oriented()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.project_points"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.project_points()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.hole_bboxes_3d"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.hole_bboxes_3d()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.auto_expose_frame"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.auto_expose_frame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.detect_faces_in_scene"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.detect_faces_in_scene()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.get_all_faces_from_bbox"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.get_all_faces_from_bbox()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.filter_side_faces"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.filter_side_faces()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.create_3d_debug_visualization"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.create_3d_debug_visualization()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.create_3d_debug_visualization_with_faces"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.create_3d_debug_visualization_with_faces()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.select_faces_by_camera_proximity"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.select_faces_by_camera_proximity()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.check_faces_adjacent"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.check_faces_adjacent()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.check_2d_middle_view"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.check_2d_middle_view()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.check_geometric_adjacency_only"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.check_geometric_adjacency_only()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.check_2d_surface_quality"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.check_2d_surface_quality()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.check_face_behind_primary"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.check_face_behind_primary()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.detect_overlapping_keypoints"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.detect_overlapping_keypoints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.draw_overlapping_keypoint_circles"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.draw_overlapping_keypoint_circles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.draw_single_keypoint_labels"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.draw_single_keypoint_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.draw_overlapping_keypoint_labels"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.draw_overlapping_keypoint_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.calculate_face_normal"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.calculate_face_normal()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.generate_keypoints_for_frame"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.generate_keypoints_for_frame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_2d_boxes"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.generate_face_2d_boxes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_3d_coordinates"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.generate_face_3d_coordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.create_interactive_3d_figure"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.create_interactive_3d_figure()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_keypoints"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.generate_face_keypoints()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.check_keypoint_visibility"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.check_keypoint_visibility()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.base_generator.html#palletdatagenerator.modes.base_generator.BaseGenerator.save_keypoints_labels"><code class="docutils literal notranslate"><span class="pre">BaseGenerator.save_keypoints_labels()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html">palletdatagenerator.modes.single_pallet module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.__init__"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.position_camera_for_side_face"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.position_camera_for_side_face()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.generate_frames"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.generate_frames()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.apply_pallet_movement"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.apply_pallet_movement()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.prepare_pallets"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.prepare_pallets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.duplicate_pallets_if_needed"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.duplicate_pallets_if_needed()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.position_pallets"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.position_pallets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.setup_lighting"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.setup_lighting()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.create_random_lights"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.create_random_lights()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.handle_attached_boxes"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.handle_attached_boxes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.ATTACHED_GROUP_PREFIX"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.ATTACHED_GROUP_PREFIX</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.get_detections"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.get_detections()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.auto_expose_frame"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.auto_expose_frame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.save_frame"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.save_frame()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.project_holes_and_write_labels"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.project_holes_and_write_labels()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.save_final_outputs"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.save_final_outputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.apply_initial_transform"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.apply_initial_transform()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.save_generated_scene"><code class="docutils literal notranslate"><span class="pre">SinglePalletMode.save_generated_scene()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html">palletdatagenerator.modes.warehouse module</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode"><code class="docutils literal notranslate"><span class="pre">WarehouseMode</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.__init__"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.__init__()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.generate_frames"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.generate_frames()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.find_warehouse_objects"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.find_warehouse_objects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.generate_warehouse_path"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.generate_warehouse_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.find_nearest_pallet"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.find_nearest_pallet()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.position_camera_on_path"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.position_camera_on_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.randomize_scene_objects"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.randomize_scene_objects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.generate_pallet_box_group"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.generate_pallet_box_group()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.cleanup_generated_boxes"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.cleanup_generated_boxes()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.find_pallet_box_relationships"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.find_pallet_box_relationships()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.get_visible_pallets"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.get_visible_pallets()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.randomize_lighting"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.randomize_lighting()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.save_warehouse_frame_outputs"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.save_warehouse_frame_outputs()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.write_warehouse_annotations"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.write_warehouse_annotations()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.restore_scene_objects"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.restore_scene_objects()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.modes.warehouse.html#palletdatagenerator.modes.warehouse.WarehouseMode.save_generated_scene"><code class="docutils literal notranslate"><span class="pre">WarehouseMode.save_generated_scene()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="module-palletdatagenerator.modes">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-palletdatagenerator.modes" title="Link to this heading"></a></h2>
+<p>Modes package - Contains generator mode implementations</p>
+<p>Each mode implements the exact logic from the original generator files.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="palletdatagenerator.html" class="btn btn-neutral float-left" title="palletdatagenerator package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="palletdatagenerator.modes.base_generator.html" class="btn btn-neutral float-right" title="palletdatagenerator.modes.base_generator module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Ibrahim Boubakri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

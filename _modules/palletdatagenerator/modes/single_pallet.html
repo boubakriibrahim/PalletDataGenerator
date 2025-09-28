@@ -1,0 +1,1310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.modes.single_pallet &mdash; PalletDataGenerator 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/_modules/palletdatagenerator/modes/single_pallet.html" />
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=360bc84d"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../../_static/copybutton.js?v=30646c52"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../keypoints_generation.html">Keypoints Generation Feature</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#keypoints-layout">Keypoints Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#output-format">Output Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#keypoints-labels-yolo-format">Keypoints Labels (YOLO Format)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#example-keypoints-file">Example Keypoints File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#analysis-images">Analysis Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#face-detection">Face Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#visibility-detection">Visibility Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#d-debug-visualization">3D Debug Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#debug-output-structure">Debug Output Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#coordinate-files">Coordinate Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#interactive-html-figures">Interactive HTML Figures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#debug-images">Debug Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#using-debug-3d-features">Using Debug 3D Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#interactive-html-visualization">Interactive HTML Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#coordinate-analysis">Coordinate Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#example-usage">Example Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#integration-with-existing-features">Integration with Existing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#no-keypoints-generated">No keypoints generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#all-keypoints-marked-as-hidden">All keypoints marked as hidden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../keypoints_generation.html#keypoints-in-wrong-positions">Keypoints in wrong positions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../keypoints_generation.html#advanced-configuration">Advanced Configuration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/modules.html">palletdatagenerator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/palletdatagenerator.html">palletdatagenerator package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/palletdatagenerator.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.modes.html">palletdatagenerator.modes package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/palletdatagenerator.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.blender_runner.html">palletdatagenerator.blender_runner module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.cli.html">palletdatagenerator.cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.config.html">palletdatagenerator.config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.generator.html">palletdatagenerator.generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.utils.html">palletdatagenerator.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/palletdatagenerator.html#module-palletdatagenerator">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.html#palletdatagenerator.PalletDataGenerator"><code class="docutils literal notranslate"><span class="pre">PalletDataGenerator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.html#palletdatagenerator.DefaultConfig"><code class="docutils literal notranslate"><span class="pre">DefaultConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/palletdatagenerator.html#palletdatagenerator.setup_logging"><code class="docutils literal notranslate"><span class="pre">setup_logging()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.modes.single_pallet</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for palletdatagenerator.modes.single_pallet</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Single Pallet Mode - Based on original one_pallet_generator.py</span>
+
+<span class="sd">Implements the exact camera positioning, movement, and generation logic</span>
+<span class="sd">from the original single pallet generator.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">random</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">bpy</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">mathutils</span><span class="w"> </span><span class="kn">import</span> <span class="n">Euler</span><span class="p">,</span> <span class="n">Matrix</span><span class="p">,</span> <span class="n">Vector</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">.base_generator</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseGenerator</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">pascal_voc_writer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writer</span> <span class="k">as</span> <span class="n">VocWriter</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="n">VocWriter</span> <span class="o">=</span> <span class="kc">None</span>
+
+
+<div class="viewcode-block" id="SinglePalletMode">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">SinglePalletMode</span><span class="p">(</span><span class="n">BaseGenerator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Single pallet generation mode with camera movement around a stationary pallet.</span>
+<span class="sd">    Replicates the exact behavior of the original one_pallet_generator.py</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="SinglePalletMode.__init__">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">config</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">config</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">mode_name</span> <span class="o">=</span> <span class="s2">&quot;single_pallet&quot;</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.position_camera_for_side_face">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.position_camera_for_side_face">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">position_camera_for_side_face</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cam_obj</span><span class="p">,</span> <span class="n">target_obj</span><span class="p">,</span> <span class="n">cfg</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Position camera to focus on side faces of the pallet, EXACT as in original.</span>
+<span class="sd">        Includes ground-safe positioning to prevent camera going below floor.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">tp</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">(</span><span class="n">target_obj</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+        <span class="n">ground_z</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_ground_z</span><span class="p">()</span>
+        <span class="n">z_margin</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;camera_min_z_above_ground&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">))</span>
+        <span class="n">min_allowed_z</span> <span class="o">=</span> <span class="n">ground_z</span> <span class="o">+</span> <span class="n">z_margin</span>
+
+        <span class="n">az</span> <span class="o">=</span> <span class="n">el</span> <span class="o">=</span> <span class="n">dist</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">cam_pos</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;side_face_probability&quot;</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">):</span>
+                <span class="n">face_angles</span> <span class="o">=</span> <span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;preferred_face_angles&quot;</span><span class="p">]</span>
+                <span class="n">chosen_face</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">face_angles</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+                <span class="n">angle_range</span> <span class="o">=</span> <span class="n">face_angles</span><span class="p">[</span><span class="n">chosen_face</span><span class="p">]</span>
+                <span class="n">az</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">angle_range</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">angle_range</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+                <span class="n">el</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">))</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.5</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">az</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">360</span><span class="p">))</span>
+                <span class="n">el</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">35</span><span class="p">))</span>
+                <span class="n">dist</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">1.8</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">)</span>
+
+            <span class="n">candidate</span> <span class="o">=</span> <span class="n">tp</span> <span class="o">+</span> <span class="n">Vector</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">dist</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">az</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">el</span><span class="p">),</span>
+                    <span class="n">dist</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">az</span><span class="p">)</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">el</span><span class="p">),</span>
+                    <span class="n">dist</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">el</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">candidate</span><span class="o">.</span><span class="n">z</span> <span class="o">&gt;=</span> <span class="n">min_allowed_z</span><span class="p">:</span>
+                <span class="n">cam_pos</span> <span class="o">=</span> <span class="n">candidate</span>
+                <span class="k">break</span>
+        <span class="k">if</span> <span class="n">cam_pos</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">cam_pos</span> <span class="o">=</span> <span class="n">candidate</span>
+        <span class="k">if</span> <span class="n">cam_pos</span><span class="o">.</span><span class="n">z</span> <span class="o">&lt;</span> <span class="n">min_allowed_z</span><span class="p">:</span>
+            <span class="n">cam_pos</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">min_allowed_z</span>
+
+        <span class="n">cam_obj</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">cam_pos</span>
+        <span class="n">look_dir</span> <span class="o">=</span> <span class="p">(</span><span class="n">tp</span> <span class="o">+</span> <span class="n">Vector</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">))</span> <span class="o">-</span> <span class="n">cam_pos</span><span class="p">)</span><span class="o">.</span><span class="n">normalized</span><span class="p">()</span>
+        <span class="n">cam_obj</span><span class="o">.</span><span class="n">rotation_euler</span> <span class="o">=</span> <span class="n">look_dir</span><span class="o">.</span><span class="n">to_track_quat</span><span class="p">(</span><span class="s2">&quot;-Z&quot;</span><span class="p">,</span> <span class="s2">&quot;Y&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">to_euler</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;azimuth&quot;</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">az</span><span class="p">),</span>
+            <span class="s2">&quot;elevation&quot;</span><span class="p">:</span> <span class="n">math</span><span class="o">.</span><span class="n">degrees</span><span class="p">(</span><span class="n">el</span><span class="p">),</span>
+            <span class="s2">&quot;distance&quot;</span><span class="p">:</span> <span class="n">dist</span><span class="p">,</span>
+            <span class="s2">&quot;camera_z&quot;</span><span class="p">:</span> <span class="n">cam_pos</span><span class="o">.</span><span class="n">z</span><span class="p">,</span>
+            <span class="s2">&quot;ground_z&quot;</span><span class="p">:</span> <span class="n">ground_z</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_get_ground_z</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get the Z coordinate of the floor/ground - uses base class implementation.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_get_ground_z</span><span class="p">()</span>
+
+<div class="viewcode-block" id="SinglePalletMode.generate_frames">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.generate_frames">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">generate_frames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Main generation loop exactly as in original one_pallet_generator.py</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🚀 Starting single pallet generation...&quot;</span><span class="p">)</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="c1"># Setup output folders first</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_folders</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📁 Output folders created&quot;</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+        <span class="c1"># Get the main pallet object</span>
+        <span class="n">base</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">base</span> <span class="ow">or</span> <span class="n">base</span><span class="o">.</span><span class="n">type</span> <span class="o">!=</span> <span class="s2">&quot;MESH&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s2">&quot;Object &#39;pallet&#39; not found or is not a mesh.&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Setup camera</span>
+        <span class="n">cam_data</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">cameras</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;SynthCam&quot;</span><span class="p">)</span>
+        <span class="n">cam_obj</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s2">&quot;SynthCam&quot;</span><span class="p">,</span> <span class="n">cam_data</span><span class="p">)</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">cam_obj</span><span class="p">)</span>
+        <span class="n">cam_obj</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">lens</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;camera_focal_mm&quot;</span><span class="p">]</span>
+        <span class="n">cam_obj</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sensor_width</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;camera_sensor_mm&quot;</span><span class="p">]</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span><span class="o">.</span><span class="n">camera</span> <span class="o">=</span> <span class="n">cam_obj</span>
+
+        <span class="c1"># Setup environment</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_environment</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_lighting</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+
+        <span class="c1"># Prepare pallets</span>
+        <span class="n">pallets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">prepare_pallets</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+
+        <span class="c1"># COCO scaffolding</span>
+        <span class="n">coco</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;info&quot;</span><span class="p">:</span> <span class="p">{},</span>
+            <span class="s2">&quot;licenses&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;images&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;annotations&quot;</span><span class="p">:</span> <span class="p">[],</span>
+            <span class="s2">&quot;categories&quot;</span><span class="p">:</span> <span class="p">[</span>
+                <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">base</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;object&quot;</span><span class="p">},</span>
+                <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;hole&quot;</span><span class="p">,</span> <span class="s2">&quot;supercategory&quot;</span><span class="p">:</span> <span class="s2">&quot;pocket&quot;</span><span class="p">},</span>
+            <span class="p">],</span>
+        <span class="p">}</span>
+        <span class="n">ann_id</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">meta</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">valid</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="n">total</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;num_images&quot;</span><span class="p">]</span>
+        <span class="n">_img_w</span><span class="p">,</span> <span class="n">_img_h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;resolution_x&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;resolution_y&quot;</span><span class="p">]</span>
+        <span class="n">sc</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">scene</span>
+
+        <span class="c1"># Save scene before rendering (if enabled)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;save_scene_before_render&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_generated_scene</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🔄 Starting generation loop: </span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2"> frames&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Main generation loop - exactly as in original</span>
+        <span class="k">while</span> <span class="n">valid</span> <span class="o">&lt;</span> <span class="n">total</span><span class="p">:</span>
+            <span class="n">sc</span><span class="o">.</span><span class="n">frame_current</span> <span class="o">=</span> <span class="n">valid</span>
+
+            <span class="c1"># Optional per-frame XY shift for pallet movement</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_pallet_move_xy&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">apply_pallet_movement</span><span class="p">(</span><span class="n">pallets</span><span class="p">)</span>
+
+            <span class="c1"># Re-roll lights per frame (optional)</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;randomize_lights_per_frame&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">create_random_lights</span><span class="p">(</span><span class="n">pallets</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">replace_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># Camera movement - the key difference from current implementation!</span>
+            <span class="n">focus_obj</span> <span class="o">=</span> <span class="n">pallets</span><span class="p">[</span><span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pallets</span><span class="p">)</span> <span class="o">//</span> <span class="mi">2</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pallets</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)]</span>
+            <span class="n">_camera_info</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">position_camera_for_side_face</span><span class="p">(</span>
+                <span class="n">cam_obj</span><span class="p">,</span> <span class="n">focus_obj</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+            <span class="p">)</span>
+
+            <span class="c1"># Handle attached boxes (per-frame rebuilding)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">handle_attached_boxes</span><span class="p">(</span><span class="n">pallets</span><span class="p">)</span>
+
+            <span class="c1"># Get detections for all visible pallets</span>
+            <span class="n">b2d_list</span><span class="p">,</span> <span class="n">b3d_list</span><span class="p">,</span> <span class="n">pockets_list</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_detections</span><span class="p">(</span><span class="n">pallets</span><span class="p">,</span> <span class="n">cam_obj</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span>
+
+            <span class="c1"># Detect faces and generate keypoints</span>
+            <span class="n">keypoints_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_keypoints_for_frame</span><span class="p">(</span><span class="n">cam_obj</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">valid</span><span class="p">)</span>
+
+            <span class="c1"># Debug output for keypoints</span>
+            <span class="k">if</span> <span class="n">keypoints_data</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span>
+                    <span class="sa">f</span><span class="s2">&quot;🎯 Frame </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">: Detected </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">keypoints_data</span><span class="p">)</span><span class="si">}</span><span class="s2"> faces with keypoints&quot;</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">face_data</span> <span class="ow">in</span> <span class="n">keypoints_data</span><span class="p">:</span>
+                    <span class="n">visible_kp</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span>
+                        <span class="mi">1</span> <span class="k">for</span> <span class="n">kp</span> <span class="ow">in</span> <span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;keypoints&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kp</span><span class="p">[</span><span class="s2">&quot;visible&quot;</span><span class="p">]</span>
+                    <span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;   - </span><span class="si">{</span><span class="n">face_data</span><span class="p">[</span><span class="s1">&#39;face_name&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> face: </span><span class="si">{</span><span class="n">visible_kp</span><span class="si">}</span><span class="s2">/6 keypoints visible&quot;</span>
+                    <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎯 Frame </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">: No faces detected for keypoints&quot;</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">b2d_list</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[skip] frame </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2"> - no visible pallets&quot;</span><span class="p">)</span>
+                <span class="n">valid</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">continue</span>
+
+            <span class="c1"># Auto exposure</span>
+            <span class="n">_new_ev</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_expose_frame</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">cam_obj</span><span class="p">)</span>
+
+            <span class="c1"># Render final image</span>
+            <span class="n">fn</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">valid</span><span class="si">:</span><span class="s2">06d</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">img_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+            <span class="n">sc</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">filepath</span> <span class="o">=</span> <span class="n">img_path</span>
+            <span class="n">sc</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">image_settings</span><span class="o">.</span><span class="n">file_format</span> <span class="o">=</span> <span class="s2">&quot;PNG&quot;</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">render</span><span class="o">.</span><span class="n">render</span><span class="p">(</span><span class="n">write_still</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="c1"># Generate all outputs (analysis, annotations, etc.)</span>
+            <span class="n">ann_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">save_frame</span><span class="p">(</span>
+                <span class="n">img_path</span><span class="p">,</span>
+                <span class="n">b2d_list</span><span class="p">,</span>
+                <span class="n">b3d_list</span><span class="p">,</span>
+                <span class="n">pockets_list</span><span class="p">,</span>
+                <span class="n">cam_obj</span><span class="p">,</span>
+                <span class="n">sc</span><span class="p">,</span>
+                <span class="n">valid</span><span class="p">,</span>
+                <span class="n">fn</span><span class="p">,</span>
+                <span class="n">coco</span><span class="p">,</span>
+                <span class="n">ann_id</span><span class="p">,</span>
+                <span class="n">meta</span><span class="p">,</span>
+                <span class="n">pallets</span><span class="p">,</span>
+                <span class="n">keypoints_data</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;✅ [</span><span class="si">{</span><span class="n">valid</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">/</span><span class="si">{</span><span class="n">total</span><span class="si">}</span><span class="s2">] frame </span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">b2d_list</span><span class="p">)</span><span class="si">}</span><span class="s2"> pallets visible; EV=</span><span class="si">{</span><span class="n">sc</span><span class="o">.</span><span class="n">view_settings</span><span class="o">.</span><span class="n">exposure</span><span class="si">:</span><span class="s2">+.2f</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="p">)</span>
+            <span class="n">valid</span> <span class="o">+=</span> <span class="mi">1</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;🎉 Generation completed! Generated </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2"> frames&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Write final outputs</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">save_final_outputs</span><span class="p">(</span><span class="n">coco</span><span class="p">,</span> <span class="n">meta</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="s2">&quot;frames_generated&quot;</span><span class="p">:</span> <span class="n">valid</span><span class="p">,</span>
+            <span class="s2">&quot;output_dir&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">],</span>
+            <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">mode_name</span><span class="p">,</span>
+        <span class="p">}</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.apply_pallet_movement">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.apply_pallet_movement">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_pallet_movement</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pallets</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply optional XY movement to pallets while keeping vertical stack.&quot;&quot;&quot;</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+        <span class="n">base_mat</span> <span class="o">=</span> <span class="n">pallets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">matrix_world</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># Get original transform</span>
+
+        <span class="n">tx</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;pallet_move_x_range&quot;</span><span class="p">])</span>
+        <span class="n">ty</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">*</span><span class="n">cfg</span><span class="p">[</span><span class="s2">&quot;pallet_move_y_range&quot;</span><span class="p">])</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">Translation</span><span class="p">(</span><span class="n">Vector</span><span class="p">((</span><span class="n">tx</span><span class="p">,</span> <span class="n">ty</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)))</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">po</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pallets</span><span class="p">):</span>
+            <span class="c1"># Calculate vertical offset for stacked pallets</span>
+            <span class="n">z_off</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">idx</span>
+                <span class="o">*</span> <span class="p">(</span><span class="n">pallets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_stack_gap&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)))</span>
+                <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;duplicate_pallets&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_stack_vertical&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="k">else</span> <span class="mf">0.0</span>
+            <span class="p">)</span>
+            <span class="n">base_stack</span> <span class="o">=</span> <span class="n">base_mat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">base_stack</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span> <span class="o">+=</span> <span class="n">z_off</span>
+            <span class="n">po</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">=</span> <span class="n">base_stack</span> <span class="o">@</span> <span class="n">delta</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.prepare_pallets">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.prepare_pallets">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">prepare_pallets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Prepare pallet objects (duplicates, materials, etc.) exactly as original.&quot;&quot;&quot;</span>
+        <span class="c1"># Store original matrix</span>
+        <span class="n">base_mat</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">matrix_world</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+        <span class="c1"># Create duplicates if needed</span>
+        <span class="n">pallets</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">duplicate_pallets_if_needed</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+
+        <span class="c1"># Set pass indices for object identification</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;unique_object_index&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">po</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pallets</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">po</span><span class="o">.</span><span class="n">pass_index</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">po</span> <span class="ow">in</span> <span class="n">pallets</span><span class="p">:</span>
+                <span class="n">po</span><span class="o">.</span><span class="n">pass_index</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Apply materials</span>
+        <span class="k">for</span> <span class="n">po</span> <span class="ow">in</span> <span class="n">pallets</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">randomize_object_material</span><span class="p">(</span><span class="n">po</span><span class="p">)</span>
+
+        <span class="c1"># Apply initial transform if requested</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;apply_initial_random_transform&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">apply_initial_transform</span><span class="p">(</span><span class="n">pallets</span><span class="p">,</span> <span class="n">base_mat</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># Just position pallets according to stacking rules</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">position_pallets</span><span class="p">(</span><span class="n">pallets</span><span class="p">,</span> <span class="n">base_mat</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pallets</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.duplicate_pallets_if_needed">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.duplicate_pallets_if_needed">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">duplicate_pallets_if_needed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create duplicate pallets if requested in config.&quot;&quot;&quot;</span>
+        <span class="n">pallets</span> <span class="o">=</span> <span class="p">[</span><span class="n">base_obj</span><span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;duplicate_pallets&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">pallets</span>
+
+        <span class="n">n</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;num_pallets&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">pallets</span>
+
+        <span class="n">base_h</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">z</span>
+        <span class="n">gap</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_stack_gap&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
+            <span class="n">dup</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">dup</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">data</span>
+            <span class="n">dup</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_obj</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">dup</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_stack_vertical&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+                <span class="n">dup</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">matrix_world</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">dup</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">z</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">z</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="p">(</span><span class="n">base_h</span> <span class="o">+</span> <span class="n">gap</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">dup</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">=</span> <span class="n">base_obj</span><span class="o">.</span><span class="n">matrix_world</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                <span class="n">dup</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">x</span> <span class="o">+=</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">base_obj</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">x</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">)</span>
+                <span class="n">dup</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">y</span> <span class="o">+=</span> <span class="p">(</span><span class="n">i</span> <span class="o">//</span> <span class="mi">2</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">base_obj</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">y</span> <span class="o">+</span> <span class="mf">0.1</span><span class="p">)</span>
+
+            <span class="n">pallets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dup</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pallets</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.position_pallets">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.position_pallets">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">position_pallets</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pallets</span><span class="p">,</span> <span class="n">base_mat</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Position pallets according to stacking configuration.&quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">po</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pallets</span><span class="p">):</span>
+            <span class="n">z_off</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">idx</span>
+                <span class="o">*</span> <span class="p">(</span>
+                    <span class="n">pallets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">z</span>
+                    <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_stack_gap&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;duplicate_pallets&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_stack_vertical&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="k">else</span> <span class="mf">0.0</span>
+            <span class="p">)</span>
+            <span class="n">base_stack</span> <span class="o">=</span> <span class="n">base_mat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">base_stack</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span> <span class="o">+=</span> <span class="n">z_off</span>
+            <span class="n">po</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">=</span> <span class="n">base_stack</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.setup_lighting">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.setup_lighting">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setup_lighting</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">base_obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Setup lighting system.&quot;&quot;&quot;</span>
+        <span class="c1"># Create initial lights</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">create_random_lights</span><span class="p">(</span><span class="n">base_obj</span><span class="p">,</span> <span class="n">replace_existing</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.create_random_lights">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.create_random_lights">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">create_random_lights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">anchor_obj</span><span class="p">,</span> <span class="n">replace_existing</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create random lighting around the anchor object - uses base class method.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">create_random_lights</span><span class="p">(</span><span class="n">anchor_obj</span><span class="p">,</span> <span class="n">replace_existing</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.handle_attached_boxes">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.handle_attached_boxes">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">handle_attached_boxes</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pallets</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Handle attached box variants per frame - EXACT from original.&quot;&quot;&quot;</span>
+        <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+        <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_name&quot;</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_cleanup_attached_group</span><span class="p">()</span>
+
+            <span class="c1"># Check if placeholder exists</span>
+            <span class="n">placeholder</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_name&quot;</span><span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">placeholder</span><span class="p">:</span>
+                <span class="c1"># Hide placeholder if configured</span>
+                <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;hide_placeholder_box&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">):</span>
+                    <span class="n">placeholder</span><span class="o">.</span><span class="n">hide_render</span> <span class="o">=</span> <span class="kc">True</span>
+                    <span class="n">placeholder</span><span class="o">.</span><span class="n">hide_viewport</span> <span class="o">=</span> <span class="kc">True</span>
+
+                <span class="c1"># build group/single fresh each frame (if enabled)</span>
+                <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_group&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_build_attached_box_group</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">,</span> <span class="n">pallets</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">_build_attached_box_single</span><span class="p">(</span><span class="n">cfg</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">,</span> <span class="n">pallets</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span></div>
+
+
+    <span class="c1"># Attached box system constants and functions (EXACT from original)</span>
+    <span class="n">ATTACHED_GROUP_PREFIX</span> <span class="o">=</span> <span class="s2">&quot;AttachedGroup_&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_cleanup_attached_group</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Clean up existing attached group objects.&quot;&quot;&quot;</span>
+        <span class="n">to_remove</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">o</span> <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span> <span class="k">if</span> <span class="n">o</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ATTACHED_GROUP_PREFIX</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">for</span> <span class="n">o</span> <span class="ow">in</span> <span class="n">to_remove</span><span class="p">:</span>
+            <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+                <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">o</span><span class="p">,</span> <span class="n">do_unlink</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_scale_object_to_bbox</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">target_dims</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Scale object to match target dimensions.&quot;&quot;&quot;</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">cur</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">dimensions</span>
+            <span class="n">sx</span> <span class="o">=</span> <span class="n">target_dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">cur</span><span class="o">.</span><span class="n">x</span> <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">x</span> <span class="k">else</span> <span class="mf">1.0</span>
+            <span class="n">sy</span> <span class="o">=</span> <span class="n">target_dims</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">cur</span><span class="o">.</span><span class="n">y</span> <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">y</span> <span class="k">else</span> <span class="mf">1.0</span>
+            <span class="n">sz</span> <span class="o">=</span> <span class="n">target_dims</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">/</span> <span class="n">cur</span><span class="o">.</span><span class="n">z</span> <span class="k">if</span> <span class="n">cur</span><span class="o">.</span><span class="n">z</span> <span class="k">else</span> <span class="mf">1.0</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">x</span> <span class="o">*=</span> <span class="n">sx</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">y</span> <span class="o">*=</span> <span class="n">sy</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">scale</span><span class="o">.</span><span class="n">z</span> <span class="o">*=</span> <span class="n">sz</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_bottom_world_z</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get bottom Z coordinate of object in world space.&quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">view_layer</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">corners</span> <span class="o">=</span> <span class="p">[</span><span class="n">obj</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">@</span> <span class="n">Vector</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">obj</span><span class="o">.</span><span class="n">bound_box</span><span class="p">]</span>
+            <span class="k">return</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">corners</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">obj</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">z</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_align_bottom</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">obj</span><span class="p">,</span> <span class="n">target_bottom_z</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Align object&#39;s bottom to target Z coordinate.&quot;&quot;&quot;</span>
+        <span class="n">cur_bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bottom_world_z</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span>
+        <span class="n">dz</span> <span class="o">=</span> <span class="n">target_bottom_z</span> <span class="o">-</span> <span class="n">cur_bottom</span>
+        <span class="k">if</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dz</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-6</span><span class="p">:</span>
+            <span class="n">obj</span><span class="o">.</span><span class="n">location</span><span class="o">.</span><span class="n">z</span> <span class="o">+=</span> <span class="n">dz</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_attached_box_single</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">,</span> <span class="n">pallet</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build single attached box - EXACT from original.&quot;&quot;&quot;</span>
+        <span class="n">variants</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_variants&quot;</span><span class="p">,</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">variants</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">name_src</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">variants</span><span class="p">)</span>
+        <span class="n">src</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">name_src</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">src</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="n">dup</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">dup</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">data</span>
+        <span class="n">dup</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">ATTACHED_GROUP_PREFIX</span> <span class="o">+</span> <span class="n">name_src</span>
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">dup</span><span class="p">)</span>
+        <span class="n">dup</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">=</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">matrix_world</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_scale_object_to_bbox</span><span class="p">(</span><span class="n">dup</span><span class="p">,</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">dimensions</span><span class="p">)</span>
+        <span class="n">ph_bottom</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_bottom_world_z</span><span class="p">(</span><span class="n">placeholder</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_align_bottom</span><span class="p">(</span><span class="n">dup</span><span class="p">,</span> <span class="n">ph_bottom</span><span class="p">)</span>
+        <span class="n">dup</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">pallet</span>
+        <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+            <span class="n">dup</span><span class="o">.</span><span class="n">matrix_parent_inverse</span> <span class="o">=</span> <span class="n">pallet</span><span class="o">.</span><span class="n">matrix_world</span><span class="o">.</span><span class="n">inverted</span><span class="p">()</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_build_attached_box_group</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">cfg</span><span class="p">,</span> <span class="n">placeholder</span><span class="p">,</span> <span class="n">pallet</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Build group of attached boxes - EXACT from original.&quot;&quot;&quot;</span>
+        <span class="n">variants</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_variants&quot;</span><span class="p">,</span> <span class="p">[])</span> <span class="k">if</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">variants</span><span class="p">:</span>
+            <span class="k">return</span>
+
+        <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">view_layer</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+        <span class="n">pallet_corners</span> <span class="o">=</span> <span class="p">[</span><span class="n">pallet</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">@</span> <span class="n">Vector</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pallet</span><span class="o">.</span><span class="n">bound_box</span><span class="p">]</span>
+        <span class="n">pallet_min_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pallet_corners</span><span class="p">)</span>
+        <span class="n">pallet_max_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pallet_corners</span><span class="p">)</span>
+        <span class="n">pallet_min_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pallet_corners</span><span class="p">)</span>
+        <span class="n">pallet_max_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pallet_corners</span><span class="p">)</span>
+        <span class="n">pallet_max_z</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">pallet_corners</span><span class="p">)</span>
+
+        <span class="n">target_width</span> <span class="o">=</span> <span class="n">pallet_max_x</span> <span class="o">-</span> <span class="n">pallet_min_x</span>
+        <span class="n">target_depth</span> <span class="o">=</span> <span class="n">pallet_max_y</span> <span class="o">-</span> <span class="n">pallet_min_y</span>
+
+        <span class="n">ph_matrix</span> <span class="o">=</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">matrix_world</span>
+        <span class="n">ph_corners</span> <span class="o">=</span> <span class="p">[</span><span class="n">ph_matrix</span> <span class="o">@</span> <span class="n">Vector</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">placeholder</span><span class="o">.</span><span class="n">bound_box</span><span class="p">]</span>
+        <span class="n">ph_min_z</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ph_corners</span><span class="p">)</span>
+        <span class="n">ph_max_z</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">ph_corners</span><span class="p">)</span>
+        <span class="n">base_height</span> <span class="o">=</span> <span class="n">ph_max_z</span> <span class="o">-</span> <span class="n">ph_min_z</span>
+
+        <span class="n">extra_h_min</span><span class="p">,</span> <span class="n">extra_h_max</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+            <span class="s2">&quot;attached_box_allow_extra_height&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">max_height</span> <span class="o">=</span> <span class="n">base_height</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">extra_h_min</span><span class="p">,</span> <span class="n">extra_h_max</span><span class="p">)</span>
+
+        <span class="n">count</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">*</span><span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_group_count_range&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)))</span>
+
+        <span class="c1"># Find best grid layout</span>
+        <span class="n">best_grid</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">best_aspect</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">rows</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):</span>
+            <span class="n">cols</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="n">count</span> <span class="o">+</span> <span class="n">rows</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">//</span> <span class="n">rows</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">rows</span> <span class="o">*</span> <span class="n">cols</span> <span class="o">&gt;=</span> <span class="n">count</span><span class="p">:</span>
+                <span class="n">grid_aspect</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">rows</span> <span class="o">/</span> <span class="n">cols</span><span class="p">,</span> <span class="n">cols</span> <span class="o">/</span> <span class="n">rows</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">grid_aspect</span> <span class="o">&lt;</span> <span class="n">best_aspect</span><span class="p">:</span>
+                    <span class="n">best_aspect</span> <span class="o">=</span> <span class="n">grid_aspect</span>
+                    <span class="n">best_grid</span> <span class="o">=</span> <span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">cols</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">best_grid</span><span class="p">:</span>
+            <span class="n">best_grid</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">count</span><span class="p">)</span>
+        <span class="n">grid_rows</span><span class="p">,</span> <span class="n">grid_cols</span> <span class="o">=</span> <span class="n">best_grid</span>
+
+        <span class="n">cell_width</span> <span class="o">=</span> <span class="n">target_width</span> <span class="o">/</span> <span class="n">grid_cols</span>
+        <span class="n">cell_depth</span> <span class="o">=</span> <span class="n">target_depth</span> <span class="o">/</span> <span class="n">grid_rows</span>
+
+        <span class="n">enable_stacking</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_enable_stacking&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+        <span class="n">stack_prob</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_stack_probability&quot;</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+        <span class="n">stack_range</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_stack_layers_range&quot;</span><span class="p">,</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+        <span class="n">offset_factor</span> <span class="o">=</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;attached_box_stack_offset_factor&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">)</span>
+
+        <span class="n">created_objects</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">obj_index</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid_rows</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">grid_cols</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">obj_index</span> <span class="o">&gt;=</span> <span class="n">count</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+                <span class="n">cell_min_x</span> <span class="o">=</span> <span class="n">pallet_min_x</span> <span class="o">+</span> <span class="n">col</span> <span class="o">*</span> <span class="n">cell_width</span>
+                <span class="n">cell_max_x</span> <span class="o">=</span> <span class="n">pallet_min_x</span> <span class="o">+</span> <span class="p">(</span><span class="n">col</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cell_width</span>
+                <span class="n">cell_min_y</span> <span class="o">=</span> <span class="n">pallet_min_y</span> <span class="o">+</span> <span class="n">row</span> <span class="o">*</span> <span class="n">cell_depth</span>
+                <span class="n">cell_max_y</span> <span class="o">=</span> <span class="n">pallet_min_y</span> <span class="o">+</span> <span class="p">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="n">cell_depth</span>
+
+                <span class="n">cell_center_x</span> <span class="o">=</span> <span class="p">(</span><span class="n">cell_min_x</span> <span class="o">+</span> <span class="n">cell_max_x</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+                <span class="n">cell_center_y</span> <span class="o">=</span> <span class="p">(</span><span class="n">cell_min_y</span> <span class="o">+</span> <span class="n">cell_max_y</span><span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+
+                <span class="n">create_stack</span> <span class="o">=</span> <span class="n">enable_stacking</span> <span class="ow">and</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">stack_prob</span>
+                <span class="n">stack_layers</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="o">*</span><span class="n">stack_range</span><span class="p">)</span> <span class="k">if</span> <span class="n">create_stack</span> <span class="k">else</span> <span class="mi">1</span>
+
+                <span class="n">cell_objects</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">stack_layers</span><span class="p">):</span>
+                    <span class="n">src_name</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">variants</span><span class="p">)</span>
+                    <span class="n">src</span> <span class="o">=</span> <span class="n">bpy</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">src_name</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="ow">not</span> <span class="n">src</span><span class="p">:</span>
+                        <span class="k">continue</span>
+
+                    <span class="n">dup</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+                    <span class="n">dup</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">src</span><span class="o">.</span><span class="n">data</span>
+                    <span class="n">dup</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">ATTACHED_GROUP_PREFIX</span><span class="si">}{</span><span class="n">obj_index</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">layer</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">src_name</span><span class="si">}</span><span class="s2">&quot;</span>
+                    <span class="p">)</span>
+                    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">collection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">link</span><span class="p">(</span><span class="n">dup</span><span class="p">)</span>
+
+                    <span class="n">dup</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">Identity</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+                    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">view_layer</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+                    <span class="n">src_corners</span> <span class="o">=</span> <span class="p">[</span><span class="n">Vector</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src</span><span class="o">.</span><span class="n">bound_box</span><span class="p">]</span>
+                    <span class="n">src_min_x</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src_corners</span><span class="p">)</span>
+                    <span class="n">src_max_x</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src_corners</span><span class="p">)</span>
+                    <span class="n">src_min_y</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src_corners</span><span class="p">)</span>
+                    <span class="n">src_max_y</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src_corners</span><span class="p">)</span>
+                    <span class="n">src_min_z</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src_corners</span><span class="p">)</span>
+                    <span class="n">src_max_z</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">src_corners</span><span class="p">)</span>
+
+                    <span class="n">src_width</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">src_max_x</span> <span class="o">-</span> <span class="n">src_min_x</span><span class="p">)</span>
+                    <span class="n">src_depth</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">src_max_y</span> <span class="o">-</span> <span class="n">src_min_y</span><span class="p">)</span>
+                    <span class="n">src_height</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mf">1e-6</span><span class="p">,</span> <span class="n">src_max_z</span> <span class="o">-</span> <span class="n">src_min_z</span><span class="p">)</span>
+
+                    <span class="n">scale_x</span> <span class="o">=</span> <span class="n">cell_width</span> <span class="o">/</span> <span class="n">src_width</span>
+                    <span class="n">scale_y</span> <span class="o">=</span> <span class="n">cell_depth</span> <span class="o">/</span> <span class="n">src_depth</span>
+
+                    <span class="k">if</span> <span class="n">layer</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">target_obj_height</span> <span class="o">=</span> <span class="n">max_height</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.8</span><span class="p">)</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">target_obj_height</span> <span class="o">=</span> <span class="n">max_height</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.6</span><span class="p">)</span>
+                    <span class="n">scale_z</span> <span class="o">=</span> <span class="n">target_obj_height</span> <span class="o">/</span> <span class="n">src_height</span>
+
+                    <span class="n">dup</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">((</span><span class="n">scale_x</span><span class="p">,</span> <span class="n">scale_y</span><span class="p">,</span> <span class="n">scale_z</span><span class="p">))</span>
+                    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">view_layer</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+                    <span class="k">if</span> <span class="n">layer</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                        <span class="n">target_x</span> <span class="o">=</span> <span class="n">cell_center_x</span>
+                        <span class="n">target_y</span> <span class="o">=</span> <span class="n">cell_center_y</span>
+                        <span class="n">target_z</span> <span class="o">=</span> <span class="n">pallet_max_z</span>
+                    <span class="k">else</span><span class="p">:</span>
+                        <span class="n">max_offset_x</span> <span class="o">=</span> <span class="n">cell_width</span> <span class="o">*</span> <span class="n">offset_factor</span> <span class="o">*</span> <span class="mf">0.5</span>
+                        <span class="n">max_offset_y</span> <span class="o">=</span> <span class="n">cell_depth</span> <span class="o">*</span> <span class="n">offset_factor</span> <span class="o">*</span> <span class="mf">0.5</span>
+                        <span class="n">offset_x</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">max_offset_x</span><span class="p">,</span> <span class="n">max_offset_x</span><span class="p">)</span>
+                        <span class="n">offset_y</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="n">max_offset_y</span><span class="p">,</span> <span class="n">max_offset_y</span><span class="p">)</span>
+                        <span class="n">target_x</span> <span class="o">=</span> <span class="n">cell_center_x</span> <span class="o">+</span> <span class="n">offset_x</span>
+                        <span class="n">target_y</span> <span class="o">=</span> <span class="n">cell_center_y</span> <span class="o">+</span> <span class="n">offset_y</span>
+                        <span class="n">prev_obj</span> <span class="o">=</span> <span class="n">cell_objects</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+                        <span class="n">prev_corners</span> <span class="o">=</span> <span class="p">[</span>
+                            <span class="n">prev_obj</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">@</span> <span class="n">Vector</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+                            <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">prev_obj</span><span class="o">.</span><span class="n">bound_box</span>
+                        <span class="p">]</span>
+                        <span class="n">prev_top_z</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">prev_corners</span><span class="p">)</span>
+                        <span class="n">stack_gap</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">cell_width</span> <span class="o">*</span> <span class="n">offset_factor</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span>
+                        <span class="n">target_z</span> <span class="o">=</span> <span class="n">prev_top_z</span> <span class="o">+</span> <span class="n">stack_gap</span>
+
+                    <span class="n">dup_corners</span> <span class="o">=</span> <span class="p">[</span><span class="n">dup</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">@</span> <span class="n">Vector</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dup</span><span class="o">.</span><span class="n">bound_box</span><span class="p">]</span>
+                    <span class="n">dup_center_x</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dup_corners</span><span class="p">)</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">x</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dup_corners</span><span class="p">)</span>
+                    <span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+                    <span class="n">dup_center_y</span> <span class="o">=</span> <span class="p">(</span>
+                        <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dup_corners</span><span class="p">)</span> <span class="o">+</span> <span class="nb">max</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">y</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dup_corners</span><span class="p">)</span>
+                    <span class="p">)</span> <span class="o">/</span> <span class="mf">2.0</span>
+                    <span class="n">dup_min_z</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">z</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">dup_corners</span><span class="p">)</span>
+
+                    <span class="n">final_x</span> <span class="o">=</span> <span class="n">target_x</span> <span class="o">-</span> <span class="n">dup_center_x</span>
+                    <span class="n">final_y</span> <span class="o">=</span> <span class="n">target_y</span> <span class="o">-</span> <span class="n">dup_center_y</span>
+                    <span class="n">final_z</span> <span class="o">=</span> <span class="n">target_z</span> <span class="o">-</span> <span class="n">dup_min_z</span>
+
+                    <span class="n">dup</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="n">Vector</span><span class="p">((</span><span class="n">final_x</span><span class="p">,</span> <span class="n">final_y</span><span class="p">,</span> <span class="n">final_z</span><span class="p">))</span>
+                    <span class="n">bpy</span><span class="o">.</span><span class="n">context</span><span class="o">.</span><span class="n">view_layer</span><span class="o">.</span><span class="n">update</span><span class="p">()</span>
+
+                    <span class="n">dup</span><span class="o">.</span><span class="n">parent</span> <span class="o">=</span> <span class="n">pallet</span>
+                    <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">suppress</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+                        <span class="n">dup</span><span class="o">.</span><span class="n">matrix_parent_inverse</span> <span class="o">=</span> <span class="n">pallet</span><span class="o">.</span><span class="n">matrix_world</span><span class="o">.</span><span class="n">inverted</span><span class="p">()</span>
+
+                    <span class="n">created_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dup</span><span class="p">)</span>
+                    <span class="n">cell_objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dup</span><span class="p">)</span>
+
+                <span class="n">obj_index</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">obj_index</span> <span class="o">&gt;=</span> <span class="n">count</span><span class="p">:</span>
+                    <span class="k">break</span>
+
+<div class="viewcode-block" id="SinglePalletMode.get_detections">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.get_detections">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_detections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pallets</span><span class="p">,</span> <span class="n">cam_obj</span><span class="p">,</span> <span class="n">sc</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get 2D and 3D bounding boxes for all visible pallets - EXACT from original.&quot;&quot;&quot;</span>
+        <span class="n">b2d_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">b3d_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">pockets_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">po</span> <span class="ow">in</span> <span class="n">pallets</span><span class="p">:</span>
+            <span class="n">b2d</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_bbox_2d_accurate</span><span class="p">(</span><span class="n">po</span><span class="p">,</span> <span class="n">cam_obj</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">b2d</span><span class="p">:</span>  <span class="c1"># off-screen or behind camera</span>
+                <span class="k">continue</span>
+
+            <span class="n">cfg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span>
+            <span class="k">if</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;allow_cropping&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+                <span class="k">if</span> <span class="p">(</span>
+                    <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;visible_ratio&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;min_visible_area_ratio&quot;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;crop_ratio&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">cfg</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;max_crop_ratio&quot;</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">)</span>
+                    <span class="ow">or</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">50</span>
+                <span class="p">):</span>
+                    <span class="k">continue</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">:</span>
+                    <span class="k">continue</span>
+
+            <span class="n">b2d_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">b2d</span><span class="p">)</span>
+            <span class="n">b3d_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bbox_3d_oriented</span><span class="p">(</span><span class="n">po</span><span class="p">))</span>
+            <span class="n">pockets_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">hole_bboxes_3d</span><span class="p">(</span><span class="n">po</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="n">b2d_list</span><span class="p">,</span> <span class="n">b3d_list</span><span class="p">,</span> <span class="n">pockets_list</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.auto_expose_frame">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.auto_expose_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">auto_expose_frame</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="n">cam_obj</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Auto-exposure adjustment for the frame - uses base class method.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">auto_expose_frame</span><span class="p">(</span><span class="n">sc</span><span class="p">,</span> <span class="n">cam_obj</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.save_frame">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.save_frame">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_frame</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">img_path</span><span class="p">,</span>
+        <span class="n">b2d_list</span><span class="p">,</span>
+        <span class="n">b3d_list</span><span class="p">,</span>
+        <span class="n">pockets_list</span><span class="p">,</span>
+        <span class="n">cam_obj</span><span class="p">,</span>
+        <span class="n">sc</span><span class="p">,</span>
+        <span class="n">valid</span><span class="p">,</span>
+        <span class="n">fn</span><span class="p">,</span>
+        <span class="n">coco</span><span class="p">,</span>
+        <span class="n">ann_id</span><span class="p">,</span>
+        <span class="n">meta</span><span class="p">,</span>
+        <span class="n">pallets</span><span class="p">,</span>
+        <span class="n">keypoints_data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save all outputs for a single frame: analysis, YOLO, VOC, COCO, metadata - EXACT from original.&quot;&quot;&quot;</span>
+
+        <span class="c1"># Helper functions for coordinate conversion - EXACT from original pattern</span>
+        <span class="k">def</span><span class="w"> </span><span class="nf">xyxy_to_xywh</span><span class="p">(</span><span class="n">b2d</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Convert bbox from x_min,y_min,x_max,y_max to x,y,width,height for COCO&quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="p">[</span><span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">],</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">],</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">],</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]]</span>
+
+        <span class="k">def</span><span class="w"> </span><span class="nf">xyxy_to_yolo</span><span class="p">(</span><span class="n">b2d</span><span class="p">,</span> <span class="n">img_w</span><span class="p">,</span> <span class="n">img_h</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;Convert bbox to YOLO format: center_x, center_y, width, height (normalized)&quot;&quot;&quot;</span>
+            <span class="n">x_center</span> <span class="o">=</span> <span class="p">(</span><span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;x_max&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">img_w</span>
+            <span class="n">y_center</span> <span class="o">=</span> <span class="p">(</span><span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]</span> <span class="o">+</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;y_max&quot;</span><span class="p">])</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">img_h</span>
+            <span class="n">width</span> <span class="o">=</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;width&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">img_w</span>
+            <span class="n">height</span> <span class="o">=</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;height&quot;</span><span class="p">]</span> <span class="o">/</span> <span class="n">img_h</span>
+            <span class="k">return</span> <span class="n">x_center</span><span class="p">,</span> <span class="n">y_center</span><span class="p">,</span> <span class="n">width</span><span class="p">,</span> <span class="n">height</span>
+
+        <span class="c1"># Generate analysis image - ALWAYS generate like original (no config check)</span>
+        <span class="n">ana_path</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">PIL.Image</span>  <span class="c1"># noqa: F401</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">PIL.ImageDraw</span>  <span class="c1"># noqa: F401</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">PIL.ImageFont</span>  <span class="c1"># noqa: F401</span>
+
+            <span class="n">PIL_AVAILABLE</span> <span class="o">=</span> <span class="kc">True</span>
+        <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+            <span class="n">PIL_AVAILABLE</span> <span class="o">=</span> <span class="kc">False</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️  PIL not available - skipping analysis image&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">PIL_AVAILABLE</span><span class="p">:</span>
+            <span class="n">ana_path</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="s2">&quot;analysis&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;analysis_</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Ensure analysis directory exists</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="s2">&quot;analysis&quot;</span><span class="p">],</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">success</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">create_analysis_image_multi</span><span class="p">(</span>
+                    <span class="n">img_path</span><span class="p">,</span>
+                    <span class="n">b2d_list</span><span class="p">,</span>
+                    <span class="n">b3d_list</span><span class="p">,</span>
+                    <span class="n">pockets_list</span><span class="p">,</span>
+                    <span class="n">cam_obj</span><span class="p">,</span>
+                    <span class="n">sc</span><span class="p">,</span>
+                    <span class="n">ana_path</span><span class="p">,</span>
+                    <span class="n">valid</span><span class="p">,</span>
+                    <span class="n">keypoints_data</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="n">success</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Analysis image saved: analysis_</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">)</span>
+                    <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️  Analysis image creation failed for frame </span><span class="si">{</span><span class="n">valid</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Analysis image error: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="kn">import</span><span class="w"> </span><span class="nn">traceback</span>
+
+                <span class="n">traceback</span><span class="o">.</span><span class="n">print_exc</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️  Skipping analysis generation - PIL not available&quot;</span><span class="p">)</span>
+
+        <span class="c1"># COCO (image)</span>
+        <span class="n">img_w</span><span class="p">,</span> <span class="n">img_h</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;resolution_x&quot;</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;resolution_y&quot;</span><span class="p">]</span>
+        <span class="n">coco</span><span class="p">[</span><span class="s2">&quot;images&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span><span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">valid</span><span class="p">,</span> <span class="s2">&quot;file_name&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2">.png&quot;</span><span class="p">,</span> <span class="s2">&quot;width&quot;</span><span class="p">:</span> <span class="n">img_w</span><span class="p">,</span> <span class="s2">&quot;height&quot;</span><span class="p">:</span> <span class="n">img_h</span><span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="c1"># YOLO pallets (class 0) - EXACT from original</span>
+        <span class="n">yolo_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="s2">&quot;yolo&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yolo_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">y</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">for</span> <span class="n">b2d</span> <span class="ow">in</span> <span class="n">b2d_list</span><span class="p">:</span>
+            <span class="n">coco</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">ann_id</span><span class="p">,</span>
+                    <span class="s2">&quot;image_id&quot;</span><span class="p">:</span> <span class="n">valid</span><span class="p">,</span>
+                    <span class="s2">&quot;category_id&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                    <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="n">xyxy_to_xywh</span><span class="p">(</span><span class="n">b2d</span><span class="p">),</span>
+                    <span class="s2">&quot;area&quot;</span><span class="p">:</span> <span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;area&quot;</span><span class="p">],</span>
+                    <span class="s2">&quot;iscrowd&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s2">&quot;segmentation&quot;</span><span class="p">:</span> <span class="p">[],</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">ann_id</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">xyxy_to_yolo</span><span class="p">(</span><span class="n">b2d</span><span class="p">,</span> <span class="n">img_w</span><span class="p">,</span> <span class="n">img_h</span><span class="p">)</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">yolo_file</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">y</span><span class="p">:</span>
+                <span class="n">y</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;0 </span><span class="si">{</span><span class="n">xc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">yc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">w</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">h</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Holes (class 1) - using exact original logic</span>
+        <span class="k">for</span> <span class="n">pockets</span> <span class="ow">in</span> <span class="n">pockets_list</span><span class="p">:</span>
+            <span class="n">ann_id</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_holes_and_write_labels</span><span class="p">(</span>
+                <span class="n">pockets</span><span class="p">,</span> <span class="n">cam_obj</span><span class="p">,</span> <span class="n">sc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="s2">&quot;yolo&quot;</span><span class="p">],</span> <span class="n">fn</span><span class="p">,</span> <span class="n">coco</span><span class="p">,</span> <span class="n">ann_id</span><span class="p">,</span> <span class="n">img_w</span><span class="p">,</span> <span class="n">img_h</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Save keypoints labels</span>
+        <span class="k">if</span> <span class="n">keypoints_data</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_keypoints_labels</span><span class="p">(</span><span class="n">keypoints_data</span><span class="p">,</span> <span class="n">valid</span><span class="p">,</span> <span class="n">img_w</span><span class="p">,</span> <span class="n">img_h</span><span class="p">)</span>
+
+        <span class="c1"># VOC (all pallets) - EXACT from original</span>
+        <span class="k">if</span> <span class="n">PIL_AVAILABLE</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="kn">from</span><span class="w"> </span><span class="nn">pascal_voc_writer</span><span class="w"> </span><span class="kn">import</span> <span class="n">Writer</span> <span class="k">as</span> <span class="n">VocWriter</span>
+
+                <span class="n">voc</span> <span class="o">=</span> <span class="n">VocWriter</span><span class="p">(</span><span class="n">img_path</span><span class="p">,</span> <span class="n">img_w</span><span class="p">,</span> <span class="n">img_h</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">b2d</span> <span class="ow">in</span> <span class="n">b2d_list</span><span class="p">:</span>
+                    <span class="n">voc</span><span class="o">.</span><span class="n">addObject</span><span class="p">(</span>
+                        <span class="s2">&quot;pallet&quot;</span><span class="p">,</span>  <span class="c1"># Use original object name</span>
+                        <span class="nb">int</span><span class="p">(</span><span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;x_min&quot;</span><span class="p">]),</span>
+                        <span class="nb">int</span><span class="p">(</span><span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;y_min&quot;</span><span class="p">]),</span>
+                        <span class="nb">int</span><span class="p">(</span><span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;x_max&quot;</span><span class="p">]),</span>
+                        <span class="nb">int</span><span class="p">(</span><span class="n">b2d</span><span class="p">[</span><span class="s2">&quot;y_max&quot;</span><span class="p">]),</span>
+                    <span class="p">)</span>
+                <span class="n">voc</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="p">[</span><span class="s2">&quot;voc&quot;</span><span class="p">],</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">fn</span><span class="si">}</span><span class="s2">.xml&quot;</span><span class="p">))</span>
+            <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+        <span class="c1"># Metadata - EXACT from original format</span>
+        <span class="n">meta</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">{</span>
+                <span class="s2">&quot;frame&quot;</span><span class="p">:</span> <span class="n">valid</span><span class="p">,</span>
+                <span class="s2">&quot;image_id&quot;</span><span class="p">:</span> <span class="n">fn</span><span class="p">,</span>
+                <span class="s2">&quot;rgb&quot;</span><span class="p">:</span> <span class="n">img_path</span><span class="p">,</span>
+                <span class="s2">&quot;analysis_png&quot;</span><span class="p">:</span> <span class="n">ana_path</span><span class="p">,</span>
+                <span class="s2">&quot;boxes_2d&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">b2d_list</span><span class="p">),</span>
+                <span class="s2">&quot;boxes_3d&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">b3d_list</span><span class="p">),</span>
+                <span class="s2">&quot;pockets&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">pockets_list</span><span class="p">),</span>
+                <span class="s2">&quot;faces_detected&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">keypoints_data</span><span class="p">)</span> <span class="k">if</span> <span class="n">keypoints_data</span> <span class="k">else</span> <span class="mi">0</span><span class="p">,</span>
+                <span class="s2">&quot;keypoints_total&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="nb">sum</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;keypoints&quot;</span><span class="p">])</span> <span class="k">for</span> <span class="n">face_data</span> <span class="ow">in</span> <span class="n">keypoints_data</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="n">keypoints_data</span>
+                    <span class="k">else</span> <span class="mi">0</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;keypoints_visible&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="nb">sum</span><span class="p">(</span>
+                        <span class="nb">sum</span><span class="p">(</span><span class="mi">1</span> <span class="k">for</span> <span class="n">kp</span> <span class="ow">in</span> <span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;keypoints&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kp</span><span class="p">[</span><span class="s2">&quot;visible&quot;</span><span class="p">])</span>
+                        <span class="k">for</span> <span class="n">face_data</span> <span class="ow">in</span> <span class="n">keypoints_data</span>
+                    <span class="p">)</span>
+                    <span class="k">if</span> <span class="n">keypoints_data</span>
+                    <span class="k">else</span> <span class="mi">0</span>
+                <span class="p">),</span>
+                <span class="s2">&quot;pallets&quot;</span><span class="p">:</span> <span class="p">[</span>
+                    <span class="p">{</span>
+                        <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">po</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                        <span class="s2">&quot;position&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">po</span><span class="o">.</span><span class="n">location</span><span class="p">),</span>
+                        <span class="s2">&quot;rotation&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">po</span><span class="o">.</span><span class="n">rotation_euler</span><span class="p">),</span>
+                        <span class="s2">&quot;scale&quot;</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="n">po</span><span class="o">.</span><span class="n">scale</span><span class="p">),</span>
+                        <span class="s2">&quot;pass_index&quot;</span><span class="p">:</span> <span class="n">po</span><span class="o">.</span><span class="n">pass_index</span><span class="p">,</span>
+                    <span class="p">}</span>
+                    <span class="k">for</span> <span class="n">po</span> <span class="ow">in</span> <span class="n">pallets</span>
+                <span class="p">],</span>
+                <span class="s2">&quot;faces&quot;</span><span class="p">:</span> <span class="p">(</span>
+                    <span class="p">[</span>
+                        <span class="p">{</span>
+                            <span class="s2">&quot;object_name&quot;</span><span class="p">:</span> <span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;face_object&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                            <span class="s2">&quot;face_name&quot;</span><span class="p">:</span> <span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;face_name&quot;</span><span class="p">],</span>
+                            <span class="s2">&quot;face_index&quot;</span><span class="p">:</span> <span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;face_index&quot;</span><span class="p">],</span>
+                            <span class="s2">&quot;keypoints_count&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;keypoints&quot;</span><span class="p">]),</span>
+                            <span class="s2">&quot;visible_keypoints&quot;</span><span class="p">:</span> <span class="nb">sum</span><span class="p">(</span>
+                                <span class="mi">1</span> <span class="k">for</span> <span class="n">kp</span> <span class="ow">in</span> <span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;keypoints&quot;</span><span class="p">]</span> <span class="k">if</span> <span class="n">kp</span><span class="p">[</span><span class="s2">&quot;visible&quot;</span><span class="p">]</span>
+                            <span class="p">),</span>
+                            <span class="s2">&quot;keypoints&quot;</span><span class="p">:</span> <span class="p">[</span>
+                                <span class="p">{</span>
+                                    <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="n">kp</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">],</span>
+                                    <span class="s2">&quot;visible&quot;</span><span class="p">:</span> <span class="n">kp</span><span class="p">[</span><span class="s2">&quot;visible&quot;</span><span class="p">],</span>
+                                    <span class="s2">&quot;position_2d&quot;</span><span class="p">:</span> <span class="n">kp</span><span class="p">[</span><span class="s2">&quot;position_2d&quot;</span><span class="p">],</span>
+                                    <span class="s2">&quot;position_3d&quot;</span><span class="p">:</span> <span class="n">kp</span><span class="p">[</span><span class="s2">&quot;position_3d&quot;</span><span class="p">],</span>
+                                <span class="p">}</span>
+                                <span class="k">for</span> <span class="n">kp</span> <span class="ow">in</span> <span class="n">face_data</span><span class="p">[</span><span class="s2">&quot;keypoints&quot;</span><span class="p">]</span>
+                            <span class="p">],</span>
+                        <span class="p">}</span>
+                        <span class="k">for</span> <span class="n">face_data</span> <span class="ow">in</span> <span class="n">keypoints_data</span>
+                    <span class="p">]</span>
+                    <span class="k">if</span> <span class="n">keypoints_data</span>
+                    <span class="k">else</span> <span class="p">[]</span>
+                <span class="p">),</span>
+            <span class="p">}</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">ann_id</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.project_holes_and_write_labels">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.project_holes_and_write_labels">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">project_holes_and_write_labels</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">pockets_world</span><span class="p">,</span>
+        <span class="n">cam</span><span class="p">,</span>
+        <span class="n">sc</span><span class="p">,</span>
+        <span class="n">yolo_dir</span><span class="p">,</span>
+        <span class="n">img_idx</span><span class="p">,</span>
+        <span class="n">coco</span><span class="p">,</span>
+        <span class="n">ann_id_start</span><span class="p">,</span>
+        <span class="n">img_w</span><span class="p">,</span>
+        <span class="n">img_h</span><span class="p">,</span>
+    <span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Project holes and write YOLO/COCO labels - EXACT from original.&quot;&quot;&quot;</span>
+        <span class="n">ann_id</span> <span class="o">=</span> <span class="n">ann_id_start</span>
+        <span class="n">yolo_lines</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">pk</span> <span class="ow">in</span> <span class="n">pockets_world</span><span class="p">:</span>
+            <span class="n">proj</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">project_points</span><span class="p">(</span><span class="n">pk</span><span class="p">,</span> <span class="n">cam</span><span class="p">,</span> <span class="n">sc</span><span class="p">)</span>
+            <span class="n">vis</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">proj</span> <span class="k">if</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vis</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">4</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="p">[(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">vis</span><span class="p">],</span> <span class="n">strict</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">x0</span><span class="p">,</span> <span class="n">y0</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">xs</span><span class="p">)),</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">ys</span><span class="p">))</span>
+            <span class="n">x1</span><span class="p">,</span> <span class="n">y1</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">img_w</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">xs</span><span class="p">)),</span> <span class="nb">min</span><span class="p">(</span><span class="n">img_h</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">ys</span><span class="p">))</span>
+            <span class="n">w</span><span class="p">,</span> <span class="n">h</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">x0</span><span class="p">,</span> <span class="n">y1</span> <span class="o">-</span> <span class="n">y0</span>
+            <span class="k">if</span> <span class="n">w</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="ow">or</span> <span class="n">h</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="k">continue</span>
+            <span class="n">xc</span> <span class="o">=</span> <span class="p">(</span><span class="n">x0</span> <span class="o">+</span> <span class="n">x1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">img_w</span>
+            <span class="n">yc</span> <span class="o">=</span> <span class="p">(</span><span class="n">y0</span> <span class="o">+</span> <span class="n">y1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">/</span> <span class="n">img_h</span>
+            <span class="n">yolo_lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;1 </span><span class="si">{</span><span class="n">xc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">yc</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">w</span><span class="o">/</span><span class="n">img_w</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">h</span><span class="o">/</span><span class="n">img_h</span><span class="si">:</span><span class="s2">.6f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">poly</span> <span class="o">=</span> <span class="p">[</span><span class="n">coord</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">vis</span> <span class="k">for</span> <span class="n">coord</span> <span class="ow">in</span> <span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="n">coco</span><span class="p">[</span><span class="s2">&quot;annotations&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s2">&quot;id&quot;</span><span class="p">:</span> <span class="n">ann_id</span><span class="p">,</span>
+                    <span class="s2">&quot;image_id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">img_idx</span><span class="p">),</span>
+                    <span class="s2">&quot;category_id&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+                    <span class="s2">&quot;bbox&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">x0</span><span class="p">,</span> <span class="n">y0</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h</span><span class="p">],</span>
+                    <span class="s2">&quot;area&quot;</span><span class="p">:</span> <span class="n">w</span> <span class="o">*</span> <span class="n">h</span><span class="p">,</span>
+                    <span class="s2">&quot;iscrowd&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+                    <span class="s2">&quot;segmentation&quot;</span><span class="p">:</span> <span class="p">[</span><span class="n">poly</span><span class="p">],</span>
+                <span class="p">}</span>
+            <span class="p">)</span>
+            <span class="n">ann_id</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">yolo_lines</span><span class="p">:</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">yolo_dir</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">img_idx</span><span class="si">}</span><span class="s2">.txt&quot;</span><span class="p">),</span> <span class="s2">&quot;a&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">yolo_lines</span><span class="p">)</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">ann_id</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.save_final_outputs">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.save_final_outputs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_final_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coco</span><span class="p">,</span> <span class="n">meta</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save final COCO and metadata files.&quot;&quot;&quot;</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">[</span><span class="s2">&quot;output_dir&quot;</span><span class="p">]</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;annotations_coco.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">jf</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">coco</span><span class="p">,</span> <span class="n">jf</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">root</span><span class="p">,</span> <span class="s2">&quot;dataset_manifest.json&quot;</span><span class="p">),</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mf</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">({</span><span class="s2">&quot;config&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">,</span> <span class="s2">&quot;frames&quot;</span><span class="p">:</span> <span class="n">meta</span><span class="p">},</span> <span class="n">mf</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ COCO / YOLO / VOC annotations written.&quot;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.apply_initial_transform">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.apply_initial_transform">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">apply_initial_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pallets</span><span class="p">,</span> <span class="n">base_mat</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Apply random initial transform to pallets.&quot;&quot;&quot;</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">Translation</span><span class="p">(</span>
+            <span class="n">Vector</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+                    <span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mf">0.05</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">Euler</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+                    <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">)),</span>
+                    <span class="n">math</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="o">-</span><span class="mi">45</span><span class="p">,</span> <span class="mi">45</span><span class="p">)),</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="o">.</span><span class="n">to_matrix</span><span class="p">()</span>
+            <span class="o">.</span><span class="n">to_4x4</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="n">s</span> <span class="o">=</span> <span class="n">Matrix</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">random</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">1.2</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">delta</span> <span class="o">=</span> <span class="n">t</span> <span class="o">@</span> <span class="n">r</span> <span class="o">@</span> <span class="n">s</span>
+
+        <span class="k">for</span> <span class="n">idx</span><span class="p">,</span> <span class="n">po</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pallets</span><span class="p">):</span>
+            <span class="n">z_off</span> <span class="o">=</span> <span class="p">(</span>
+                <span class="n">idx</span>
+                <span class="o">*</span> <span class="p">(</span>
+                    <span class="n">pallets</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">dimensions</span><span class="o">.</span><span class="n">z</span>
+                    <span class="o">+</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_stack_gap&quot;</span><span class="p">,</span> <span class="mf">0.05</span><span class="p">))</span>
+                <span class="p">)</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;duplicate_pallets&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+                <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;pallet_stack_vertical&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+                <span class="k">else</span> <span class="mf">0.0</span>
+            <span class="p">)</span>
+            <span class="n">base_stack</span> <span class="o">=</span> <span class="n">base_mat</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+            <span class="n">base_stack</span><span class="o">.</span><span class="n">translation</span><span class="o">.</span><span class="n">z</span> <span class="o">+=</span> <span class="n">z_off</span>
+            <span class="n">po</span><span class="o">.</span><span class="n">matrix_world</span> <span class="o">=</span> <span class="n">base_stack</span> <span class="o">@</span> <span class="n">delta</span></div>
+
+
+<div class="viewcode-block" id="SinglePalletMode.save_generated_scene">
+<a class="viewcode-back" href="../../../api/palletdatagenerator.modes.single_pallet.html#palletdatagenerator.modes.single_pallet.SinglePalletMode.save_generated_scene">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_generated_scene</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Save the current generated scene to a .blend file in the scenes folder.</span>
+<span class="sd">        This allows inspection and reuse of the randomized single pallet layout.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+        <span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+        <span class="c1"># Create scenes folder if it doesn&#39;t exist</span>
+        <span class="n">scenes_folder</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;scenes&quot;</span><span class="p">)</span>
+        <span class="n">scenes_folder</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Generate scene filename with batch info</span>
+        <span class="n">batch_name</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">paths</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;root&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown_batch&quot;</span><span class="p">))</span>
+        <span class="n">scene_filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;single_pallet_generated_</span><span class="si">{</span><span class="n">batch_name</span><span class="si">}</span><span class="s2">.blend&quot;</span>
+        <span class="n">scene_path</span> <span class="o">=</span> <span class="n">scenes_folder</span> <span class="o">/</span> <span class="n">scene_filename</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💾 Saving generated scene to: </span><span class="si">{</span><span class="n">scene_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">bpy</span><span class="o">.</span><span class="n">ops</span><span class="o">.</span><span class="n">wm</span><span class="o">.</span><span class="n">save_as_mainfile</span><span class="p">(</span><span class="n">filepath</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">scene_path</span><span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Scene saved successfully: </span><span class="si">{</span><span class="n">scene_filename</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+
+            <span class="c1"># Also save scene info as JSON for reference</span>
+            <span class="n">scene_info</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;mode&quot;</span><span class="p">:</span> <span class="s2">&quot;single_pallet&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;batch_folder&quot;</span><span class="p">:</span> <span class="n">batch_name</span><span class="p">,</span>
+                <span class="s2">&quot;config_used&quot;</span><span class="p">:</span> <span class="p">{</span>
+                    <span class="s2">&quot;num_images&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;num_images&quot;</span><span class="p">,</span> <span class="s2">&quot;unknown&quot;</span><span class="p">),</span>
+                    <span class="s2">&quot;duplicate_pallets&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;duplicate_pallets&quot;</span><span class="p">,</span> <span class="kc">False</span><span class="p">),</span>
+                    <span class="s2">&quot;num_pallets&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;num_pallets&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                    <span class="s2">&quot;pallet_stack_vertical&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="s2">&quot;pallet_stack_vertical&quot;</span><span class="p">,</span> <span class="kc">True</span>
+                    <span class="p">),</span>
+                    <span class="s2">&quot;allow_pallet_move_xy&quot;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">get</span><span class="p">(</span>
+                        <span class="s2">&quot;allow_pallet_move_xy&quot;</span><span class="p">,</span> <span class="kc">False</span>
+                    <span class="p">),</span>
+                <span class="p">},</span>
+                <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="nb">__import__</span><span class="p">(</span><span class="s2">&quot;datetime&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()),</span>
+            <span class="p">}</span>
+
+            <span class="n">info_path</span> <span class="o">=</span> <span class="n">scenes_folder</span> <span class="o">/</span> <span class="sa">f</span><span class="s2">&quot;single_pallet_</span><span class="si">{</span><span class="n">batch_name</span><span class="si">}</span><span class="s2">_info.json&quot;</span>
+            <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">info_path</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                <span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+
+                <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">scene_info</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;⚠️  Failed to save generated scene: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Ibrahim Boubakri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

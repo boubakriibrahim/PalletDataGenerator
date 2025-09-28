@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="palletdatagenerator.modes.base_generator module" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="api/palletdatagenerator.modes.base_generator.html" />
+<meta property="og:site_name" content="PalletDataGenerator" />
+<meta property="og:description" content="Base generator class that contains shared functionality for all generation modes. Provides common methods for scene setup, rendering, and data export." />
+<meta name="description" content="Base generator class that contains shared functionality for all generation modes. Provides common methods for scene setup, rendering, and data export." />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>palletdatagenerator.modes.base_generator module &mdash; PalletDataGenerator 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/api/palletdatagenerator.modes.base_generator.html" />
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=360bc84d"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../_static/copybutton.js?v=30646c52"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="palletdatagenerator.modes.single_pallet module" href="palletdatagenerator.modes.single_pallet.html" />
+    <link rel="prev" title="palletdatagenerator.modes package" href="palletdatagenerator.modes.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../keypoints_generation.html">Keypoints Generation Feature</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#keypoints-layout">Keypoints Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#output-format">Output Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#keypoints-labels-yolo-format">Keypoints Labels (YOLO Format)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#example-keypoints-file">Example Keypoints File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#analysis-images">Analysis Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#face-detection">Face Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#visibility-detection">Visibility Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#d-debug-visualization">3D Debug Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#debug-output-structure">Debug Output Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#coordinate-files">Coordinate Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#interactive-html-figures">Interactive HTML Figures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#debug-images">Debug Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#using-debug-3d-features">Using Debug 3D Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#interactive-html-visualization">Interactive HTML Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#coordinate-analysis">Coordinate Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#example-usage">Example Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#integration-with-existing-features">Integration with Existing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#no-keypoints-generated">No keypoints generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#all-keypoints-marked-as-hidden">All keypoints marked as hidden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../keypoints_generation.html#keypoints-in-wrong-positions">Keypoints in wrong positions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../keypoints_generation.html#advanced-configuration">Advanced Configuration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">palletdatagenerator</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="palletdatagenerator.html">palletdatagenerator package</a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="palletdatagenerator.html#subpackages">Subpackages</a><ul class="current">
+<li class="toctree-l4 current"><a class="reference internal" href="palletdatagenerator.modes.html">palletdatagenerator.modes package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.blender_runner.html">palletdatagenerator.blender_runner module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.cli.html">palletdatagenerator.cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.config.html">palletdatagenerator.config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.generator.html">palletdatagenerator.generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.utils.html">palletdatagenerator.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="palletdatagenerator.html#module-palletdatagenerator">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.html#palletdatagenerator.PalletDataGenerator"><code class="docutils literal notranslate"><span class="pre">PalletDataGenerator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.html#palletdatagenerator.DefaultConfig"><code class="docutils literal notranslate"><span class="pre">DefaultConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="palletdatagenerator.html#palletdatagenerator.setup_logging"><code class="docutils literal notranslate"><span class="pre">setup_logging()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">palletdatagenerator</a></li>
+          <li class="breadcrumb-item"><a href="palletdatagenerator.html">palletdatagenerator package</a></li>
+          <li class="breadcrumb-item"><a href="palletdatagenerator.modes.html">palletdatagenerator.modes package</a></li>
+      <li class="breadcrumb-item active">palletdatagenerator.modes.base_generator module</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/docs/api/palletdatagenerator.modes.base_generator.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-palletdatagenerator.modes.base_generator">
+<span id="palletdatagenerator-modes-base-generator-module"></span><h1>palletdatagenerator.modes.base_generator module<a class="headerlink" href="#module-palletdatagenerator.modes.base_generator" title="Link to this heading"></a></h1>
+<p>Base generator class that contains shared functionality for all generation modes.
+Provides common methods for scene setup, rendering, and data export.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">palletdatagenerator.modes.base_generator.</span></span><span class="sig-name descname"><span class="pre">BaseGenerator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.13)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class for all generation modes with shared functionality.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.__init__" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.setup_folders">
+<span class="sig-name descname"><span class="pre">setup_folders</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.setup_folders"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.setup_folders" title="Link to this definition"></a></dt>
+<dd><p>Create the output folder structure.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.configure_render">
+<span class="sig-name descname"><span class="pre">configure_render</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.configure_render"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.configure_render" title="Link to this definition"></a></dt>
+<dd><p>Configure Blender render settings.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.setup_compositor_nodes">
+<span class="sig-name descname"><span class="pre">setup_compositor_nodes</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.setup_compositor_nodes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.setup_compositor_nodes" title="Link to this definition"></a></dt>
+<dd><p>Setup compositor nodes for depth, normals, and index passes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.setup_environment">
+<span class="sig-name descname"><span class="pre">setup_environment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.setup_environment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.setup_environment" title="Link to this definition"></a></dt>
+<dd><p>Setup world background and floor.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.setup_random_background">
+<span class="sig-name descname"><span class="pre">setup_random_background</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.setup_random_background"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.setup_random_background" title="Link to this definition"></a></dt>
+<dd><p>Setup world background exactly as in original.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.create_floor_plane">
+<span class="sig-name descname"><span class="pre">create_floor_plane</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.create_floor_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.create_floor_plane" title="Link to this definition"></a></dt>
+<dd><p>Create floor plane exactly as in original.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.randomize_object_material">
+<span class="sig-name descname"><span class="pre">randomize_object_material</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.randomize_object_material"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.randomize_object_material" title="Link to this definition"></a></dt>
+<dd><p>Randomize object materials if enabled.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.draw_3d_bbox_edges">
+<span class="sig-name descname"><span class="pre">draw_3d_bbox_edges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">draw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corners_2d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.draw_3d_bbox_edges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.draw_3d_bbox_edges" title="Link to this definition"></a></dt>
+<dd><p>Draw 3D bounding box wireframe.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.project_points_accurate">
+<span class="sig-name descname"><span class="pre">project_points_accurate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.project_points_accurate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.project_points_accurate" title="Link to this definition"></a></dt>
+<dd><p>Project 3D points to 2D screen coordinates.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.create_analysis_image_multi">
+<span class="sig-name descname"><span class="pre">create_analysis_image_multi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rgb_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bboxes2d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bboxes3d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">all_pockets_world</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keypoints_data</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.create_analysis_image_multi"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.create_analysis_image_multi" title="Link to this definition"></a></dt>
+<dd><p>Create analysis image with 2D/3D bounding boxes, holes, and legend.
+Exact copy from original one_pallet_generator.py</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.create_random_lights">
+<span class="sig-name descname"><span class="pre">create_random_lights</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">anchor_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">replace_existing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.create_random_lights"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.create_random_lights" title="Link to this definition"></a></dt>
+<dd><p>Create 1..N random lights around anchor_obj.
+Also ensures at least one neutral ‘key’ light when requested.
+EXACT implementation from original one_pallet_generator.py</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.get_bbox_2d_accurate">
+<span class="sig-name descname"><span class="pre">get_bbox_2d_accurate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.get_bbox_2d_accurate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.get_bbox_2d_accurate" title="Link to this definition"></a></dt>
+<dd><p>Get accurate 2D bounding box - EXACT from original.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.bbox_3d_oriented">
+<span class="sig-name descname"><span class="pre">bbox_3d_oriented</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.bbox_3d_oriented"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.bbox_3d_oriented" title="Link to this definition"></a></dt>
+<dd><p>Get 3D oriented bounding box - EXACT from original.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.project_points">
+<span class="sig-name descname"><span class="pre">project_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.project_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.project_points" title="Link to this definition"></a></dt>
+<dd><p>Project 3D points to 2D screen coordinates - EXACT from original.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.hole_bboxes_3d">
+<span class="sig-name descname"><span class="pre">hole_bboxes_3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">side_margin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.08</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_gap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.15</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hole_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(0.2,</span> <span class="pre">0.85)</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.hole_bboxes_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.hole_bboxes_3d" title="Link to this definition"></a></dt>
+<dd><p>Generate 3D hole/pocket bounding boxes for pallet - EXACT from original.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.auto_expose_frame">
+<span class="sig-name descname"><span class="pre">auto_expose_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">_cam_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.auto_expose_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.auto_expose_frame" title="Link to this definition"></a></dt>
+<dd><p>Enhanced auto-exposure with minimum brightness guarantee.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.detect_faces_in_scene">
+<span class="sig-name descname"><span class="pre">detect_faces_in_scene</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cam_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.detect_faces_in_scene"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.detect_faces_in_scene" title="Link to this definition"></a></dt>
+<dd><p>Detect faces in the scene by looking for pallet objects and extracting their faces.
+Uses the pallet’s 3D bounding box to define 6 faces and generate keypoints for each visible face.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.get_all_faces_from_bbox">
+<span class="sig-name descname"><span class="pre">get_all_faces_from_bbox</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.get_all_faces_from_bbox"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.get_all_faces_from_bbox" title="Link to this definition"></a></dt>
+<dd><p>Get all 6 faces from 3D bounding box corners.
+Returns list of face data with corner indices and names.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.filter_side_faces">
+<span class="sig-name descname"><span class="pre">filter_side_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_faces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">corners_3d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.filter_side_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.filter_side_faces" title="Link to this definition"></a></dt>
+<dd><p>Filter out top and bottom faces by analyzing Z coordinates.
+Returns only the 4 side faces.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.create_3d_debug_visualization">
+<span class="sig-name descname"><span class="pre">create_3d_debug_visualization</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.create_3d_debug_visualization"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.create_3d_debug_visualization" title="Link to this definition"></a></dt>
+<dd><p>Create a 3D visualization showing camera position, pallet corners, and face names.
+Saves the visualization to a new debug folder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.create_3d_debug_visualization_with_faces">
+<span class="sig-name descname"><span class="pre">create_3d_debug_visualization_with_faces</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_faces</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.create_3d_debug_visualization_with_faces"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.create_3d_debug_visualization_with_faces" title="Link to this definition"></a></dt>
+<dd><p>Create a 3D visualization showing camera position, pallet corners, face names, and selected faces.
+Saves the visualization to the debug_3d folder.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.select_faces_by_camera_proximity">
+<span class="sig-name descname"><span class="pre">select_faces_by_camera_proximity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">visible_faces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_obj</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.select_faces_by_camera_proximity"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.select_faces_by_camera_proximity" title="Link to this definition"></a></dt>
+<dd><p>Select faces based on camera proximity using nearest point distance.
+Returns 1-2 faces: first the nearest face, then an adjacent candidate if available.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.check_faces_adjacent">
+<span class="sig-name descname"><span class="pre">check_faces_adjacent</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">face2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.check_faces_adjacent"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.check_faces_adjacent" title="Link to this definition"></a></dt>
+<dd><p>Check if two faces are truly adjacent (side-by-side), NEVER parallel.
+Uses strict geometric analysis to ensure only side-by-side faces are selected.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.check_2d_middle_view">
+<span class="sig-name descname"><span class="pre">check_2d_middle_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">face2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.check_2d_middle_view"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.check_2d_middle_view" title="Link to this definition"></a></dt>
+<dd><p>Check if both faces are in the middle view of the 2D bounding box.
+Middle view = within 50% of the box size from center.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.check_geometric_adjacency_only">
+<span class="sig-name descname"><span class="pre">check_geometric_adjacency_only</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">face2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.check_geometric_adjacency_only"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.check_geometric_adjacency_only" title="Link to this definition"></a></dt>
+<dd><p>Check if two faces are geometrically adjacent (only geometric validation, no 2D check).
+This is used as a fallback when the full adjacency check fails.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.check_2d_surface_quality">
+<span class="sig-name descname"><span class="pre">check_2d_surface_quality</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1024</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">image_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">768</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_area</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_width</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">30</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.check_2d_surface_quality"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.check_2d_surface_quality" title="Link to this definition"></a></dt>
+<dd><p>Check if a face has sufficient 2D surface quality to be selected as a candidate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>face</strong> – Face data containing bbox_2d</p></li>
+<li><p><strong>image_width</strong> – Width of the rendered image</p></li>
+<li><p><strong>image_height</strong> – Height of the rendered image</p></li>
+<li><p><strong>min_area</strong> – Minimum 2D bounding box area in pixels</p></li>
+<li><p><strong>min_width</strong> – Minimum width in pixels</p></li>
+<li><p><strong>min_height</strong> – Minimum height in pixels</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the face has good 2D surface quality, False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.check_face_behind_primary">
+<span class="sig-name descname"><span class="pre">check_face_behind_primary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">primary_face</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">candidate_face</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.check_face_behind_primary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.check_face_behind_primary" title="Link to this definition"></a></dt>
+<dd><p>Check if the candidate face has points between the primary face’s points,
+which indicates the candidate is behind the camera view.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>primary_face</strong> – The primary selected face</p></li>
+<li><p><strong>candidate_face</strong> – The candidate face to check</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if candidate is behind primary (should be eliminated), False otherwise</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.detect_overlapping_keypoints">
+<span class="sig-name descname"><span class="pre">detect_overlapping_keypoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">all_keypoints</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">keypoints_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.detect_overlapping_keypoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.detect_overlapping_keypoints" title="Link to this definition"></a></dt>
+<dd><p>Detect keypoints that are overlapping (within threshold pixels).
+Returns groups of overlapping keypoints with face data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.draw_overlapping_keypoint_circles">
+<span class="sig-name descname"><span class="pre">draw_overlapping_keypoint_circles</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">draw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.draw_overlapping_keypoint_circles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.draw_overlapping_keypoint_circles" title="Link to this definition"></a></dt>
+<dd><p>Draw overlapping keypoints with both colors (one inside the other).
+The face with smaller perimeter gets the inner color.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.draw_single_keypoint_labels">
+<span class="sig-name descname"><span class="pre">draw_single_keypoint_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">draw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">kp</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_text</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.draw_single_keypoint_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.draw_single_keypoint_labels" title="Link to this definition"></a></dt>
+<dd><p>Draw labels for a single keypoint.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.draw_overlapping_keypoint_labels">
+<span class="sig-name descname"><span class="pre">draw_overlapping_keypoint_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">draw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">font</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overlap_group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.draw_overlapping_keypoint_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.draw_overlapping_keypoint_labels" title="Link to this definition"></a></dt>
+<dd><p>Draw stacked labels for overlapping keypoints.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.calculate_face_normal">
+<span class="sig-name descname"><span class="pre">calculate_face_normal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face_corners_3d</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.calculate_face_normal"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.calculate_face_normal" title="Link to this definition"></a></dt>
+<dd><p>Calculate the normal vector of a face from its 4 corners.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.generate_keypoints_for_frame">
+<span class="sig-name descname"><span class="pre">generate_keypoints_for_frame</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cam_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.generate_keypoints_for_frame"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.generate_keypoints_for_frame" title="Link to this definition"></a></dt>
+<dd><p>Generate keypoints for all faces detected in the current frame.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_2d_boxes">
+<span class="sig-name descname"><span class="pre">generate_face_2d_boxes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_faces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.generate_face_2d_boxes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_2d_boxes" title="Link to this definition"></a></dt>
+<dd><p>Generate 2D bounding boxes for selected faces in YOLO format.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_3d_coordinates">
+<span class="sig-name descname"><span class="pre">generate_face_3d_coordinates</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">selected_faces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_width</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_height</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.generate_face_3d_coordinates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_3d_coordinates" title="Link to this definition"></a></dt>
+<dd><p>Generate 3D coordinates for selected faces in YOLO format.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.create_interactive_3d_figure">
+<span class="sig-name descname"><span class="pre">create_interactive_3d_figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">corners_3d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">camera_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">selected_faces</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_path</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.create_interactive_3d_figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.create_interactive_3d_figure" title="Link to this definition"></a></dt>
+<dd><p>Create an interactive 3D figure using plotly that can be opened and manipulated in a browser.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_keypoints">
+<span class="sig-name descname"><span class="pre">generate_face_keypoints</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">face_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.generate_face_keypoints"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.generate_face_keypoints" title="Link to this definition"></a></dt>
+<dd><p>Generate 6 keypoints for a pallet face: 4 corners of the 3D face + 2 middle points (top and bottom center).
+Uses the actual face corners and calculates middle points between them.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.check_keypoint_visibility">
+<span class="sig-name descname"><span class="pre">check_keypoint_visibility</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keypoint_3d</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cam_obj</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sc</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.check_keypoint_visibility"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.check_keypoint_visibility" title="Link to this definition"></a></dt>
+<dd><p>Check if a keypoint is visible by performing ray casting from camera to keypoint.
+Returns True if no obstacles are blocking the line of sight.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="palletdatagenerator.modes.base_generator.BaseGenerator.save_keypoints_labels">
+<span class="sig-name descname"><span class="pre">save_keypoints_labels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">keypoints_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frame_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_w</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">img_h</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/palletdatagenerator/modes/base_generator.html#BaseGenerator.save_keypoints_labels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#palletdatagenerator.modes.base_generator.BaseGenerator.save_keypoints_labels" title="Link to this definition"></a></dt>
+<dd><p>Save keypoints labels in YOLO format to the keypoints_labels folder.
+Format: class_id x_center y_center width height kp1_x kp1_y kp1_v kp2_x kp2_y kp2_v …</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="palletdatagenerator.modes.html" class="btn btn-neutral float-left" title="palletdatagenerator.modes package" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="palletdatagenerator.modes.single_pallet.html" class="btn btn-neutral float-right" title="palletdatagenerator.modes.single_pallet module" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Ibrahim Boubakri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

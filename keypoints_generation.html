@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="og:title" content="Keypoints Generation Feature" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="keypoints_generation.html" />
+<meta property="og:site_name" content="PalletDataGenerator" />
+<meta property="og:description" content="This document describes the keypoints generation feature added to PalletDataGenerator, which automatically detects faces in the scene and generates 6 keypoints per face with visibility tracking. Ov..." />
+<meta name="description" content="This document describes the keypoints generation feature added to PalletDataGenerator, which automatically detects faces in the scene and generates 6 keypoints per face with visibility tracking. Ov..." />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Keypoints Generation Feature &mdash; PalletDataGenerator 0.1.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=bb82b355" />
+
+  
+    <link rel="canonical" href="https://boubakriibrahim.github.io/PalletDataGenerator/keypoints_generation.html" />
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=360bc84d"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=30646c52"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="palletdatagenerator" href="api/modules.html" />
+    <link rel="prev" title="Quick Start Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #2980B9" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            PalletDataGenerator
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#system-requirements">🚀 System Requirements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#recommended-versions-tested-optimized">Recommended Versions (Tested &amp; Optimized)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#minimum-requirements">Minimum Requirements</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#installation-methods">📦 Installation Methods</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#method-1-pypi-installation-recommended">Method 1: PyPI Installation (Recommended)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#method-2-development-installation">Method 2: Development Installation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#method-3-using-the-built-in-setup-command">Method 3: Using the Built-in Setup Command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#blender-setup">🎨 Blender Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#installing-blender">Installing Blender</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#macos">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#linux-ubuntu-debian">Linux (Ubuntu/Debian)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#verifying-blender-installation">Verifying Blender Installation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#virtual-environment-setup">🔧 Virtual Environment Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#creating-a-virtual-environment">Creating a Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#activating-the-virtual-environment">Activating the Virtual Environment</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#linux-macos">Linux/macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#id1">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#installing-dependencies">Installing Dependencies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#verification">🧪 Verification</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#quick-test">Quick Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#blender-integration-test">Blender Integration Test</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#cli-test">CLI Test</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#troubleshooting">🐛 Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#python-version-compatibility">1. Python Version Compatibility</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#blender-python-path-issues">2. Blender Python Path Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#gpu-issues">3. GPU Issues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#import-errors">4. Import Errors</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#platform-specific-issues">Platform-Specific Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#id2">macOS</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#linux">Linux</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#id3">Windows</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#next-steps">📚 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#getting-help">🆘 Getting Help</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#minute-quick-start">🏃‍♂️ 5-Minute Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#step-1-create-virtual-environment">Step 1: Create Virtual Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#step-2-prepare-your-blender-scene">Step 2: Prepare Your Blender Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#step-3-generate-your-first-dataset">Step 3: Generate Your First Dataset</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#with-blender-recommended">With Blender (Recommended)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#direct-python-limited">Direct Python (Limited)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#step-4-check-your-results">Step 4: Check Your Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#common-use-cases">🎯 Common Use Cases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#single-pallet-scene">Single Pallet Scene</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#warehouse-environment">Warehouse Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#with-custom-configuration">With Custom Configuration</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#understanding-the-output">📊 Understanding the Output</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#directory-structure">Directory Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#annotation-formats">Annotation Formats</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#yolo-format">YOLO Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#coco-format">COCO Format</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#cli-command-reference">🔧 CLI Command Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#basic-commands">Basic Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#generation-options">Generation Options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#blender-integration">🎨 Blender Integration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#scene-setup-requirements">Scene Setup Requirements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#launch-commands">Launch Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#environment-variables">Environment Variables</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#troubleshooting-quick-fixes">🚨 Troubleshooting Quick Fixes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#common-issues">Common Issues</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#no-pallet-objects-found">1. “No pallet objects found”</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#module-not-found-errors">2. “Module not found” errors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#gpu-not-detected">3. GPU not detected</a></li>
+<li class="toctree-l4"><a class="reference internal" href="quickstart.html#empty-output-directory">4. Empty output directory</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#performance-tips">📈 Performance Tips</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#speed-optimization">Speed Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#quality-optimization">Quality Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">🎯 Next Steps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#pro-tips">💡 Pro Tips</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Keypoints Generation Feature</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keypoints-layout">Keypoints Layout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#configuration">Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#output-format">Output Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#keypoints-labels-yolo-format">Keypoints Labels (YOLO Format)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-keypoints-file">Example Keypoints File</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#analysis-images">Analysis Images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#usage-example">Usage Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#face-detection">Face Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#visibility-detection">Visibility Detection</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#d-debug-visualization">3D Debug Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#debug-output-structure">Debug Output Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coordinate-files">Coordinate Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-html-figures">Interactive HTML Figures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debug-images">Debug Images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-debug-3d-features">Using Debug 3D Features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#interactive-html-visualization">Interactive HTML Visualization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#coordinate-analysis">Coordinate Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-usage">Example Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#integration-with-existing-features">Integration with Existing Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#no-keypoints-generated">No keypoints generated</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#all-keypoints-marked-as-hidden">All keypoints marked as hidden</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keypoints-in-wrong-positions">Keypoints in wrong positions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-configuration">Advanced Configuration</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/modules.html">palletdatagenerator</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/palletdatagenerator.html">palletdatagenerator package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/palletdatagenerator.html#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.modes.html">palletdatagenerator.modes package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/palletdatagenerator.html#submodules">Submodules</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.blender_runner.html">palletdatagenerator.blender_runner module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.cli.html">palletdatagenerator.cli module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.config.html">palletdatagenerator.config module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.generator.html">palletdatagenerator.generator module</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.utils.html">palletdatagenerator.utils module</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/palletdatagenerator.html#module-palletdatagenerator">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.html#palletdatagenerator.PalletDataGenerator"><code class="docutils literal notranslate"><span class="pre">PalletDataGenerator</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.html#palletdatagenerator.DefaultConfig"><code class="docutils literal notranslate"><span class="pre">DefaultConfig</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/palletdatagenerator.html#palletdatagenerator.setup_logging"><code class="docutils literal notranslate"><span class="pre">setup_logging()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu"  style="background: #2980B9" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">PalletDataGenerator</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Keypoints Generation Feature</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/boubakriibrahim/PalletDataGenerator/blob/main/docs/keypoints_generation.md" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="keypoints-generation-feature">
+<h1>Keypoints Generation Feature<a class="headerlink" href="#keypoints-generation-feature" title="Link to this heading"></a></h1>
+<p>This document describes the keypoints generation feature added to PalletDataGenerator, which automatically detects faces in the scene and generates 6 keypoints per face with visibility tracking.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The keypoints generation system:</p>
+<ul class="simple">
+<li><p><strong>Detects faces</strong> in the Blender scene by looking for pallet objects and extracting their side faces</p></li>
+<li><p><strong>Generates 6 keypoints</strong> per face: 4 corners of the 3D face + 2 middle points (top and bottom center)</p></li>
+<li><p><strong>Tracks visibility</strong> of each keypoint using ray casting to detect obstacles</p></li>
+<li><p><strong>Saves labels</strong> in YOLO format to the <code class="docutils literal notranslate"><span class="pre">keypoints_labels</span></code> folder</p></li>
+<li><p><strong>Visualizes keypoints</strong> in analysis images with different colors for visible/hidden points</p></li>
+<li><p><strong>3D Debug Visualization</strong> with interactive HTML figures and detailed coordinate tracking</p></li>
+<li><p><strong>Comprehensive metadata</strong> including face selection criteria and camera positioning</p></li>
+</ul>
+</section>
+<section id="keypoints-layout">
+<h2>Keypoints Layout<a class="headerlink" href="#keypoints-layout" title="Link to this heading"></a></h2>
+<p>Each face gets 6 keypoints arranged as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>    <span class="n">Top</span> <span class="n">Left</span> <span class="p">(</span><span class="mi">2</span><span class="p">)</span>     <span class="n">Middle</span> <span class="n">Top</span> <span class="p">(</span><span class="mi">0</span><span class="p">)</span>     <span class="n">Top</span> <span class="n">Right</span> <span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+           <span class="o">|</span>                <span class="o">|</span>                <span class="o">|</span>
+           <span class="o">|</span>                <span class="o">|</span>                <span class="o">|</span>
+    <span class="n">Bottom</span> <span class="n">Left</span> <span class="p">(</span><span class="mi">3</span><span class="p">)</span>  <span class="n">Middle</span> <span class="n">Bottom</span> <span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="n">Bottom</span> <span class="n">Right</span> <span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Middle keypoints</strong>: Top and bottom center of the face (calculated as midpoints between corners)</p></li>
+<li><p><strong>Corner keypoints</strong>: The 4 actual corners of the 3D face (top-left, top-right, bottom-left, bottom-right)</p></li>
+</ul>
+</section>
+<section id="configuration">
+<h2>Configuration<a class="headerlink" href="#configuration" title="Link to this heading"></a></h2>
+<p>Add these settings to your config to control keypoints generation:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">config</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="c1"># Enable/disable keypoints generation</span>
+    <span class="s2">&quot;generate_keypoints&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    
+    <span class="c1"># Minimum face area (in pixels) to generate keypoints</span>
+    <span class="s2">&quot;keypoints_min_face_area&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    
+    <span class="c1"># Enable ray casting for visibility detection</span>
+    <span class="s2">&quot;keypoints_visibility_check&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    
+    <span class="c1"># Face detection confidence threshold</span>
+    <span class="s2">&quot;keypoints_face_detection_threshold&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>
+    
+    <span class="c1"># Show 3D coordinate labels in analysis images</span>
+    <span class="s2">&quot;keypoints_show_3d_labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    
+    <span class="c1"># Show 2D coordinate labels in analysis images</span>
+    <span class="s2">&quot;keypoints_show_2d_labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    
+    <span class="c1"># Show all keypoint labels (names, coordinates) in analysis images</span>
+    <span class="s2">&quot;keypoints_show_labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    
+    <span class="c1"># Show all labels in analysis images (YOLO boxes, 3D structures)</span>
+    <span class="s2">&quot;analysis_show_all_labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    
+    <span class="c1"># Show keypoints in analysis images</span>
+    <span class="s2">&quot;analysis_show_keypoints&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="output-format">
+<h2>Output Format<a class="headerlink" href="#output-format" title="Link to this heading"></a></h2>
+<section id="keypoints-labels-yolo-format">
+<h3>Keypoints Labels (YOLO Format)<a class="headerlink" href="#keypoints-labels-yolo-format" title="Link to this heading"></a></h3>
+<p>Keypoints are saved in YOLO format in the <code class="docutils literal notranslate"><span class="pre">keypoints_labels</span></code> folder:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">class_id</span> <span class="n">x_center</span> <span class="n">y_center</span> <span class="n">width</span> <span class="n">height</span> <span class="n">kp1_x</span> <span class="n">kp1_y</span> <span class="n">kp1_v</span> <span class="n">kp2_x</span> <span class="n">kp2_y</span> <span class="n">kp2_v</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">class_id</span></code>: Object class (0 for face)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x_center,</span> <span class="pre">y_center</span></code>: Face bounding box center (normalized 0-1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">width,</span> <span class="pre">height</span></code>: Face bounding box dimensions (normalized 0-1)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kpN_x,</span> <span class="pre">kpN_y</span></code>: Keypoint coordinates (normalized 0-1) - always provided regardless of visibility</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">kpN_v</span></code>: Visibility flag (2=visible, 0=hidden)</p></li>
+</ul>
+</section>
+<section id="example-keypoints-file">
+<h3>Example Keypoints File<a class="headerlink" href="#example-keypoints-file" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">0</span> <span class="mf">0.573150</span> <span class="mf">0.639442</span> <span class="mf">0.284453</span> <span class="mf">0.139362</span> <span class="mf">0.580366</span> <span class="mf">0.603590</span> <span class="mi">2</span> <span class="mf">0.578420</span> <span class="mf">0.669213</span> <span class="mi">2</span> <span class="mf">0.715376</span> <span class="mf">0.569761</span> <span class="mi">2</span> <span class="mf">0.710409</span> <span class="mf">0.633069</span> <span class="mi">2</span> <span class="mf">0.430924</span> <span class="mf">0.641035</span> <span class="mi">2</span> <span class="mf">0.432683</span> <span class="mf">0.709123</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>This represents:</p>
+<ul class="simple">
+<li><p>Face at center (0.573, 0.639) with size 0.284×0.139</p></li>
+<li><p>All 6 keypoints visible (visibility=2)</p></li>
+<li><p><strong>Real example</strong> from generated dataset with actual face detection results</p></li>
+</ul>
+</section>
+</section>
+<section id="analysis-images">
+<h2>Analysis Images<a class="headerlink" href="#analysis-images" title="Link to this heading"></a></h2>
+<p>Analysis images show keypoints visualization:</p>
+<ul class="simple">
+<li><p><strong>Colored circles</strong>: Visible keypoints (different colors for different faces)</p></li>
+<li><p><strong>Gray circles with X</strong>: Hidden keypoints</p></li>
+<li><p><strong>White text</strong>: Keypoint names (if <code class="docutils literal notranslate"><span class="pre">keypoints_show_labels</span></code> is enabled)</p></li>
+<li><p><strong>Orange text</strong>: 3D coordinates (if both <code class="docutils literal notranslate"><span class="pre">keypoints_show_labels</span></code> and <code class="docutils literal notranslate"><span class="pre">keypoints_show_3d_labels</span></code> are enabled)</p></li>
+<li><p><strong>Cyan text</strong>: 2D coordinates (if both <code class="docutils literal notranslate"><span class="pre">keypoints_show_labels</span></code> and <code class="docutils literal notranslate"><span class="pre">keypoints_show_2d_labels</span></code> are enabled)</p></li>
+<li><p><strong>Legend</strong>: Shows what each color represents</p></li>
+</ul>
+<p><strong>Label Control:</strong></p>
+<ul class="simple">
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">analysis_show_all_labels:</span> <span class="pre">False</span></code> to hide YOLO boxes and 3D structures</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">analysis_show_keypoints:</span> <span class="pre">False</span></code> to hide keypoints completely</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">keypoints_show_labels:</span> <span class="pre">False</span></code> to hide ALL keypoint labels (names and coordinates)</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">keypoints_show_3d_labels:</span> <span class="pre">False</span></code> to hide only 3D coordinate labels</p></li>
+<li><p>Set <code class="docutils literal notranslate"><span class="pre">keypoints_show_2d_labels:</span> <span class="pre">False</span></code> to hide only 2D coordinate labels</p></li>
+</ul>
+<p><strong>Face Colors:</strong></p>
+<ul class="simple">
+<li><p>Face 0: Red keypoints</p></li>
+<li><p>Face 1: Green keypoints</p></li>
+<li><p>Face 2: Blue keypoints</p></li>
+<li><p>Face 3: Yellow keypoints</p></li>
+</ul>
+<p><strong>Usage Examples:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hide YOLO boxes and 3D structures, show only keypoints</span>
+<span class="s2">&quot;analysis_show_all_labels&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="s2">&quot;analysis_show_keypoints&quot;</span><span class="p">:</span> <span class="kc">True</span>
+
+<span class="c1"># Show YOLO boxes and 3D structures, hide keypoints</span>
+<span class="s2">&quot;analysis_show_all_labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="s2">&quot;analysis_show_keypoints&quot;</span><span class="p">:</span> <span class="kc">False</span>
+
+<span class="c1"># Show everything</span>
+<span class="s2">&quot;analysis_show_all_labels&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="s2">&quot;analysis_show_keypoints&quot;</span><span class="p">:</span> <span class="kc">True</span>
+
+<span class="c1"># Hide everything</span>
+<span class="s2">&quot;analysis_show_all_labels&quot;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="s2">&quot;analysis_show_keypoints&quot;</span><span class="p">:</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</section>
+<section id="usage-example">
+<h2>Usage Example<a class="headerlink" href="#usage-example" title="Link to this heading"></a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">palletdatagenerator</span><span class="w"> </span><span class="kn">import</span> <span class="n">PalletDataGenerator</span>
+
+<span class="c1"># Create generator</span>
+<span class="n">generator</span> <span class="o">=</span> <span class="n">PalletDataGenerator</span><span class="p">(</span><span class="n">mode</span><span class="o">=</span><span class="s2">&quot;single_pallet&quot;</span><span class="p">)</span>
+
+<span class="c1"># Configure keypoints</span>
+<span class="n">config_updates</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;generate_keypoints&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="s2">&quot;keypoints_min_face_area&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s2">&quot;generate_analysis&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>  <span class="c1"># To see keypoints visualization</span>
+<span class="p">}</span>
+
+<span class="c1"># Generate dataset</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">generator</span><span class="o">.</span><span class="n">generate</span><span class="p">(</span>
+    <span class="n">num_frames</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+    <span class="n">resolution</span><span class="o">=</span><span class="p">(</span><span class="mi">640</span><span class="p">,</span> <span class="mi">480</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;frames_generated&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> frames&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Keypoints saved to: </span><span class="si">{</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;output_dir&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">/keypoints_labels/&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="face-detection">
+<h2>Face Detection<a class="headerlink" href="#face-detection" title="Link to this heading"></a></h2>
+<p>The system detects faces by:</p>
+<ol class="arabic simple">
+<li><p>Looking for pallet objects (mesh objects with “pallet” in their name or pass_index &gt; 0)</p></li>
+<li><p>Extracting the 4 side faces from each pallet’s 3D bounding box (excludes top/bottom faces)</p></li>
+<li><p>Checking if each face is visible from the camera</p></li>
+<li><p>Verifying the face meets minimum area requirements</p></li>
+<li><p>Selecting up to 2 most visible faces that are well-oriented to the camera</p></li>
+<li><p>Generating keypoints for each selected face</p></li>
+</ol>
+<p>To add faces to your scene:</p>
+<ul class="simple">
+<li><p>Create pallet objects (mesh objects with “pallet” in their name)</p></li>
+<li><p>Ensure they’re visible from the camera</p></li>
+<li><p>The system will automatically extract side faces and generate keypoints</p></li>
+</ul>
+</section>
+<section id="visibility-detection">
+<h2>Visibility Detection<a class="headerlink" href="#visibility-detection" title="Link to this heading"></a></h2>
+<p>Keypoint visibility is determined by:</p>
+<ol class="arabic simple">
+<li><p><strong>Camera frustum check</strong>: Keypoint must be in front of camera</p></li>
+<li><p><strong>Ray casting</strong>: Line-of-sight check from camera to keypoint</p></li>
+<li><p><strong>Obstacle detection</strong>: Objects blocking the view are detected</p></li>
+</ol>
+<p>Visibility values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">2</span></code>: Keypoint is visible and not occluded</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">0</span></code>: Keypoint is hidden or occluded</p></li>
+</ul>
+</section>
+<section id="d-debug-visualization">
+<h2>3D Debug Visualization<a class="headerlink" href="#d-debug-visualization" title="Link to this heading"></a></h2>
+<p>The system generates comprehensive 3D debug information in the <code class="docutils literal notranslate"><span class="pre">debug_3d</span></code> folder:</p>
+<section id="debug-output-structure">
+<h3>Debug Output Structure<a class="headerlink" href="#debug-output-structure" title="Link to this heading"></a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>debug_3d/
+├── coordinates/           # Detailed coordinate information
+│   └── frame_XXXXXX_coordinates.txt
+├── figures/              # Interactive HTML 3D figures
+│   └── frame_XXXXXX_3d_interactive.html
+└── images/               # 3D debug visualization images
+    └── frame_XXXXXX_3d_debug.png
+</pre></div>
+</div>
+</section>
+<section id="coordinate-files">
+<h3>Coordinate Files<a class="headerlink" href="#coordinate-files" title="Link to this heading"></a></h3>
+<p>Each frame generates a detailed coordinate file containing:</p>
+<ul class="simple">
+<li><p><strong>Camera position</strong> and orientation</p></li>
+<li><p><strong>All face definitions</strong> with corner coordinates</p></li>
+<li><p><strong>Selected faces</strong> with selection criteria</p></li>
+<li><p><strong>Distance calculations</strong> from camera to each face</p></li>
+<li><p><strong>2D and 3D bounding boxes</strong> for each face</p></li>
+<li><p><strong>Face selection status</strong> and reasoning</p></li>
+</ul>
+</section>
+<section id="interactive-html-figures">
+<h3>Interactive HTML Figures<a class="headerlink" href="#interactive-html-figures" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>3D visualization</strong> of the entire scene using Plotly.js</p></li>
+<li><p><strong>Interactive controls</strong>: rotate, zoom, pan, reset view</p></li>
+<li><p><strong>Face highlighting</strong>: selected faces in red, unselected in blue</p></li>
+<li><p><strong>Keypoint visualization</strong>: 6 keypoints per selected face (orange dots)</p></li>
+<li><p><strong>Camera position</strong>: green diamond showing camera location</p></li>
+<li><p><strong>Real-time distance calculations</strong> from camera to each face</p></li>
+<li><p><strong>Legend and controls</strong> for easy navigation and understanding</p></li>
+</ul>
+</section>
+<section id="debug-images">
+<h3>Debug Images<a class="headerlink" href="#debug-images" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p><strong>Static 3D visualization</strong> for quick reference</p></li>
+<li><p><strong>Face selection visualization</strong> showing which faces were chosen</p></li>
+<li><p><strong>Coordinate system reference</strong> for debugging</p></li>
+</ul>
+</section>
+</section>
+<section id="using-debug-3d-features">
+<h2>Using Debug 3D Features<a class="headerlink" href="#using-debug-3d-features" title="Link to this heading"></a></h2>
+<section id="interactive-html-visualization">
+<h3>Interactive HTML Visualization<a class="headerlink" href="#interactive-html-visualization" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Open the HTML file</strong> in any modern web browser</p></li>
+<li><p><strong>Navigate the 3D scene</strong>:</p>
+<ul class="simple">
+<li><p><strong>Rotate</strong>: Click and drag to rotate the view</p></li>
+<li><p><strong>Zoom</strong>: Use mouse wheel to zoom in/out</p></li>
+<li><p><strong>Pan</strong>: Right-click and drag to pan the view</p></li>
+<li><p><strong>Reset</strong>: Double-click to reset to default view</p></li>
+</ul>
+</li>
+<li><p><strong>Analyze face selection</strong>:</p>
+<ul class="simple">
+<li><p><strong>Red faces</strong>: Selected for keypoints generation</p></li>
+<li><p><strong>Blue faces</strong>: Detected but not selected</p></li>
+<li><p><strong>Orange dots</strong>: Generated keypoints (6 per selected face)</p></li>
+<li><p><strong>Green diamond</strong>: Camera position</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="coordinate-analysis">
+<h3>Coordinate Analysis<a class="headerlink" href="#coordinate-analysis" title="Link to this heading"></a></h3>
+<p>The coordinate files provide detailed information for debugging:</p>
+<ul class="simple">
+<li><p><strong>Face selection criteria</strong>: Why certain faces were chosen</p></li>
+<li><p><strong>Distance calculations</strong>: Camera-to-face distances for selection</p></li>
+<li><p><strong>Bounding box data</strong>: Both 2D and 3D bounding box information</p></li>
+<li><p><strong>Keypoint positions</strong>: Exact 3D coordinates of all keypoints</p></li>
+</ul>
+</section>
+<section id="example-usage">
+<h3>Example Usage<a class="headerlink" href="#example-usage" title="Link to this heading"></a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate dataset with debug 3D enabled</span>
+palletgen<span class="w"> </span>-m<span class="w"> </span>single_pallet<span class="w"> </span>scenes/one_pallet.blend<span class="w"> </span>--frames<span class="w"> </span><span class="m">10</span>
+
+<span class="c1"># View debug files</span>
+ls<span class="w"> </span>output/single_pallet/generated_XXXXXX/debug_3d/
+<span class="c1"># coordinates/  figures/  images/</span>
+
+<span class="c1"># Open interactive 3D visualization</span>
+open<span class="w"> </span>output/single_pallet/generated_XXXXXX/debug_3d/figures/frame_000000_3d_interactive.html
+
+<span class="c1"># View coordinate details</span>
+cat<span class="w"> </span>output/single_pallet/generated_XXXXXX/debug_3d/coordinates/frame_000000_coordinates.txt
+</pre></div>
+</div>
+</section>
+</section>
+<section id="integration-with-existing-features">
+<h2>Integration with Existing Features<a class="headerlink" href="#integration-with-existing-features" title="Link to this heading"></a></h2>
+<p>Keypoints generation integrates seamlessly with:</p>
+<ul class="simple">
+<li><p><strong>Analysis images</strong>: Keypoints are visualized alongside bounding boxes</p></li>
+<li><p><strong>Metadata</strong>: Face and keypoint information is included in dataset manifest</p></li>
+<li><p><strong>YOLO labels</strong>: Keypoints follow YOLO format standards</p></li>
+<li><p><strong>Configuration</strong>: All settings are configurable via config file</p></li>
+<li><p><strong>3D Debug</strong>: Comprehensive visualization and coordinate tracking</p></li>
+</ul>
+</section>
+<section id="troubleshooting">
+<h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Link to this heading"></a></h2>
+<section id="no-keypoints-generated">
+<h3>No keypoints generated<a class="headerlink" href="#no-keypoints-generated" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Check that objects have “face” in their name</p></li>
+<li><p>Verify objects are mesh type</p></li>
+<li><p>Ensure objects are visible from camera</p></li>
+<li><p>Check minimum area threshold setting</p></li>
+</ul>
+</section>
+<section id="all-keypoints-marked-as-hidden">
+<h3>All keypoints marked as hidden<a class="headerlink" href="#all-keypoints-marked-as-hidden" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Verify camera positioning</p></li>
+<li><p>Check for objects blocking the view</p></li>
+<li><p>Ensure face objects are not behind camera</p></li>
+<li><p>Try disabling visibility check for testing</p></li>
+</ul>
+</section>
+<section id="keypoints-in-wrong-positions">
+<h3>Keypoints in wrong positions<a class="headerlink" href="#keypoints-in-wrong-positions" title="Link to this heading"></a></h3>
+<ul class="simple">
+<li><p>Verify face object geometry</p></li>
+<li><p>Check face object orientation</p></li>
+<li><p>Ensure face object has proper bounding box</p></li>
+</ul>
+</section>
+</section>
+<section id="advanced-configuration">
+<h2>Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Link to this heading"></a></h2>
+<p>For advanced users, you can customize:</p>
+<ul class="simple">
+<li><p>Keypoint positioning relative to face geometry</p></li>
+<li><p>Visibility detection algorithms</p></li>
+<li><p>Face detection criteria</p></li>
+<li><p>Output format and coordinate systems</p></li>
+</ul>
+<p>See the source code in <code class="docutils literal notranslate"><span class="pre">modes/base_generator.py</span></code> for implementation details.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quick Start Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api/modules.html" class="btn btn-neutral float-right" title="palletdatagenerator" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, Ibrahim Boubakri.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
