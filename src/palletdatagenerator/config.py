@@ -198,7 +198,7 @@ WAREHOUSE_CONFIG = {
     # Generation options
     "generate_analysis": True,
     "generate_segmentation": True,
-    "save_scene_before_render": False,
+    "save_scene_before_render": True,
     # Detection
     "max_faces_per_pallet": 2,
     "min_pallet_area": 100,
