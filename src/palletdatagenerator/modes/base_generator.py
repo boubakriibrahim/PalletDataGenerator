@@ -976,10 +976,6 @@ class BaseGenerator:
             self._aim_at(Lo_fill, Vector(anchor_obj.location))
             created.append(Lo_fill)
 
-            logger.debug(
-                f"Added fill light with energy {fill_energy} to ensure minimum brightness"
-            )
-
         return created
 
     def get_bbox_2d_accurate(self, obj, cam, sc):
@@ -1191,10 +1187,8 @@ class BaseGenerator:
                     skip_word in obj_name_lower
                     for skip_word in ["down", "bottom", "top", "up", "face"]
                 ):
-                    logger.debug(f"Skipping non-pallet object: {obj.name}")
                     continue
 
-                logger.debug(f"Processing pallet object: {obj.name}")
                 # Get the pallet's 3D bounding box
                 bbox_3d = self.bbox_3d_oriented(obj)
                 corners_3d = [Vector(c) for c in bbox_3d["corners"]]
@@ -1244,9 +1238,6 @@ class BaseGenerator:
                                 face_normal.dot(camera_direction)
                             )  # Higher = more directly facing camera
 
-                            logger.debug(
-                                f"  Adding visible face: {face_name} (original index {original_face_idx})"
-                            )
                             visible_faces.append(
                                 {
                                     "object": obj,
@@ -1536,20 +1527,12 @@ class BaseGenerator:
             logger.error(f"Matplotlib not available for 3D visualization: {e}")
             return
 
-        # Use the debug_3d folder from setup_folders
-        debug_folder = self.paths["debug_3d"]
-        logger.debug(f"Debug folder: {debug_folder}")
-
         # Get pallet bounding box and corners
         bbox_3d = self.bbox_3d_oriented(obj)
         corners_3d = [Vector(c) for c in bbox_3d["corners"]]
-        logger.debug(f"Found {len(corners_3d)} corners for {obj.name}")
 
         # Get camera position
         camera_pos = cam_obj.location
-        logger.debug(
-            f"Camera position: ({camera_pos.x:.2f}, {camera_pos.y:.2f}, {camera_pos.z:.2f})"
-        )
 
         # Create figure
         fig = plt.figure(figsize=(15, 10))
@@ -1713,7 +1696,6 @@ class BaseGenerator:
         output_path = os.path.join(
             self.paths["debug_3d_images"], f"frame_{frame_id:06d}_3d_debug.png"
         )
-        logger.debug(f"Saving 3D plot to: {output_path}")
 
         try:
             plt.savefig(output_path, dpi=150, bbox_inches="tight")
@@ -1741,7 +1723,6 @@ class BaseGenerator:
         coord_file = os.path.join(
             self.paths["debug_3d_coordinates"], f"frame_{frame_id:06d}_coordinates.txt"
         )
-        logger.debug(f"Saving coordinate data to: {coord_file}")
 
         try:
             with open(coord_file, "w") as f:
@@ -2508,7 +2489,6 @@ class BaseGenerator:
                         skip_word in obj_name_lower
                         for skip_word in ["down", "bottom", "top", "up", "face"]
                     ):
-                        logger.debug(f"Skipping non-pallet object: {obj.name}")
                         continue
 
                     pallet_objects_found += 1
@@ -2611,8 +2591,6 @@ class BaseGenerator:
                     f"{class_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n"
                 )
 
-        logger.debug(f"Generated 2D boxes file (YOLO format): {output_file}")
-
     def generate_face_3d_coordinates(
         self, selected_faces, frame_id, img_width, img_height
     ):
@@ -2673,8 +2651,6 @@ class BaseGenerator:
                     line += f" {corner_x:.6f} {corner_y:.6f} {visibility}"
 
                 f.write(f"{line}\n")
-
-        logger.debug(f"Generated 3D coordinates file (YOLO format): {output_file}")
 
     def create_interactive_3d_figure(
         self, corners_3d, camera_pos, selected_faces, frame_id, output_path
