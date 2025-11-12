@@ -15,6 +15,7 @@ from pathlib import Path
 
 import bpy
 import bpy_extras
+import mathutils
 import numpy as np
 from mathutils import Euler, Vector
 
@@ -70,6 +71,13 @@ class WarehouseMode(BaseGenerator):
         self.config.setdefault(
             "save_scene_with_path", True
         )  # Save scene with camera path visualization
+
+        # NEW: Advanced visibility detection using BVH-based occlusion testing
+        # Set to True to use the new visibility system (recommended)
+        # Set to False to use the legacy occlusion detection
+        self.config.setdefault(
+            "warehouse_use_advanced_visibility", True
+        )  # Use BVH-based visibility detection (frustum + facing + occlusion)
 
     def generate_frames(self):
         """
@@ -4687,29 +4695,444 @@ class WarehouseMode(BaseGenerator):
             draw.text((lx + pad, y), item, fill=color, font=font)
             y += h + line_gap
 
+    def detect_faces_by_rack_geometry(self, cam_obj, sc):
+        """
+        Detect visible faces using pre-calculated rack geometry.
+        Simplified approach: just find all pallets and check which are visible.
+        """
+        print("🔍 Rack-based detection starting...")
+        
+        # Step 1: Find ALL pallets in the scene (regardless of collection)
+        all_pallets = []
+        for obj in bpy.context.scene.objects:
+            if obj.type == "MESH":
+                # Check if it's a pallet by name or pass_index
+                is_pallet = False
+                if "pallet" in obj.name.lower() and obj.pass_index > 0:
+                    is_pallet = True
+                
+                # Skip objects with exclusion keywords
+                obj_name_lower = obj.name.lower()
+                if any(skip_word in obj_name_lower for skip_word in ["down", "bottom", "top", "up", "face", "rack", "floor", "wall"]):
+                    is_pallet = False
+                
+                if is_pallet:
+                    all_pallets.append(obj)
+        
+        print(f"📦 Found {len(all_pallets)} total pallets in scene")
+        
+        if not all_pallets:
+            print("❌ No pallets found in scene!")
+            # Try to find objects with pass_index > 0
+            print("   Searching for any objects with pass_index > 0...")
+            for obj in bpy.context.scene.objects:
+                if obj.type == "MESH" and obj.pass_index > 0:
+                    print(f"      Found: {obj.name} (pass_index={obj.pass_index})")
+                    all_pallets.append(obj)
+        
+        if not all_pallets:
+            return []
+        
+        # Get camera info
+        cam_pos = cam_obj.location
+        cam_matrix = cam_obj.matrix_world
+        
+        print(f"� Camera at ({cam_pos.x:.2f}, {cam_pos.y:.2f}, {cam_pos.z:.2f})")
+        
+        # Step 2: Check each pallet for visibility
+        visible_faces = []
+        min_area = self.config.get("keypoints_min_face_area", 100) * 0.05  # Very lenient
+        max_faces_per_pallet = self.config.get("warehouse_max_faces_per_pallet", 10)
+        
+        stats = {
+            "pallets_checked": 0,
+            "faces_checked": 0,
+            "rejected_behind_camera": 0,
+            "rejected_no_2d_corners": 0,
+            "rejected_too_small": 0,
+            "rejected_wrong_orientation": 0,
+            "rejected_occluded": 0,
+            "accepted": 0,
+        }
+        
+        # Filter pallets based on camera viewing direction
+        # Get camera forward direction (negative Z in camera's local space)
+        cam_forward = cam_matrix.to_quaternion() @ mathutils.Vector((0, 0, -1))
+        
+        # Determine camera angle - which direction is it pointing?
+        cam_angle_deg = math.degrees(math.atan2(cam_forward.y, cam_forward.x))
+        
+        print(f"📐 Camera forward direction: ({cam_forward.x:.2f}, {cam_forward.y:.2f}, {cam_forward.z:.2f})")
+        print(f"📐 Camera angle: {cam_angle_deg:.1f}°")
+        
+        # Filter pallets based on whether camera is looking at them
+        filtered_pallets = []
+        
+        for pallet in all_pallets:
+            pallet_pos = pallet.location
+            
+            # Vector from camera to pallet
+            to_pallet = pallet_pos - cam_pos
+            to_pallet_2d = mathutils.Vector((to_pallet.x, to_pallet.y))
+            cam_forward_2d = mathutils.Vector((cam_forward.x, cam_forward.y))
+            
+            # Skip if too far away
+            distance = to_pallet.length
+            if distance > 12.0:  # Skip pallets more than 12 units away
+                continue
+            
+            # Skip if vectors are zero length
+            if to_pallet_2d.length < 0.01 or cam_forward_2d.length < 0.01:
+                continue
+            
+            to_pallet_2d.normalize()
+            cam_forward_2d.normalize()
+            
+            # Check if pallet is in front of camera (dot product > 0 means same general direction)
+            dot = to_pallet_2d.dot(cam_forward_2d)
+            
+            # Only include pallets that are roughly in the camera's view direction
+            # Use a generous threshold (> -0.3 means within ~108 degrees of forward)
+            if dot > -0.3:
+                filtered_pallets.append(pallet)
+        
+        print(f"🎯 Filtered {len(all_pallets)} pallets to {len(filtered_pallets)} based on camera view direction")
+        
+        for pallet_obj in filtered_pallets:
+            stats["pallets_checked"] += 1
+            
+            # Get pallet bounding box
+            bbox_3d = self.bbox_3d_oriented(pallet_obj)
+            corners_3d = [Vector(c) for c in bbox_3d["corners"]]
+            
+            # Get all faces, filter to side faces only
+            all_faces = self.get_all_faces_from_bbox()
+            side_faces = self.filter_side_faces(all_faces, corners_3d)
+            
+            pallet_visible_faces = []
+            
+            for face_data in side_faces:
+                stats["faces_checked"] += 1
+                
+                corner_indices = face_data["corners"]
+                face_name = face_data["name"]
+                
+                # Get face corners and center
+                face_corners_3d = [corners_3d[i] for i in corner_indices]
+                face_center_3d = sum(face_corners_3d, Vector()) / 4
+                
+                # Check 1: Is face in front of camera?
+                to_face = face_center_3d - cam_pos
+                cam_forward = cam_matrix.to_quaternion() @ Vector((0, 0, -1))
+                if to_face.dot(cam_forward) < 0:
+                    stats["rejected_behind_camera"] += 1
+                    continue
+                
+                # Check 2: Project to 2D
+                face_corners_2d = self.project_points(face_corners_3d, cam_obj, sc)
+                visible_corners_2d = [p for p in face_corners_2d if p[2] > 0]
+                
+                if len(visible_corners_2d) < 1:
+                    stats["rejected_no_2d_corners"] += 1
+                    continue
+                
+                # Calculate 2D bounding box
+                xs, ys = zip(*[(p[0], p[1]) for p in visible_corners_2d], strict=False)
+                x_min, x_max = min(xs), max(xs)
+                y_min, y_max = min(ys), max(ys)
+                face_area_2d = (x_max - x_min) * (y_max - y_min)
+                
+                if face_area_2d < min_area:
+                    stats["rejected_too_small"] += 1
+                    continue
+                
+                # Check 2.5: Distance check - reject if too far
+                distance_to_face = (face_center_3d - cam_pos).length
+                if distance_to_face > 10.0:  # More than 10 units away
+                    stats["rejected_too_small"] += 1  # Reusing counter
+                    continue
+                
+                # Check 3: Face orientation (does it face the camera?)
+                face_normal = self.calculate_face_normal(face_corners_3d)
+                to_camera = (cam_pos - face_center_3d).normalized()
+                dot_product = face_normal.dot(to_camera)
+                
+                # Stricter check: face must be oriented toward camera
+                # Accept if angle < 75° (dot > 0.26), meaning face is generally pointing at camera
+                if dot_product < 0.26:
+                    stats["rejected_wrong_orientation"] += 1
+                    continue
+                
+                # Check 4: Occlusion (optional, disabled by default)
+                skip_occlusion = self.config.get("warehouse_skip_occlusion_check", True)
+                if not skip_occlusion:
+                    if not self.is_face_visible_simple(cam_pos, face_center_3d, pallet_obj):
+                        stats["rejected_occluded"] += 1
+                        continue
+                
+                # Face passed all checks!
+                stats["accepted"] += 1
+                distance_to_camera = (face_center_3d - cam_pos).length
+                
+                pallet_visible_faces.append({
+                    "object": pallet_obj,
+                    "face_index": all_faces.index(face_data),
+                    "face_name": face_name,
+                    "face_center_3d": face_center_3d,
+                    "face_corners_3d": face_corners_3d,
+                    "face_normal": face_normal,
+                    "face_angle": abs(dot_product),
+                    "bbox_2d": {
+                        "x_min": x_min,
+                        "y_min": y_min,
+                        "x_max": x_max,
+                        "y_max": y_max,
+                        "width": x_max - x_min,
+                        "height": y_max - y_min,
+                        "area": face_area_2d,
+                    },
+                    "bbox_3d": bbox_3d,
+                    "distance": distance_to_camera,
+                    "visibility_score": abs(dot_product) / max(distance_to_camera, 0.1),
+                })
+            
+            # Sort and select best faces for this pallet
+            if pallet_visible_faces:
+                pallet_visible_faces.sort(key=lambda x: x["visibility_score"], reverse=True)
+                visible_faces.extend(pallet_visible_faces[:max_faces_per_pallet])
+        
+        # Print statistics
+        print(f"\n📊 Detection Statistics:")
+        print(f"   Pallets checked: {stats['pallets_checked']}")
+        print(f"   Faces checked: {stats['faces_checked']}")
+        print(f"   Rejected (behind camera): {stats['rejected_behind_camera']}")
+        print(f"   Rejected (no 2D corners): {stats['rejected_no_2d_corners']}")
+        print(f"   Rejected (too small): {stats['rejected_too_small']}")
+        print(f"   Rejected (wrong orientation): {stats['rejected_wrong_orientation']}")
+        print(f"   Rejected (occluded): {stats['rejected_occluded']}")
+        print(f"   ✅ Accepted faces: {stats['accepted']}")
+        print(f"   Final selection: {len(visible_faces)} faces")
+        
+        return visible_faces
+
+    def analyze_rack_structure(self):
+        """
+        Analyze the warehouse rack structure from collections.
+        Returns info about left and right racks including centerlines and normals.
+        """
+        print("🔍 Analyzing rack structure...")
+        left_collection = None
+        right_collection = None
+        
+        for collection in bpy.data.collections:
+            name_lower = collection.name.lower()
+            print(f"   Found collection: {collection.name}")
+            if name_lower == "left" or "left" in name_lower:
+                left_collection = collection
+                print(f"      ✅ Identified as LEFT collection")
+            elif name_lower == "right" or "right" in name_lower:
+                right_collection = collection
+                print(f"      ✅ Identified as RIGHT collection")
+        
+        if not left_collection and not right_collection:
+            print("❌ No left or right collections found!")
+            return None
+        
+        racks_info = {
+            "left": None,
+            "right": None,
+            "aisle_axis": None,
+            "aisle_center": None,
+        }
+        
+        # Analyze left rack
+        if left_collection:
+            print(f"📦 Analyzing left collection with {len(left_collection.objects)} objects")
+            pallets = [obj for obj in left_collection.objects 
+                      if obj.type == "MESH" and ("pallet" in obj.name.lower() or obj.pass_index > 0)]
+            print(f"   Found {len(pallets)} pallet objects in left collection")
+            if pallets:
+                for p in pallets[:3]:  # Show first 3
+                    print(f"      - {p.name} (pass_index={p.pass_index})")
+                positions = [obj.location for obj in pallets]
+                avg_pos = sum(positions, Vector()) / len(positions)
+                racks_info["left"] = {
+                    "centerline": avg_pos,
+                    "pallets": pallets,
+                    "aisle_normal": Vector((1, 0, 0)),  # Points towards aisle (right)
+                }
+                print(f"   Left rack centerline: ({avg_pos.x:.2f}, {avg_pos.y:.2f}, {avg_pos.z:.2f})")
+        
+        # Analyze right rack
+        if right_collection:
+            print(f"📦 Analyzing right collection with {len(right_collection.objects)} objects")
+            pallets = [obj for obj in right_collection.objects 
+                      if obj.type == "MESH" and ("pallet" in obj.name.lower() or obj.pass_index > 0)]
+            print(f"   Found {len(pallets)} pallet objects in right collection")
+            if pallets:
+                for p in pallets[:3]:  # Show first 3
+                    print(f"      - {p.name} (pass_index={p.pass_index})")
+                positions = [obj.location for obj in pallets]
+                avg_pos = sum(positions, Vector()) / len(positions)
+                racks_info["right"] = {
+                    "centerline": avg_pos,
+                    "pallets": pallets,
+                    "aisle_normal": Vector((-1, 0, 0)),  # Points towards aisle (left)
+                }
+                print(f"   Right rack centerline: ({avg_pos.x:.2f}, {avg_pos.y:.2f}, {avg_pos.z:.2f})")
+        
+        # Calculate aisle center
+        if racks_info["left"] and racks_info["right"]:
+            left_center = racks_info["left"]["centerline"]
+            right_center = racks_info["right"]["centerline"]
+            racks_info["aisle_center"] = (left_center + right_center) / 2
+            aisle_vector = (right_center - left_center).normalized()
+            racks_info["aisle_axis"] = aisle_vector
+            print(f"   Aisle center: ({racks_info['aisle_center'].x:.2f}, {racks_info['aisle_center'].y:.2f}, {racks_info['aisle_center'].z:.2f})")
+        
+        if not racks_info["left"] and not racks_info["right"]:
+            print("❌ No pallets found in collections!")
+            return None
+            
+        print("✅ Rack structure analysis complete")
+        return racks_info
+
+    def select_candidate_pallets_by_position(self, cam_pos, cam_dir, racks_info):
+        """
+        Select candidate pallets based on camera position.
+        Only returns pallets on the aisle-facing side of racks.
+        """
+        print(f"📍 Camera position: ({cam_pos.x:.2f}, {cam_pos.y:.2f}, {cam_pos.z:.2f})")
+        candidates = []
+        
+        # Determine which rack(s) to check based on camera position
+        if not racks_info["aisle_center"]:
+            # Only one rack exists, use all pallets from it
+            print("   Using single rack mode (no aisle center)")
+            if racks_info["left"]:
+                print(f"   Adding {len(racks_info['left']['pallets'])} pallets from left rack")
+                for pallet in racks_info["left"]["pallets"]:
+                    candidates.append({"object": pallet, "side": "left_aisle"})
+            if racks_info["right"]:
+                print(f"   Adding {len(racks_info['right']['pallets'])} pallets from right rack")
+                for pallet in racks_info["right"]["pallets"]:
+                    candidates.append({"object": pallet, "side": "right_aisle"})
+            print(f"✅ Selected {len(candidates)} candidate pallets (single rack mode)")
+            return candidates
+        
+        # Determine camera position relative to aisle
+        left_center = racks_info["left"]["centerline"]
+        right_center = racks_info["right"]["centerline"]
+        aisle_center = racks_info["aisle_center"]
+        
+        # Distance from camera to each rack
+        dist_to_left = (cam_pos - left_center).length
+        dist_to_right = (cam_pos - right_center).length
+        dist_to_aisle = (cam_pos - aisle_center).length
+        
+        print(f"   Distance to left rack: {dist_to_left:.2f}m")
+        print(f"   Distance to right rack: {dist_to_right:.2f}m")
+        print(f"   Distance to aisle center: {dist_to_aisle:.2f}m")
+        
+        # Threshold for "centered in aisle"
+        aisle_width = (right_center - left_center).length
+        center_threshold = aisle_width * 0.3
+        
+        print(f"   Aisle width: {aisle_width:.2f}m, center threshold: {center_threshold:.2f}m")
+        
+        if dist_to_aisle < center_threshold:
+            # Camera is centered in aisle - check BOTH racks
+            print("   Camera centered in aisle - checking BOTH racks")
+            if racks_info["left"]:
+                print(f"   Adding {len(racks_info['left']['pallets'])} pallets from left rack")
+                for pallet in racks_info["left"]["pallets"]:
+                    candidates.append({"object": pallet, "side": "left_aisle"})
+            if racks_info["right"]:
+                print(f"   Adding {len(racks_info['right']['pallets'])} pallets from right rack")
+                for pallet in racks_info["right"]["pallets"]:
+                    candidates.append({"object": pallet, "side": "right_aisle"})
+        elif dist_to_left < dist_to_right:
+            # Camera closer to left rack
+            print("   Camera closer to LEFT rack")
+            if racks_info["left"]:
+                print(f"   Adding {len(racks_info['left']['pallets'])} pallets from left rack")
+                for pallet in racks_info["left"]["pallets"]:
+                    candidates.append({"object": pallet, "side": "left_aisle"})
+        else:
+            # Camera closer to right rack
+            print("   Camera closer to RIGHT rack")
+            if racks_info["right"]:
+                print(f"   Adding {len(racks_info['right']['pallets'])} pallets from right rack")
+                for pallet in racks_info["right"]["pallets"]:
+                    candidates.append({"object": pallet, "side": "right_aisle"})
+        
+        print(f"✅ Selected {len(candidates)} candidate pallets")
+        return candidates
+
+    def is_face_visible_simple(self, cam_pos, face_center, face_object):
+        """
+        Simple occlusion check: cast single ray from camera to face center.
+        Returns True if face is visible (not occluded).
+        """
+        # Skip occlusion check if disabled
+        if self.config.get("warehouse_skip_occlusion_check", False):
+            return True
+        
+        direction = face_center - cam_pos
+        distance = direction.length
+        
+        if distance < 0.01:
+            return True
+        
+        direction = direction.normalized()
+        
+        # Cast ray using Blender's scene ray_cast
+        # Stop at 95% of distance to avoid hitting the face itself
+        result = bpy.context.scene.ray_cast(
+            bpy.context.view_layer.depsgraph,
+            cam_pos,
+            direction,
+            distance=distance * 0.95
+        )
+        
+        # result is (hit, location, normal, index, object, matrix)
+        hit = result[0]
+        
+        if not hit:
+            return True  # No occlusion
+        
+        hit_object = result[4]
+        
+        # If we hit the face's own object, it's visible
+        if hit_object == face_object:
+            return True
+        
+        # Otherwise it's occluded
+        return False
+
     def detect_faces_in_scene(self, cam_obj, sc):
         """
-        Override the base class method to use occlusion-aware face selection for warehouse mode.
-        This ensures only non-occluded faces are selected.
+        Detect visible pallet faces using rack-based geometry.
+        Uses pre-calculated rack positions from path generation for efficient detection.
         """
-        # First, get all visible faces using the base class method
-        all_visible_faces = super().detect_faces_in_scene(cam_obj, sc)
-
-        if not all_visible_faces:
-            print("🎯 No visible faces detected in scene")
-            return []
-
-        print(f"🎯 Detected {len(all_visible_faces)} visible faces in scene")
-
-        # Get scene objects for occlusion checking
-        scene_objects = self.find_warehouse_objects()
-
-        # Use our occlusion-aware face selection
-        selected_faces = self.select_faces_with_occlusion_detection(
-            all_visible_faces, cam_obj, scene_objects
+        use_advanced_visibility = self.config.get(
+            "warehouse_use_advanced_visibility", True
         )
 
-        return selected_faces
+        if not use_advanced_visibility:
+            # Use legacy detection
+            print("⚠️ Using legacy face detection")
+            all_visible_faces = super().detect_faces_in_scene(cam_obj, sc)
+            if not all_visible_faces:
+                return []
+            scene_objects = self.find_warehouse_objects()
+            return self.select_faces_with_occlusion_detection(
+                all_visible_faces, cam_obj, scene_objects
+            )
+
+        # NEW: Use rack-based detection
+        print("🔍 Using rack-based visibility detection...")
+        return self.detect_faces_by_rack_geometry(cam_obj, sc)
 
     def save_generated_scene(self, scene_id):
         """

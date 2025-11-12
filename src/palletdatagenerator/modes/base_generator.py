@@ -24,18 +24,29 @@ from ..utils import logger
 
 
 def _pip_install(args):
-    """
-    Run `python -m pip …` inside the current interpreter.
-    Adds ~/.local to sys.path so the fresh install is usable immediately.
-    """
+    import ensurepip, subprocess, sys, os
+
     try:
         import pip  # noqa: F401
     except ModuleNotFoundError:
         ensurepip.bootstrap()
-
-    cmd = [sys.executable, "-m", "pip"] + args
-    logger.debug("▶ " + " ".join(cmd))
-    subprocess.check_call(cmd)
+    wheel_links = [
+        "/cvmfs/soft.computecanada.ca/custom/python/wheelhouse/avx2",
+        "/cvmfs/soft.computecanada.ca/custom/python/wheelhouse/generic",
+    ]
+    cmd = [
+        sys.executable,
+        "-m",
+        "pip",
+        "install",
+        "--no-index",
+        "--find-links",
+        wheel_links[0],
+        "--find-links",
+        wheel_links[1],
+        "--user",
+    ] + args
+    subprocess.run(cmd, check=True, text=True)
 
     user_site = site.getusersitepackages()
     if user_site not in sys.path:
@@ -46,12 +57,13 @@ def _pip_install(args):
 
 # ---------------------------- 1) Pillow -----------------------------
 try:
-    from PIL import Image, ImageDraw, ImageFont  # noqa: F401
-
-    PIL_AVAILABLE = True
+    from PIL import Image, ImageDraw, ImageFont
 except ModuleNotFoundError:
-    _pip_install(["install", "pillow>=10.0.0"])
-    from PIL import Image, ImageDraw, ImageFont  # retry
+    _pip_install(["pillow>=10,<11"])  # pick a version present in the wheelhouse
+    import importlib
+
+    importlib.invalidate_caches()
+    from PIL import Image, ImageDraw, ImageFont
 
     PIL_AVAILABLE = True
 
@@ -118,10 +130,152 @@ class BaseGenerator:
         cfg = self.config
         sc = bpy.context.scene
 
+        # Print Blender version info
+        print(f"🔍 Blender version: {bpy.app.version_string}")
+        print(f"🔍 Scene: {sc.name}")
+        sys.stdout.flush()
+
         sc.render.engine = cfg["render_engine"]
         sc.render.resolution_x = cfg["resolution_x"]
         sc.render.resolution_y = cfg["resolution_y"]
         sc.render.resolution_percentage = 100
+
+        # CRITICAL: Disable expensive render features
+        sc.render.use_motion_blur = False  # Motion blur is very slow
+        if hasattr(sc.render, "use_border"):
+            sc.render.use_border = False
+        if hasattr(sc.render, "use_crop_to_border"):
+            sc.render.use_crop_to_border = False
+
+        # ============== GPU SETUP FOR CYCLES ==============
+        if sc.render.engine == "CYCLES":
+            print("=" * 80)
+            print("🔧 CONFIGURING GPU FOR CYCLES RENDERING")
+            print("=" * 80)
+            sys.stdout.flush()
+
+            # CRITICAL: Check CUDA environment on Compute Canada
+            import os
+
+            cuda_home = os.environ.get("CUDA_HOME") or os.environ.get("CUDA_PATH")
+            cuda_visible = os.environ.get("CUDA_VISIBLE_DEVICES")
+            if cuda_home:
+                print(f"🔍 CUDA_HOME: {cuda_home}")
+            if cuda_visible:
+                print(f"🔍 CUDA_VISIBLE_DEVICES: {cuda_visible}")
+            else:
+                print(f"⚠️  CUDA_VISIBLE_DEVICES not set!")
+
+            # Check for loaded modules (Compute Canada specific)
+            loaded_modules = os.environ.get("LOADEDMODULES", "")
+            if "cuda" in loaded_modules.lower():
+                print(f"✅ CUDA module detected in environment")
+            else:
+                print(f"⚠️  No CUDA module detected - you may need: module load cuda")
+
+            sys.stdout.flush()
+
+            try:
+                preferences = bpy.context.preferences
+                cycles_preferences = preferences.addons["cycles"].preferences
+
+                # Show current device type
+                current_type = cycles_preferences.compute_device_type
+                print(f"📌 Current compute device type: {current_type}")
+                sys.stdout.flush()
+
+                # Allow environment override for cluster-specific preferences
+                env_backend = os.environ.get("PALLET_GPU_BACKEND")
+                preferred_backend = cfg.get("_gpu_backend", env_backend)
+                
+                # For Linux/NVIDIA (H100): prefer CUDA first (H100 lacks RT cores; CUDA faster than OPTIX)
+                # For macOS: METAL only
+                # For AMD: HIP
+                backend_order = ["CUDA", "OPTIX", "HIP", "METAL", "OPENCL"]
+                
+                if preferred_backend:
+                    # Move preferred to front
+                    if preferred_backend in backend_order:
+                        backend_order.remove(preferred_backend)
+                        backend_order.insert(0, preferred_backend)
+                    print(f"🎯 Preferred GPU backend: {preferred_backend}")
+                
+                # Try to set device type in priority order
+                device_type_set = None
+                for device_type in backend_order:
+                    try:
+                        cycles_preferences.compute_device_type = device_type
+                        device_type_set = device_type
+                        print(f"✅ Set compute device type to: {device_type}")
+                        sys.stdout.flush()
+                        break
+                    except:
+                        continue
+
+                # Refresh devices after setting type
+                cycles_preferences.refresh_devices()
+                backend = cycles_preferences.compute_device_type
+                print(f"🔄 Refreshed devices for type: {backend}")
+                sys.stdout.flush()
+
+                # Show and configure all devices - ONLY enable devices matching the chosen backend
+                print("📋 Available devices:")
+                gpu_devices = []
+                cpu_devices = []
+
+                for i, device in enumerate(cycles_preferences.devices):
+                    device_info = f"  [{i}] {device.name} - Type: {device.type}, Use: {device.use}"
+                    print(device_info)
+
+                    if device.type in {"CUDA", "OPTIX", "OPENCL", "METAL", "HIP"}:
+                        # CRITICAL: Only enable devices matching the chosen backend (not all GPUs)
+                        device.use = (device.type == backend)
+                        if device.use:
+                            gpu_devices.append(device.name)
+                    elif device.type == "CPU":
+                        device.use = False  # Disable CPU when GPU available
+                        cpu_devices.append(device.name)
+
+                sys.stdout.flush()
+
+                # Set scene to use GPU
+                if gpu_devices:
+                    sc.cycles.device = "GPU"
+                    print("=" * 80)
+                    print(f"🚀 GPU RENDERING ENABLED!")
+                    print(f"   Devices: {len(gpu_devices)} GPU(s)")
+                    for gpu in gpu_devices:
+                        print(f"   - {gpu}")
+                    print(f"   Scene cycles.device = {sc.cycles.device}")
+                    print("=" * 80)
+
+                    # CRITICAL: Verify preferences are saved
+                    cycles_preferences.get_devices()
+                    print(f"✅ GPU preferences verified")
+                    print(
+                        f"   Compute device type: {cycles_preferences.compute_device_type}"
+                    )
+                    print(
+                        f"   Active devices: {[d.name for d in cycles_preferences.devices if d.use]}"
+                    )
+                    print("=" * 80)
+                else:
+                    sc.cycles.device = "CPU"
+                    print("=" * 80)
+                    print("⚠️  NO GPU FOUND - USING CPU")
+                    print("=" * 80)
+
+                sys.stdout.flush()
+
+            except Exception as e:
+                import traceback
+
+                print("=" * 80)
+                print(f"❌ GPU SETUP FAILED: {e}")
+                print(traceback.format_exc())
+                print("=" * 80)
+                sc.cycles.device = "CPU"
+                sys.stdout.flush()
 
         # Color Management
         with contextlib.suppress(Exception):
@@ -139,33 +293,165 @@ class BaseGenerator:
         cyc = sc.cycles
         cyc.samples = cfg["fast_samples"] if cfg.get("fast_mode", False) else 128
 
+        print(
+            f"🎨 Render settings: samples={cyc.samples}, fast_mode={cfg.get('fast_mode', False)}, device={sc.cycles.device}"
+        )
+        sys.stdout.flush()
+
         if hasattr(cyc, "use_adaptive_sampling"):
             cyc.use_adaptive_sampling = bool(cfg.get("fast_adaptive_sampling", False))
+            print(f"🎨 Adaptive sampling: {cyc.use_adaptive_sampling}")
+            sys.stdout.flush()
 
         if cfg.get("fast_mode", False):
             if hasattr(cyc, "use_denoising"):
                 cyc.use_denoising = True
 
-            # Set denoiser
-            den = cfg.get(
-                "_resolved_denoiser", cfg.get("fast_denoiser", "OPENIMAGEDENOISE")
-            )
-            for candidate in (den, "OPENIMAGEDENOISE", "OPTIX", "NLM"):
-                try:
-                    cyc.denoiser = candidate
-                    break
-                except Exception:
-                    continue
+            # Set denoiser - prefer OPTIX for NVIDIA GPUs (fastest)
+            if sc.cycles.device == "GPU":
+                # Try OPTIX first for NVIDIA, then others
+                denoiser_priority = ["OPTIX", "OPENIMAGEDENOISE", "NLM"]
+            else:
+                denoiser_priority = ["OPENIMAGEDENOISE", "NLM"]
+
+            den = cfg.get("_resolved_denoiser", cfg.get("fast_denoiser", "AUTO"))
+            if den == "AUTO":
+                # Use priority list
+                for candidate in denoiser_priority:
+                    try:
+                        cyc.denoiser = candidate
+                        print(f"🎨 Denoiser: {candidate}")
+                        sys.stdout.flush()
+                        break
+                    except Exception:
+                        continue
+            else:
+                # Use specified denoiser
+                for candidate in (den, "OPENIMAGEDENOISE", "OPTIX", "NLM"):
+                    try:
+                        cyc.denoiser = candidate
+                        print(f"🎨 Denoiser: {candidate}")
+                        sys.stdout.flush()
+                        break
+                    except Exception:
+                        continue
 
             if hasattr(cyc, "use_persistent_data"):
                 cyc.use_persistent_data = bool(cfg.get("cycles_persistent_data", True))
+
+            # ULTRA FAST: Reduce quality for maximum speed
+            if hasattr(cyc, "ao_bounces"):
+                cyc.ao_bounces = 0  # Disable AO bounces
+            if hasattr(cyc, "ao_bounces_render"):
+                cyc.ao_bounces_render = 0
         else:
             if hasattr(cyc, "use_persistent_data"):
                 cyc.use_persistent_data = False
 
-        # Reduce fireflies
+        # Reduce fireflies and improve speed
         if hasattr(cyc, "light_threshold"):
-            cyc.light_threshold = 0.001
+            cyc.light_threshold = 0.01  # Increased from 0.001 for more speed (cull dim light paths)
+
+        # GPU-specific performance settings
+        if sc.cycles.device == "GPU":
+            # CRITICAL: Tile size for GPU rendering (OPTIX/CUDA work best with large tiles)
+            if hasattr(sc.render, "tile_x"):
+                sc.render.tile_x = 256  # Large tiles for GPU
+                sc.render.tile_y = 256
+                print(f"🎨 Tile size: {sc.render.tile_x}x{sc.render.tile_y}")
+
+            # ULTRA LOW bounces for maximum speed
+            cyc.max_bounces = 2  # Minimal bounces
+            cyc.diffuse_bounces = 1
+            cyc.glossy_bounces = 1
+            cyc.transmission_bounces = 2
+            cyc.volume_bounces = 0
+            cyc.transparent_max_bounces = 2
+
+            # Disable caustics for speed (not needed for pallets)
+            if hasattr(cyc, "caustics_reflective"):
+                cyc.caustics_reflective = False
+            if hasattr(cyc, "caustics_refractive"):
+                cyc.caustics_refractive = False
+
+            # Fast GI approximation (CRITICAL for speed)
+            if hasattr(cyc, "use_fast_gi"):
+                cyc.use_fast_gi = True
+                if hasattr(cyc, "fast_gi_method"):
+                    cyc.fast_gi_method = "REPLACE"  # Fastest
+                print(f"🎨 Fast GI enabled: {cyc.use_fast_gi}")
+                sys.stdout.flush()
+
+            # Reduce texture limit for faster loading
+            if hasattr(cyc, "texture_limit"):
+                cyc.texture_limit = "2048"  # Reduce from default
+
+            # Use less memory but faster (no BVH caching issues)
+            if hasattr(cyc, "debug_bvh_type"):
+                cyc.debug_bvh_type = "STATIC_BVH"
+
+            # CRITICAL: Shader JIT compilation cache
+            if hasattr(cyc, "use_cache"):
+                cyc.use_cache = True
+                print(f"🎨 Shader cache enabled")
+
+            print(
+                f"🎨 GPU optimizations: max_bounces={cyc.max_bounces}, caustics=off, fast_gi={hasattr(cyc, 'use_fast_gi')}"
+            )
+            sys.stdout.flush()
+
+        # Reduce pixel filter width for sharper/faster rendering
+        if hasattr(cyc, "pixel_filter_type"):
+            cyc.pixel_filter_type = "BOX"  # Fastest filter
+
+        # Simplify scene for faster rendering
+        if hasattr(sc.render, "use_simplify"):
+            sc.render.use_simplify = True
+            sc.render.simplify_subdivision = 0  # Disable subdivision in render
+            sc.render.simplify_child_particles = 0.0  # Reduce particles
+            sc.render.simplify_volumes = 1.0
+            print(f"🎨 Scene simplification enabled")
+            sys.stdout.flush()
+
+        # CRITICAL: Disable all subdivision modifiers for speed
+        subdivision_count = 0
+        geometry_nodes_count = 0
+        for obj in bpy.data.objects:
+            if obj.type == "MESH":
+                for mod in obj.modifiers:
+                    if mod.type == "SUBSURF":
+                        mod.show_render = False  # Disable in render
+                        subdivision_count += 1
+                    elif mod.type == "NODES":  # Geometry nodes can be very slow
+                        mod.show_render = False
+                        geometry_nodes_count += 1
+        if subdivision_count > 0:
+            print(f"🎨 Disabled {subdivision_count} subdivision modifiers for speed")
+            sys.stdout.flush()
+        if geometry_nodes_count > 0:
+            print(
+                f"🎨 Disabled {geometry_nodes_count} geometry node modifiers for speed"
+            )
+            sys.stdout.flush()
+
+        # Check for high-poly meshes that might slow rendering
+        total_polys = 0
+        high_poly_objects = []
+        for obj in bpy.data.objects:
+            if obj.type == "MESH" and obj.data:
+                poly_count = len(obj.data.polygons)
+                total_polys += poly_count
+                if poly_count > 100000:  # More than 100k polygons
+                    high_poly_objects.append((obj.name, poly_count))
+
+        if high_poly_objects:
+            print(f"⚠️  High-poly objects detected (may be slow):")
+            for name, count in high_poly_objects[:5]:  # Show top 5
+                print(f"   - {name}: {count:,} polygons")
+            sys.stdout.flush()
+
+        print(f"🔍 Total scene polygons: {total_polys:,}")
+        sys.stdout.flush()
 
         # Enable passes
         vl = sc.view_layers[0]

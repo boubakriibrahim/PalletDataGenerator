@@ -170,7 +170,12 @@ class PalletDataGenerator:
             mode_generator = SinglePalletMode(CONFIG)
             mode_generator.setup_folders()
             mode_generator.configure_render()
-            mode_generator.setup_compositor_nodes()
+
+            # Only setup compositor if depth/normals/index are needed
+            if CONFIG.get("generate_depth_normals_index", True):
+                mode_generator.setup_compositor_nodes()
+            else:
+                print("⚡ Skipping compositor setup for maximum speed")
 
             print("🔄 Running EXACT single pallet generator logic...")
             result = mode_generator.generate_frames()
@@ -189,7 +194,12 @@ class PalletDataGenerator:
             mode_generator = WarehouseMode(CONFIG)
             mode_generator.setup_folders()
             mode_generator.configure_render()
-            mode_generator.setup_compositor_nodes()
+
+            # Only setup compositor if depth/normals/index are needed
+            if CONFIG.get("generate_depth_normals_index", True):
+                mode_generator.setup_compositor_nodes()
+            else:
+                print("⚡ Skipping compositor setup for maximum speed")
 
             print("🔄 Running EXACT warehouse generator logic...")
             result = mode_generator.generate_frames()

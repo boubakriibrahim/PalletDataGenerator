@@ -97,10 +97,16 @@ SINGLE_PALLET_CONFIG = {
     "camera_min_z_above_ground": 0.05,
     # FAST mode
     "fast_mode": True,
-    "fast_samples": 32,
+    "fast_samples": 8,  # ULTRA low samples for maximum speed, denoiser will clean it
     "fast_denoiser": "AUTO",  # AUTO: Metal->OIDN, CUDA->OPTIX
     "fast_adaptive_sampling": True,
     "cycles_persistent_data": True,
+    # GPU backend preference (CUDA for H100, OPTIX for RTX cards, METAL for macOS)
+    "_gpu_backend": "CUDA",  # Prefer CUDA on H100 (lacks RT cores), can override with PALLET_GPU_BACKEND env var
+    # Performance: Disable slow post-processing for speed
+    "generate_analysis_images": False,  # Analysis images are slow, disable for production
+    "generate_depth_normals_index": False,  # Depth/normals/index passes are slow, disable for speed
+    "analysis_show_all_labels": True,  # Only used if generate_analysis_images=True
     # ---------------- Lighting randomness ----------------
     "randomize_lights_per_frame": False,
     "light_count_range": (1, 3),
@@ -137,7 +143,8 @@ SINGLE_PALLET_CONFIG = {
     "exposure_min": -2.0,  # EV clamp - more conservative to prevent very dark frames
     "exposure_max": 4.0,
     "exposure_smooth": 0.6,  # 0..1 how strongly to apply EV correction
-    "preview_samples": 4,  # quick preview render for measurement
+    "preview_samples": 1,  # Reduced from 4 to 1 for maximum speed (preview is just for exposure measurement)
+    "preview_resolution_percent": 50,  # Render preview at 50% resolution for speed
     "initial_exposure_ev": 0.0,  # starting EV
     # Name of an auxiliary object that moves with pallet but is not annotated
     "attached_box_name": "box",
@@ -178,9 +185,12 @@ WAREHOUSE_CONFIG = {
     "resolution_x": 1280,
     "resolution_y": 720,
     "render_engine": "CYCLES",
-    "fast_samples": 64,
+    "fast_samples": 8,  # ULTRA low samples for maximum speed, denoiser will clean it
     "fast_mode": True,
     "fast_denoiser": "AUTO",
+    # Performance: Disable slow post-processing for speed
+    "generate_analysis_images": False,  # Analysis images are slow, disable for production
+    "generate_depth_normals_index": False,  # Depth/normals/index passes are slow, disable for speed
     # Forklift simulation
     "camera_focal_mm": 35.0,
     "camera_sensor_mm": 36.0,

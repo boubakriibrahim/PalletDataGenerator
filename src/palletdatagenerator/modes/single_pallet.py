@@ -103,11 +103,15 @@ class SinglePalletMode(BaseGenerator):
         sys.stdout.flush()
 
         # Get the main pallet object
+        print("🔍 Looking for pallet object...")
+        sys.stdout.flush()
         base = bpy.data.objects.get("pallet")
         if not base or base.type != "MESH":
             raise RuntimeError("Object 'pallet' not found or is not a mesh.")
 
         # Setup camera
+        print("📷 Setting up camera...")
+        sys.stdout.flush()
         cam_data = bpy.data.cameras.new("SynthCam")
         cam_obj = bpy.data.objects.new("SynthCam", cam_data)
         bpy.context.collection.objects.link(cam_obj)
@@ -116,11 +120,19 @@ class SinglePalletMode(BaseGenerator):
         bpy.context.scene.camera = cam_obj
 
         # Setup environment
+        print("🌍 Setting up environment...")
+        sys.stdout.flush()
         self.setup_environment()
+        print("💡 Setting up lighting...")
+        sys.stdout.flush()
         self.setup_lighting(base)
 
         # Prepare pallets
+        print("📦 Preparing pallets...")
+        sys.stdout.flush()
         pallets = self.prepare_pallets(base)
+        print(f"✅ Prepared {len(pallets)} pallets")
+        sys.stdout.flush()
 
         # COCO scaffolding
         coco = {
@@ -145,9 +157,13 @@ class SinglePalletMode(BaseGenerator):
             self.save_generated_scene()
 
         print(f"🔄 Starting generation loop: {total} frames")
+        sys.stdout.flush()
 
         # Main generation loop - exactly as in original
         while valid < total:
+            print(f"🔁 Loop iteration: valid={valid}/{total}")
+            sys.stdout.flush()
+
             sc.frame_current = valid
 
             # Optional per-frame XY shift for pallet movement
@@ -159,21 +175,40 @@ class SinglePalletMode(BaseGenerator):
                 self.create_random_lights(pallets[0], replace_existing=True)
 
             # Camera movement - the key difference from current implementation!
+            print(f"📷 Positioning camera for frame {valid}...")
+            sys.stdout.flush()
             focus_obj = pallets[min(len(pallets) // 2, len(pallets) - 1)]
             _camera_info = self.position_camera_for_side_face(
                 cam_obj, focus_obj, self.config
             )
+            print(f"✅ Camera positioned")
+            sys.stdout.flush()
 
             # Handle attached boxes (per-frame rebuilding)
+            print(f"📦 Handling attached boxes...")
+            sys.stdout.flush()
             self.handle_attached_boxes(pallets)
+            print(f"✅ Boxes handled")
+            sys.stdout.flush()
 
             # Get detections for all visible pallets
+            print(f"🔍 Getting detections...")
+            sys.stdout.flush()
             b2d_list, b3d_list, pockets_list = self.get_detections(pallets, cam_obj, sc)
+            print(f"✅ Got {len(b2d_list)} detections")
+            sys.stdout.flush()
 
             # Detect faces and generate keypoints
+            print(f"🎯 Generating keypoints...")
+            sys.stdout.flush()
             keypoints_data = self.generate_keypoints_for_frame(cam_obj, sc, valid)
+            print(f"✅ Keypoints generated")
+            sys.stdout.flush()
 
             # Debug output for keypoints
+            print(f"📝 Processing keypoints debug output...")
+            sys.stdout.flush()
+
             if keypoints_data:
                 print(
                     f"🎯 Frame {valid}: Detected {len(keypoints_data)} faces with keypoints"
@@ -188,22 +223,103 @@ class SinglePalletMode(BaseGenerator):
             else:
                 print(f"🎯 Frame {valid}: No faces detected for keypoints")
 
+            print(f"✅ Debug output complete")
+            sys.stdout.flush()
+
             if not b2d_list:
                 print(f"[skip] frame {valid} - no visible pallets")
                 valid += 1
                 continue
 
+            print(f"✅ Detection check passed, proceeding to auto-exposure")
+            sys.stdout.flush()
+
             # Auto exposure
+            import time
+
+            start_exposure = time.time()
             _new_ev = self.auto_expose_frame(sc, cam_obj)
+            exposure_time = time.time() - start_exposure
+            if exposure_time > 1.0:  # Only print if it takes more than 1 second
+                print(f"⏱️  Auto-exposure time: {exposure_time:.2f}s")
+                sys.stdout.flush()
+
+            # Verify GPU on first frame
+            if valid == 0:
+                print("=" * 80)
+                print("🔍 VERIFYING RENDER CONFIGURATION BEFORE FIRST FRAME")
+                print(f"   Render engine: {sc.render.engine}")
+                print(f"   Cycles device: {sc.cycles.device}")
+                print(f"   Samples: {sc.cycles.samples}")
+                print(
+                    f"   Resolution: {sc.render.resolution_x}x{sc.render.resolution_y}"
+                )
+
+                # Check actual device being used
+                try:
+                    prefs = bpy.context.preferences
+                    cycles_prefs = prefs.addons["cycles"].preferences
+                    print(f"   Compute device type: {cycles_prefs.compute_device_type}")
+                    active_devices = [d.name for d in cycles_prefs.devices if d.use]
+                    print(f"   Active devices: {active_devices}")
+                except:
+                    pass
+
+                print("=" * 80)
+                sys.stdout.flush()
 
             # Render final image
+            import time
+
+            start_render = time.time()
             fn = f"{valid:06d}"
             img_path = os.path.join(self.paths["images"], f"{fn}.png")
             sc.render.filepath = img_path
             sc.render.image_settings.file_format = "PNG"
+
+            # CRITICAL: Force GPU right before render (scene may have reset it)
+            if sc.render.engine == "CYCLES":
+                prefs = bpy.context.preferences
+                cycles_prefs = prefs.addons["cycles"].preferences
+
+                # Check if any GPU devices are enabled
+                gpu_enabled = any(
+                    d.use and d.type in {"CUDA", "OPTIX", "OPENCL", "METAL", "HIP"}
+                    for d in cycles_prefs.devices
+                )
+
+                if gpu_enabled and sc.cycles.device != "GPU":
+                    print(f"⚠️  Forcing scene to use GPU (was: {sc.cycles.device})")
+                    sc.cycles.device = "GPU"
+
+            # CRITICAL: Verify GPU is actually being used right before render
+            print(f"🎬 Starting render for frame {fn}...")
+            print(f"🔍 Render engine: {sc.render.engine}")
+            if sc.render.engine == "CYCLES":
+                print(f"🔍 Cycles device setting: {sc.cycles.device}")
+                prefs = bpy.context.preferences
+                cycles_prefs = prefs.addons["cycles"].preferences
+                print(f"🔍 Compute device type: {cycles_prefs.compute_device_type}")
+                active = [d.name for d in cycles_prefs.devices if d.use]
+                print(f"🔍 Active devices: {active}")
+            sys.stdout.flush()
+
             bpy.ops.render.render(write_still=True)
 
+            render_time = time.time() - start_render
+
+            # Flag shader compilation time on first render
+            if valid == 0:
+                print(
+                    f"⏱️  FIRST RENDER completed in {render_time:.2f}s (includes shader compilation)"
+                )
+            else:
+                print(f"⏱️  Render completed in {render_time:.2f}s")
+
+            sys.stdout.flush()
+
             # Generate all outputs (analysis, annotations, etc.)
+            start_postprocess = time.time()
             ann_id = self.save_frame(
                 img_path,
                 b2d_list,
@@ -219,6 +335,13 @@ class SinglePalletMode(BaseGenerator):
                 pallets,
                 keypoints_data,
             )
+            postprocess_time = time.time() - start_postprocess
+            total_time = render_time + postprocess_time
+            print(f"⏱️  Post-processing completed in {postprocess_time:.2f}s")
+            print(
+                f"⏱️  Total frame time: {total_time:.2f}s (render: {render_time:.2f}s, post: {postprocess_time:.2f}s)"
+            )
+            sys.stdout.flush()
 
             print(
                 f"✅ [{valid+1}/{total}] frame {fn} - {len(b2d_list)} pallets visible; EV={sc.view_settings.exposure:+.2f}"
@@ -642,6 +765,17 @@ class SinglePalletMode(BaseGenerator):
     ):
         """Save all outputs for a single frame: analysis, YOLO, VOC, COCO, metadata - EXACT from original."""
 
+        # Check PIL availability once at the start
+        PIL_AVAILABLE = False
+        try:
+            import PIL.Image  # noqa: F401
+            import PIL.ImageDraw  # noqa: F401
+            import PIL.ImageFont  # noqa: F401
+
+            PIL_AVAILABLE = True
+        except ImportError:
+            pass
+
         # Helper functions for coordinate conversion - EXACT from original pattern
         def xyxy_to_xywh(b2d):
             """Convert bbox from x_min,y_min,x_max,y_max to x,y,width,height for COCO"""
@@ -655,19 +789,9 @@ class SinglePalletMode(BaseGenerator):
             height = b2d["height"] / img_h
             return x_center, y_center, width, height
 
-        # Generate analysis image - ALWAYS generate like original (no config check)
+        # Generate analysis image - only if enabled (can be slow)
         ana_path = None
-        try:
-            import PIL.Image  # noqa: F401
-            import PIL.ImageDraw  # noqa: F401
-            import PIL.ImageFont  # noqa: F401
-
-            PIL_AVAILABLE = True
-        except ImportError:
-            PIL_AVAILABLE = False
-            print("⚠️  PIL not available - skipping analysis image")
-
-        if PIL_AVAILABLE:
+        if self.config.get("generate_analysis_images", True) and PIL_AVAILABLE:
             ana_path = os.path.join(self.paths["analysis"], f"analysis_{fn}.png")
 
             # Ensure analysis directory exists
@@ -695,8 +819,10 @@ class SinglePalletMode(BaseGenerator):
                 import traceback
 
                 traceback.print_exc()
-        else:
-            print("⚠️  Skipping analysis generation - PIL not available")
+        elif not self.config.get("generate_analysis_images", True):
+            print("⚠️  Analysis image generation disabled for speed")
+        elif not PIL_AVAILABLE:
+            print("⚠️  PIL not available - skipping analysis image")
 
         # COCO (image)
         img_w, img_h = self.config["resolution_x"], self.config["resolution_y"]

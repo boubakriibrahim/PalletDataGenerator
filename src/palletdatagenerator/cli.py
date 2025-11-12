@@ -294,7 +294,42 @@ except Exception as e:
             if not line:
                 continue
 
-            # Skip verbose Blender memory and timing lines
+            # FIRST: Show important messages immediately (before skip filtering)
+            if any(
+                important in line
+                for important in [
+                    "[DEBUG]",
+                    "✅",
+                    "❌",
+                    "⚠️",
+                    "📊",
+                    "⏱️",
+                    "🔍",
+                    "Error",
+                    "error",
+                    "Saved:",
+                    "Analysis",
+                    "YOLO",
+                    "COCO",
+                    "VOC",
+                    "blender",
+                    "PIL",
+                    "generation",
+                    "🚀",
+                    "📁",
+                    "📸",
+                    "🏭",
+                    "save_frame",
+                    "SCENE",
+                    "warehouse",
+                    "Rendering frame",
+                ]
+            ):
+                print(line)
+                sys.stdout.flush()  # Force immediate output
+                continue
+
+            # THEN: Skip verbose Blender memory and timing lines
             if any(
                 skip_pattern in line
                 for skip_pattern in [
@@ -325,38 +360,6 @@ except Exception as e:
                             # Only show this for single pallet mode
                             # Warehouse mode shows its own "📸 Rendering frame" messages
                 continue
-
-            # Show important messages immediately
-            if any(
-                important in line
-                for important in [
-                    "[DEBUG]",
-                    "✅",
-                    "❌",
-                    "⚠️",
-                    "📊",
-                    "Error",
-                    "error",
-                    "Saved:",
-                    "Analysis",
-                    "YOLO",
-                    "COCO",
-                    "VOC",
-                    "blender",
-                    "PIL",
-                    "generation",
-                    "🚀",
-                    "📁",
-                    "📸",
-                    "🏭",
-                    "save_frame",
-                    "SCENE",
-                    "warehouse",
-                    "Rendering frame",
-                ]
-            ):
-                print(line)
-                sys.stdout.flush()  # Force immediate output
 
         # Wait for process to complete
         return_code = process.wait()
