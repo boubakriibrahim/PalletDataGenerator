@@ -375,4 +375,4 @@ Contributors will be recognized in:
 - README.md contributors section
 - GitHub releases
 
-Thank you for contributing to PalletDataGenerator! 🚀
+Thank you for contributing to PalletDataGenerator! [INFO]

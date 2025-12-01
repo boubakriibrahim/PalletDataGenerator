@@ -226,7 +226,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `🎉 Version bump detected: **v${version}**\n\nWhen this PR merges to \`main\`, a new release will be created and published to PyPI.`
+              body: `[UNK] Version bump detected: **v${version}**\n\nWhen this PR merges to \`main\`, a new release will be created and published to PyPI.`
             });
 
       - name: Comment on PR (no bump)
@@ -238,7 +238,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "ℹ️ No version change detected. To create a release, update the version in `pyproject.toml`."
+              body: "[UNK][UNK] No version change detected. To create a release, update the version in `pyproject.toml`."
             });
 
   # --------------------------
@@ -424,7 +424,7 @@ jobs:
               issue_number: prNumber,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `🚀 **Release v${version} Successfully Deployed!**\n\n✅ Package published to PyPI\n✅ GitHub release created\n✅ Documentation updated\n\nInstall:\n\`\`\`bash\npip install --upgrade ${{ env.PACKAGE_NAME }}\n\`\`\`\n\n[View Release](https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/v${version}) · [PyPI](https://pypi.org/project/${{ env.PACKAGE_NAME }}/)`
+              body: `[INFO] **Release v${version} Successfully Deployed!**\n\n[SUCCESS] Package published to PyPI\n[SUCCESS] GitHub release created\n[SUCCESS] Documentation updated\n\nInstall:\n\`\`\`bash\npip install --upgrade ${{ env.PACKAGE_NAME }}\n\`\`\`\n\n[View Release](https://github.com/${context.repo.owner}/${context.repo.repo}/releases/tag/v${version}) [UNK] [PyPI](https://pypi.org/project/${{ env.PACKAGE_NAME }}/)`
             });
 
   # --------------------------
@@ -447,5 +447,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `❌ **CI/CD Pipeline Failed**\n\nReview errors and push fixes.\n\n[View Workflow Run](${workflow_url})\n\nCommon fixes:\n- Code formatting (run \`black src/ tests/\`)\n- Linting (run \`ruff check src/ tests/\`)\n- Types (run \`mypy src/\`)\n- Tests (run \`pytest tests/\`)\n- Security (run \`bandit -r src/\`)\n`
+              body: `[ERROR] **CI/CD Pipeline Failed**\n\nReview errors and push fixes.\n\n[View Workflow Run](${workflow_url})\n\nCommon fixes:\n- Code formatting (run \`black src/ tests/\`)\n- Linting (run \`ruff check src/ tests/\`)\n- Types (run \`mypy src/\`)\n- Tests (run \`pytest tests/\`)\n- Security (run \`bandit -r src/\`)\n`
             });

@@ -168,9 +168,10 @@ class WarehouseMode(BaseGenerator):
                 scene_objects["collections"],
             )
             warehouse_bounds = self.calculate_warehouse_bounds(obstacles)
-            self.generate_and_save_path_visualization(
-                camera_path, obstacles, warehouse_bounds, scene_id
-            )
+            if self.config.get("generate_debug_3d", False):
+                self.generate_and_save_path_visualization(
+                    camera_path, obstacles, warehouse_bounds, scene_id
+                )
 
             # Create and save camera path visualization
             path_objects = []
@@ -3122,15 +3123,13 @@ class WarehouseMode(BaseGenerator):
                         keypoints_data,
                     )
                 if success:
-                    print(f"📊 Warehouse analysis image saved: {ana_path}")
+                    print(f"[OK] Warehouse analysis image saved: {ana_path}")
                 else:
-                    print(f"⚠️ Failed to create analysis image for frame {frame_id}")
+                    print(
+                        f"[WARN] Failed to create analysis image for frame {frame_id}"
+                    )
             except Exception as e:
-                print(f"    ⚠️ Analysis generation error: {e}")
-
-        # Save keypoints labels
-        if keypoints_data:
-            self.save_keypoints_labels(keypoints_data, frame_id, img_w, img_h)
+                print(f"    [WARN] Analysis generation error: {e}")
 
         # Metadata
         meta.append(
@@ -3188,9 +3187,7 @@ class WarehouseMode(BaseGenerator):
     def write_warehouse_annotations(
         self, visible_pallets, coco_data, img_id, img_w, img_h, cam_obj, sc
     ):
-        """Write COCO and YOLO annotations for warehouse scene."""
-        yolo_lines = []
-
+        """Write COCO annotations for warehouse scene."""
         for pallet_info in visible_pallets:
             # Pallet annotation
             bbox = pallet_info["bbox_2d"]
@@ -3204,15 +3201,6 @@ class WarehouseMode(BaseGenerator):
                 "segmentation": [],
             }
             coco_data["annotations"].append(annotation)
-
-            # YOLO format
-            x_center = (bbox["x_min"] + bbox["x_max"]) / 2 / img_w
-            y_center = (bbox["y_min"] + bbox["y_max"]) / 2 / img_h
-            width = bbox["width"] / img_w
-            height = bbox["height"] / img_h
-            yolo_lines.append(
-                f"0 {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}"
-            )
 
             # Generated boxes on pallet
             for box in pallet_info.get("generated_boxes", []):
@@ -3233,20 +3221,6 @@ class WarehouseMode(BaseGenerator):
                         "segmentation": [],
                     }
                     coco_data["annotations"].append(box_annotation)
-
-                    # YOLO format for box
-                    x_center = (box_bbox["x_min"] + box_bbox["x_max"]) / 2 / img_w
-                    y_center = (box_bbox["y_min"] + box_bbox["y_max"]) / 2 / img_h
-                    width = box_bbox["width"] / img_w
-                    height = box_bbox["height"] / img_h
-                    yolo_lines.append(
-                        f"2 {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}"
-                    )
-
-        # Write YOLO file
-        yolo_file = os.path.join(self.paths["yolo"], f"{img_id:06d}.txt")
-        with open(yolo_file, "w") as f:
-            f.write("\n".join(yolo_lines))
 
     def restore_scene_objects(self, removed_objects, original_positions):
         """Restore scene objects to original state."""
@@ -3910,7 +3884,7 @@ class WarehouseMode(BaseGenerator):
             )
 
         # Create consolidated 3D debug visualization for warehouse mode
-        if frame_id is not None:
+        if frame_id is not None and self.config.get("generate_debug_3d", False):
             # Get visible pallets for consolidated visualization
             scene_objects = self.find_warehouse_objects()
             visible_pallets = self.get_visible_pallets(scene_objects, cam_obj, sc)
@@ -3927,11 +3901,15 @@ class WarehouseMode(BaseGenerator):
                     "⚠️ No visible pallets found for consolidated debug visualization"
                 )
 
-            # Generate 2D boxes and 3D coordinates for selected faces (same as base class)
+        # Generate 2D boxes and keypoints for selected faces
+        # Use keypoints_data which has the generated keypoints, not faces
+        if frame_id is not None:
             img_width = self.config.get("resolution_x", 1280)
             img_height = self.config.get("resolution_y", 720)
-            self.generate_face_2d_boxes(faces, frame_id, img_width, img_height)
-            self.generate_face_3d_coordinates(faces, frame_id, img_width, img_height)
+            self.generate_face_2d_boxes(keypoints_data, frame_id, img_width, img_height)
+            self.generate_face_2d_keypoints(
+                keypoints_data, frame_id, img_width, img_height
+            )
 
         return keypoints_data
 

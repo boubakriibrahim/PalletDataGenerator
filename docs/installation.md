@@ -1,6 +1,6 @@
 # Installation Guide
 
-## 🚀 System Requirements
+## [INFO] System Requirements
 
 ### Recommended Versions (Tested & Optimized)
 - **Python**: 3.11.13
@@ -12,7 +12,7 @@
 - **RAM**: 8GB (16GB+ recommended)
 - **GPU**: NVIDIA, AMD, or Apple Silicon (optional but recommended)
 
-## 📦 Installation Methods
+## [INFO] Installation Methods
 
 ### Method 1: PyPI Installation (Recommended)
 
@@ -52,7 +52,7 @@ python -m palletdatagenerator setup --python-version 3.11 --venv-name pallet_env
 # Follow the printed instructions to activate and use
 ```
 
-## 🎨 Blender Setup
+## [INFO] Blender Setup
 
 ### Installing Blender
 
@@ -89,7 +89,7 @@ blender --version
 blender --background --python-expr "import sys; print(f'Python {sys.version}')"
 ```
 
-## 🔧 Virtual Environment Setup
+## [UNK] Virtual Environment Setup
 
 ### Creating a Virtual Environment
 
@@ -130,7 +130,7 @@ pip install "palletdatagenerator[dev,docs,gpu]"
 pip install -e ".[dev]"
 ```
 
-## 🧪 Verification
+## [UNK] Verification
 
 ### Quick Test
 
@@ -139,7 +139,7 @@ pip install -e ".[dev]"
 from palletdatagenerator import PalletDataGenerator
 from palletdatagenerator.core.generator import GenerationConfig
 
-print("✅ PalletDataGenerator installed successfully!")
+print("[SUCCESS] PalletDataGenerator installed successfully!")
 
 # Test configuration
 config = GenerationConfig(
@@ -148,7 +148,7 @@ config = GenerationConfig(
     resolution=(640, 480),
     output_dir="./test_output"
 )
-print("✅ Configuration system working!")
+print("[SUCCESS] Configuration system working!")
 ```
 
 ### Blender Integration Test
@@ -160,7 +160,7 @@ import sys
 sys.path.append('path/to/your/pallet_env/lib/python3.11/site-packages')
 from palletdatagenerator.blender_runner import BlenderEnvironmentManager
 env = BlenderEnvironmentManager()
-print('✅ Blender integration working!' if env.blender_available else '❌ Blender integration failed')
+print('[SUCCESS] Blender integration working!' if env.blender_available else '[ERROR] Blender integration failed')
 "
 ```
 
@@ -175,7 +175,7 @@ palletdatagenerator info --system-info
 palletdatagenerator config create example_config.yaml
 ```
 
-## 🐛 Troubleshooting
+## [UNK] Troubleshooting
 
 ### Common Issues
 
@@ -250,7 +250,7 @@ sudo chown -R $USER:$USER ~/.local
 # Install Visual C++ Build Tools if compilation errors occur
 ```
 
-## 📚 Next Steps
+## [UNK] Next Steps
 
 After successful installation:
 
@@ -259,7 +259,7 @@ After successful installation:
 3. **Configure your [Settings](configuration.md)**
 4. **Join the [Community](https://github.com/boubakriibrahim/PalletDataGenerator/discussions)**
 
-## 🆘 Getting Help
+## [UNK] Getting Help
 
 If you encounter issues:
 
@@ -270,4 +270,4 @@ If you encounter issues:
 
 ---
 
-**Installation complete! 🎉 Ready to generate some datasets!**
+**Installation complete! [UNK] Ready to generate some datasets!**

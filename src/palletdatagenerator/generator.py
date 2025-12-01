@@ -133,6 +133,7 @@ class PalletDataGenerator:
         num_frames: int = 50,
         output_dir: Path | None = None,
         resolution: tuple[int, int] | None = None,
+        config_overrides: dict | None = None,
     ) -> dict[str, Any]:
         """Generate dataset using the appropriate mode class."""
         if not BLENDER_AVAILABLE:
@@ -160,6 +161,9 @@ class PalletDataGenerator:
         # Get the appropriate config and set the batch folder as output_dir
         if self.mode == "single_pallet":
             CONFIG = SINGLE_PALLET_CONFIG.copy()
+            # Apply any overrides from CLI or caller
+            if config_overrides:
+                CONFIG.update(config_overrides)
             CONFIG["num_images"] = num_frames
             CONFIG["output_dir"] = batch_folder
             if resolution:
@@ -184,6 +188,9 @@ class PalletDataGenerator:
         else:
             # Warehouse mode
             CONFIG = WAREHOUSE_CONFIG.copy()
+            # Apply any overrides from CLI or caller
+            if config_overrides:
+                CONFIG.update(config_overrides)
             CONFIG["max_total_images"] = num_frames
             CONFIG["output_dir"] = batch_folder
             if resolution:
@@ -274,17 +281,19 @@ def ensure(path):
     return path
 
 
-def build_folders(root):
+def build_folders(root, config=None):
     sub = {
         "images": ensure(os.path.join(root, "images")),
         "depth": ensure(os.path.join(root, "depth")),
         "normals": ensure(os.path.join(root, "normals")),
         "index": ensure(os.path.join(root, "index")),
         "analysis": ensure(os.path.join(root, "analysis")),
-        "yolo": ensure(os.path.join(root, "yolo_labels")),
-        "voc": ensure(os.path.join(root, "voc_xml")),
-        "keypoints": ensure(os.path.join(root, "keypoints_labels")),
+        "face_2d_boxes": ensure(os.path.join(root, "face_2d_boxes")),
+        "face_2d_keypoints": ensure(os.path.join(root, "face_2d_keypoints")),
     }
+    # Conditionally create voc_xml folder
+    if config and config.get("generate_voc_xml", False):
+        sub["voc"] = ensure(os.path.join(root, "voc_xml"))
     return sub
 
 
@@ -551,7 +560,7 @@ def main_single_pallet(CONFIG):
 
     os.makedirs(cfg["output_dir"], exist_ok=True)
     root = ensure(cfg["output_dir"])
-    paths = build_folders(root)
+    paths = build_folders(root, cfg)
     configure_render(cfg)
     setup_compositor_nodes(paths, cfg)
 
@@ -659,19 +668,6 @@ def main_single_pallet(CONFIG):
             bpy.ops.render.render(write_still=True)
             print(f"✅ Rendered frame {valid+1}/{total}: {fn}.png")
 
-            # Create simple YOLO label file
-            yolo_path = os.path.join(paths["yolo"], f"{fn}.txt")
-            with open(yolo_path, "w") as yf:
-                for _i, b2d in enumerate(b2d_list):
-                    # Simple normalized coordinates (center_x, center_y, width, height)
-                    center_x = (b2d["x"] + b2d["width"] / 2) / img_w
-                    center_y = (b2d["y"] + b2d["height"] / 2) / img_h
-                    norm_w = b2d["width"] / img_w
-                    norm_h = b2d["height"] / img_h
-                    yf.write(
-                        f"0 {center_x:.6f} {center_y:.6f} {norm_w:.6f} {norm_h:.6f}\n"
-                    )
-
             # Add to COCO format
             coco["images"].append(
                 {"id": valid, "width": img_w, "height": img_h, "file_name": f"{fn}.png"}
@@ -703,11 +699,12 @@ def main_single_pallet(CONFIG):
                     with open(ana_path, "w") as af:
                         af.write("# Analysis image placeholder\n")
 
-            # Create simple VOC XML
-            voc_path = os.path.join(paths["voc"], f"{fn}.xml")
-            with open(voc_path, "w") as vf:
-                vf.write(
-                    f"""<?xml version="1.0"?>
+            # Create simple VOC XML (conditional)
+            if cfg.get("generate_voc_xml", False) and "voc" in paths:
+                voc_path = os.path.join(paths["voc"], f"{fn}.xml")
+                with open(voc_path, "w") as vf:
+                    vf.write(
+                        f"""<?xml version="1.0"?>
 <annotation>
     <filename>{fn}.png</filename>
     <size>
@@ -716,7 +713,7 @@ def main_single_pallet(CONFIG):
         <depth>3</depth>
     </size>
 </annotation>"""
-                )
+                    )
 
         except Exception as e:
             print(f"❌ Error rendering frame {valid}: {e}")

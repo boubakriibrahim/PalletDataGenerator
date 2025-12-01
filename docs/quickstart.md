@@ -2,7 +2,7 @@
 
 This guide will get you up and running with PalletDataGenerator in minutes!
 
-## 🏃‍♂️ 5-Minute Quick Start
+## [UNK][UNK][UNK][UNK] 5-Minute Quick Start
 
 ### Step 1: Create Virtual Environment
 
@@ -69,7 +69,7 @@ ls ./my_dataset/generated_0001/
 # - generation.log
 ```
 
-## 🎯 Common Use Cases
+## [INFO] Common Use Cases
 
 ### Single Pallet Scene
 
@@ -112,29 +112,29 @@ blender warehouse.blend --python -m palletdatagenerator.blender_runner -- genera
   --output ./custom_dataset
 ```
 
-## 📊 Understanding the Output
+## [INFO] Understanding the Output
 
 ### Directory Structure
 
 ```
 my_dataset/
-├── generated_0001/           # Batch 1
-│   ├── images/
-│   │   ├── frame_000001.png
-│   │   ├── frame_000002.png
-│   │   └── ...
-│   ├── annotations/
-│   │   ├── yolo/
-│   │   │   ├── frame_000001.txt
-│   │   │   ├── classes.txt
-│   │   │   └── ...
-│   │   └── coco/
-│   │       ├── annotations.json
-│   │       └── ...
-│   ├── dataset_info.json
-│   └── generation.log
-├── generated_0002/           # Batch 2 (if multiple batches)
-└── ...
+[UNK][UNK][UNK] generated_0001/           # Batch 1
+[UNK]   [UNK][UNK][UNK] images/
+[UNK]   [UNK]   [UNK][UNK][UNK] frame_000001.png
+[UNK]   [UNK]   [UNK][UNK][UNK] frame_000002.png
+[UNK]   [UNK]   [UNK][UNK][UNK] ...
+[UNK]   [UNK][UNK][UNK] annotations/
+[UNK]   [UNK]   [UNK][UNK][UNK] yolo/
+[UNK]   [UNK]   [UNK]   [UNK][UNK][UNK] frame_000001.txt
+[UNK]   [UNK]   [UNK]   [UNK][UNK][UNK] classes.txt
+[UNK]   [UNK]   [UNK]   [UNK][UNK][UNK] ...
+[UNK]   [UNK]   [UNK][UNK][UNK] coco/
+[UNK]   [UNK]       [UNK][UNK][UNK] annotations.json
+[UNK]   [UNK]       [UNK][UNK][UNK] ...
+[UNK]   [UNK][UNK][UNK] dataset_info.json
+[UNK]   [UNK][UNK][UNK] generation.log
+[UNK][UNK][UNK] generated_0002/           # Batch 2 (if multiple batches)
+[UNK][UNK][UNK] ...
 ```
 
 ### Annotation Formats
@@ -160,7 +160,7 @@ hole
 }
 ```
 
-## 🔧 CLI Command Reference
+## [UNK] CLI Command Reference
 
 ### Basic Commands
 
@@ -213,7 +213,7 @@ palletdatagenerator setup --python-version 3.11
 --segmentation-masks        # Instance masks
 ```
 
-## 🎨 Blender Integration
+## [INFO] Blender Integration
 
 ### Scene Setup Requirements
 
@@ -249,7 +249,7 @@ export PYTHONPATH="/path/to/your/pallet_env/lib/python3.11/site-packages:$PYTHON
 blender scene.blend --python -m palletdatagenerator.blender_runner -- generate --output ./dataset
 ```
 
-## 🚨 Troubleshooting Quick Fixes
+## [UNK] Troubleshooting Quick Fixes
 
 ### Common Issues
 
@@ -286,7 +286,7 @@ cat ./dataset/generated_0001/generation.log
 blender scene.blend --python -m palletdatagenerator.blender_runner -- generate --output ./dataset --verbose
 ```
 
-## 📈 Performance Tips
+## [UNK] Performance Tips
 
 ### Speed Optimization
 
@@ -317,7 +317,7 @@ blender scene.blend --python -m palletdatagenerator.blender_runner -- generate -
 --export-format yolo coco voc
 ```
 
-## 🎯 Next Steps
+## [INFO] Next Steps
 
 Now that you have the basics:
 
@@ -326,7 +326,7 @@ Now that you have the basics:
 3. **Read about [Scene Setup](scenes.md)**
 4. **Learn [Best Practices](best_practices.md)**
 
-## 💡 Pro Tips
+## [INFO] Pro Tips
 
 - **Start small**: Begin with 10-50 frames to test your setup
 - **Use batches**: Large datasets are easier to manage in batches
@@ -336,4 +336,4 @@ Now that you have the basics:
 
 ---
 
-**Happy generating! 🚀 Ready to create some amazing datasets!**
+**Happy generating! [INFO] Ready to create some amazing datasets!**

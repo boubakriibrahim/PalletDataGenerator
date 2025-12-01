@@ -41,7 +41,7 @@ def get_next_batch_folder(base_output_dir: str, mode: str) -> str:
     batch_folder_name = f"generated_{next_num:06d}"
     batch_folder_path = os.path.join(mode_dir, batch_folder_name)
 
-    print(f"📁 Creating batch folder: {batch_folder_path}")
+    print(f"[INFO] Creating batch folder: {batch_folder_path}")
     os.makedirs(batch_folder_path, exist_ok=True)
 
     return batch_folder_path
@@ -88,6 +88,9 @@ SINGLE_PALLET_CONFIG = {
     # duplicate pallets
     "duplicate_pallets": False,
     "num_pallets": 2,
+    # Probability-driven stacking: per-scene chance to create a stacked pallet setup
+    "stacked_pallets_probability": None,
+    "stacked_pallets_max": None,
     "pallet_stack_vertical": True,
     "pallet_stack_gap": 0.0,
     "unique_object_index": True,
@@ -105,7 +108,7 @@ SINGLE_PALLET_CONFIG = {
     "_gpu_backend": "CUDA",  # Prefer CUDA on H100 (lacks RT cores), can override with PALLET_GPU_BACKEND env var
     # Performance: Disable slow post-processing for speed
     "generate_analysis_images": True,  # Analysis images are slow, disable for production
-    "generate_depth_normals_index": False,  # Depth/normals/index passes are slow, disable for speed
+    "generate_depth_normals_index": True,  # Depth/normals/index passes are slow, disable for speed
     "analysis_show_all_labels": True,  # Only used if generate_analysis_images=True
     # ---------------- Lighting randomness ----------------
     "randomize_lights_per_frame": False,
@@ -183,8 +186,11 @@ SINGLE_PALLET_CONFIG = {
     "keypoints_show_labels": True,  # Show all keypoint labels (names, coordinates) in analysis images
     "analysis_show_all_labels": False,  # Show all labels in analysis images (YOLO boxes, 3D structures)
     "analysis_show_keypoints": True,  # Show keypoints in analysis images
-    "analysis_show_2d_boxes": False,  # Show 2D bounding boxes of selected faces in analysis images
-    "analysis_show_3d_coordinates": True,  # Show 3D coordinates of selected faces in analysis images
+    "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
+    "analysis_show_3d_coordinates": False,  # Show 3D coordinates of selected faces in analysis images
+    # --------------- Output folder generation ---------------
+    "generate_debug_3d": False,  # Generate debug_3d folder with 3D visualizations
+    "generate_voc_xml": False,  # Generate VOC XML annotations
 }
 
 
@@ -255,7 +261,10 @@ WAREHOUSE_CONFIG = {
     "analysis_show_all_labels": False,  # Show all labels in analysis images (YOLO boxes, 3D structures)
     "analysis_show_keypoints": True,  # Show keypoints in analysis images
     "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
-    "analysis_show_3d_coordinates": True,  # Show 3D coordinates of selected faces in analysis images
+    "analysis_show_3d_coordinates": False,  # Show 3D coordinates of selected faces in analysis images
+    # --------------- Output folder generation ---------------
+    "generate_debug_3d": False,  # Generate debug_3d folder with 3D visualizations
+    "generate_voc_xml": False,  # Generate VOC XML annotations
 }
 
 

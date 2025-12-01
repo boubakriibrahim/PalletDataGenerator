@@ -258,8 +258,8 @@ def create_dataset_manifest(dataset_info: dict[str, Any], output_path: str) -> N
             "depth": "Depth maps (16-bit PNG)",
             "normals": "Surface normal maps",
             "index": "Object index maps for segmentation",
-            "yolo_labels": "YOLO format annotations",
-            "voc_xml": "PASCAL VOC format annotations",
+            "face_2d_boxes": "Face detection YOLO format (class 0)",
+            "face_2d_keypoints": "Face keypoints YOLO format",
             "annotations.json": "COCO format annotations",
         },
     }
@@ -268,7 +268,14 @@ def create_dataset_manifest(dataset_info: dict[str, Any], output_path: str) -> N
     output_dir = Path(output_path).parent
     if output_dir.exists():
         file_stats = {}
-        for subdir in ["images", "depth", "normals", "index", "yolo_labels", "voc_xml"]:
+        for subdir in [
+            "images",
+            "depth",
+            "normals",
+            "index",
+            "face_2d_boxes",
+            "face_2d_keypoints",
+        ]:
             subdir_path = output_dir / subdir
             if subdir_path.exists():
                 files = list(subdir_path.glob("*"))
@@ -305,7 +312,15 @@ def verify_dataset_integrity(dataset_dir: str) -> dict[str, Any]:
 
     # Check for required subdirectories
     required_dirs = ["images"]
-    optional_dirs = ["depth", "normals", "index", "yolo_labels", "voc_xml"]
+    optional_dirs = [
+        "depth",
+        "normals",
+        "index",
+        "face_2d_boxes",
+        "face_2d_keypoints",
+        "voc_xml",
+        "debug_3d",
+    ]
 
     for req_dir in required_dirs:
         if not (dataset_path / req_dir).exists():

@@ -14,23 +14,23 @@
 
 ---
 
-## 🎯 Overview
+## [INFO] Overview
 
 PalletDataGenerator is a comprehensive, production-ready solution for creating photorealistic synthetic datasets of pallets and warehouse environments. Designed with professional computer vision workflows in mind, it bridges the gap between research needs and industry-grade dataset generation.
 
-### ✨ Key Features
+### [INFO] Key Features
 
-- 🎬 **Dual Generation Modes**: Single pallet focus and complex warehouse scenarios
-- 📊 **Multiple Export Formats**: YOLO, COCO JSON, and PASCAL VOC XML annotations
-- 🎯 **Advanced Keypoints Generation**: Automatic face detection with 6 keypoints per face, visibility tracking, and 3D debug visualization
-- 🔍 **3D Debug Visualization**: Interactive HTML figures and coordinate tracking for keypoints analysis
-- ⚡ **GPU-Accelerated Rendering**: High-performance generation with Blender Cycles
-- 🔧 **Flexible Configuration**: YAML configs with CLI parameter overrides
-- 📦 **Professional Output Structure**: Organized `generated_XXXX` batch folders with comprehensive metadata
-- 🏗️ **Modular Architecture**: Clean, extensible, and thoroughly tested codebase
-- 🌟 **Photorealistic Results**: Advanced lighting, materials, and post-processing
+- [UNK] **Dual Generation Modes**: Single pallet focus and complex warehouse scenarios
+- [INFO] **Multiple Export Formats**: YOLO, COCO JSON, and PASCAL VOC XML annotations
+- [INFO] **Advanced Keypoints Generation**: Automatic face detection with 6 keypoints per face, visibility tracking, and 3D debug visualization
+- [INFO] **3D Debug Visualization**: Interactive HTML figures and coordinate tracking for keypoints analysis
+- [INFO] **GPU-Accelerated Rendering**: High-performance generation with Blender Cycles
+- [UNK] **Flexible Configuration**: YAML configs with CLI parameter overrides
+- [INFO] **Professional Output Structure**: Organized `generated_XXXX` batch folders with comprehensive metadata
+- [UNK][UNK] **Modular Architecture**: Clean, extensible, and thoroughly tested codebase
+- [INFO] **Photorealistic Results**: Advanced lighting, materials, and post-processing
 
-## 🚀 Quick Start
+## [INFO] Quick Start
 
 ### Prerequisites
 
@@ -75,7 +75,7 @@ palletgen -m single_pallet scenes/one_pallet.blend \
     --resolution 2048 1536
 ```
 
-## 📸 Example Outputs
+## [UNK] Example Outputs
 
 ### Warehouse Mode
 Generate complex warehouse scenes with multiple pallets, stacked boxes, and realistic lighting:
@@ -101,7 +101,7 @@ Each frame generates comprehensive data for training:
 | <img src="readme_images/outputs/single_pallet_example.png" width="200"> | <img src="readme_images/outputs/analysis_example.png" width="200"> | <img src="readme_images/outputs/depth_example.png" width="200"> | <img src="readme_images/outputs/normal_example.png" width="200"> |
 | <img src="readme_images/outputs/warehouse_example.png" width="200"> | <img src="readme_images/outputs/analysis_example_2.png" width="200"> | <img src="readme_images/outputs/warehouse_depth_example.png" width="200"> | <img src="readme_images/outputs/warehouse_normal_example.png" width="200"> |
 
-### 🎯 Keypoints Generation Examples
+### [INFO] Keypoints Generation Examples
 Advanced face detection and keypoints tracking with 3D visualization:
 
 | Original Image | Keypoints Analysis | 3D Debug Visualization |
@@ -116,12 +116,12 @@ Advanced face detection and keypoints tracking with 3D visualization:
 - **Comprehensive debug information** including face selection criteria
 - **YOLO format compatibility** for seamless integration with training pipelines
 
-### 🔍 3D Debug Visualization
+### [INFO] 3D Debug Visualization
 Advanced debugging tools for keypoints analysis and face detection:
 
 | Interactive 3D Figure | Debug Coordinates | 3D Visualization |
 |----------------------|-------------------|------------------|
-| [🎯 Open Interactive 3D](readme_images/outputs/debug_3d_interactive_example.html) | [📄 View Coordinates](readme_images/outputs/debug_3d_coordinates_example.txt) | <img src="readme_images/outputs/debug_3d_example.png" width="200"> |
+| [[INFO] Open Interactive 3D](readme_images/outputs/debug_3d_interactive_example.html) | [[INFO] View Coordinates](readme_images/outputs/debug_3d_coordinates_example.txt) | <img src="readme_images/outputs/debug_3d_example.png" width="200"> |
 
 **Debug Features:**
 - **Interactive 3D visualization** with Plotly.js for real-time exploration
@@ -131,23 +131,23 @@ Advanced debugging tools for keypoints analysis and face detection:
 - **Comprehensive coordinate tracking** for debugging and validation
 - **Note:** Keypoints are only visible in 2D analysis images, not in 3D visualization
 
-## 🏗️ Architecture & Features
+## [UNK][UNK] Architecture & Features
 
 ### Generation Modes
 
-#### 🏭 **Warehouse Mode**
+#### [UNK] **Warehouse Mode**
 - **Multi-pallet scenes** with realistic warehouse layouts
 - **Dynamic box stacking** with collection-aware placement
 - **Procedural lighting** and environment variations
 - **Complex occlusion scenarios** for robust model training
 
-#### 📦 **Single Pallet Mode**
+#### [INFO] **Single Pallet Mode**
 - **Focused pallet detection** with controlled backgrounds
 - **Precise annotation quality** for fine-grained training
 - **Camera angle variations** including side and corner views
 - **Configurable cropping and occlusion levels**
 
-### 🎯 **Advanced Keypoints Generation**
+### [INFO] **Advanced Keypoints Generation**
 - **Automatic face detection** by scanning for objects with "face" in their name
 - **Selective face detection**: Detects 1-2 most visible faces from the pallet (not all faces)
 - **6 keypoints per selected face**: 2 middle (top-down), 2 left (top-down), 2 right (top-down)
@@ -160,13 +160,13 @@ Advanced debugging tools for keypoints analysis and face detection:
 
 ### Export Formats
 
-#### 🎯 **YOLO Format**
+#### [INFO] **YOLO Format**
 ```
 # Example: 000000.txt
 0 0.475345 0.595753 0.247050 0.102537
 ```
 
-#### 🎯 **Keypoints Labels (YOLO Format)**
+#### [INFO] **Keypoints Labels (YOLO Format)**
 ```
 # Example: keypoints_labels/000000.txt
 0 0.573150 0.639442 0.284453 0.139362 0.580366 0.603590 2 0.578420 0.669213 2 0.715376 0.569761 2 0.710409 0.633069 2 0.430924 0.641035 2 0.432683 0.709123 2
@@ -176,7 +176,7 @@ Format: `class_id x_center y_center width height kp1_x kp1_y kp1_v kp2_x kp2_y k
 - 6 keypoints per face: middle (top/bottom), left (top/bottom), right (top/bottom)
 - **Real example** from generated dataset with actual face detection results
 
-#### 📋 **COCO JSON**
+#### [UNK] **COCO JSON**
 ```json
 {
     "images": [{"id": 1, "file_name": "000000.png", "width": 1024, "height": 768}],
@@ -185,7 +185,7 @@ Format: `class_id x_center y_center width height kp1_x kp1_y kp1_v kp2_x kp2_y k
 }
 ```
 
-#### 📄 **PASCAL VOC XML**
+#### [INFO] **PASCAL VOC XML**
 ```xml
 <annotation>
     <object>
@@ -202,29 +202,29 @@ Format: `class_id x_center y_center width height kp1_x kp1_y kp1_v kp2_x kp2_y k
 
 ```
 output/
-├── warehouse/
-│   ├── generated_000001/
-│   │   ├── images/          # RGB images (PNG)
-│   │   ├── analysis/        # Overlay analysis images with keypoints
-│   │   ├── depth/           # Depth maps (PNG)
-│   │   ├── normals/         # Normal maps (PNG)
-│   │   ├── index/           # Index/segmentation maps
-│   │   ├── yolo_labels/     # YOLO format annotations
-│   │   ├── keypoints_labels/ # Keypoints annotations (YOLO format)
-│   │   ├── face_2d_boxes/   # 2D bounding boxes for detected faces
-│   │   ├── face_3d_coordinates/ # 3D coordinates for keypoints
-│   │   ├── debug_3d/        # 3D debug visualization
-│   │   │   ├── coordinates/ # Detailed coordinate information
-│   │   │   ├── figures/     # Interactive HTML 3D figures
-│   │   │   └── images/      # 3D debug visualization images
-│   │   ├── voc_xml/         # PASCAL VOC annotations
-│   │   └── coco/            # COCO JSON annotations
-│   └── generated_000002/    # Next batch...
-└── single_pallet/
-    └── generated_000001/    # Same structure
+[UNK][UNK][UNK] warehouse/
+[UNK]   [UNK][UNK][UNK] generated_000001/
+[UNK]   [UNK]   [UNK][UNK][UNK] images/          # RGB images (PNG)
+[UNK]   [UNK]   [UNK][UNK][UNK] analysis/        # Overlay analysis images with keypoints
+[UNK]   [UNK]   [UNK][UNK][UNK] depth/           # Depth maps (PNG)
+[UNK]   [UNK]   [UNK][UNK][UNK] normals/         # Normal maps (PNG)
+[UNK]   [UNK]   [UNK][UNK][UNK] index/           # Index/segmentation maps
+[UNK]   [UNK]   [UNK][UNK][UNK] yolo_labels/     # YOLO format annotations
+[UNK]   [UNK]   [UNK][UNK][UNK] keypoints_labels/ # Keypoints annotations (YOLO format)
+[UNK]   [UNK]   [UNK][UNK][UNK] face_2d_boxes/   # 2D bounding boxes for detected faces
+[UNK]   [UNK]   [UNK][UNK][UNK] face_3d_coordinates/ # 3D coordinates for keypoints
+[UNK]   [UNK]   [UNK][UNK][UNK] debug_3d/        # 3D debug visualization
+[UNK]   [UNK]   [UNK]   [UNK][UNK][UNK] coordinates/ # Detailed coordinate information
+[UNK]   [UNK]   [UNK]   [UNK][UNK][UNK] figures/     # Interactive HTML 3D figures
+[UNK]   [UNK]   [UNK]   [UNK][UNK][UNK] images/      # 3D debug visualization images
+[UNK]   [UNK]   [UNK][UNK][UNK] voc_xml/         # PASCAL VOC annotations
+[UNK]   [UNK]   [UNK][UNK][UNK] coco/            # COCO JSON annotations
+[UNK]   [UNK][UNK][UNK] generated_000002/    # Next batch...
+[UNK][UNK][UNK] single_pallet/
+    [UNK][UNK][UNK] generated_000001/    # Same structure
 ```
 
-### 🔍 Debug 3D Output Details
+### [INFO] Debug 3D Output Details
 
 The `debug_3d/` folder contains comprehensive debugging information:
 
@@ -271,7 +271,7 @@ Selected Face Details:
 - **Face selection visualization** showing which faces were chosen
 - **Coordinate system reference** for debugging
 
-### 🎮 Using Debug 3D Features
+### [UNK] Using Debug 3D Features
 
 #### **Interactive HTML Visualization**
 1. **Open the HTML file** in any modern web browser
@@ -310,7 +310,7 @@ open output/single_pallet/generated_XXXXXX/debug_3d/figures/frame_000000_3d_inte
 cat output/single_pallet/generated_XXXXXX/debug_3d/coordinates/frame_000000_coordinates.txt
 ```
 
-## ⚙️ Configuration
+## [INFO] Configuration
 
 ### CLI Parameters
 
@@ -382,7 +382,7 @@ WAREHOUSE_CONFIG = {
 }
 ```
 
-## 🛠️ Development Setup
+## [UNK][UNK] Development Setup
 
 ### Development Installation
 
@@ -418,26 +418,26 @@ pytest --cov=palletdatagenerator --cov-report=html
 
 ```
 PalletDataGenerator/
-├── src/palletdatagenerator/
-│   ├── __init__.py
-│   ├── cli.py                    # Command-line interface
-│   ├── generator.py              # Main generator class
-│   ├── config.py                 # Configuration management
-│   ├── blender_runner.py         # Blender execution handler
-│   ├── utils.py                  # Shared utilities
-│   └── modes/
-│       ├── base_generator.py     # Abstract base class
-│       ├── single_pallet.py      # Single pallet mode
-│       └── warehouse.py          # Warehouse mode
-├── tests/                        # Comprehensive test suite
-├── docs/                         # Sphinx documentation
-├── scenes/                       # Example Blender scenes
-├── original_files/               # Legacy reference implementations
-├── scripts/                      # Development scripts
-└── readme_images/               # README assets
+[UNK][UNK][UNK] src/palletdatagenerator/
+[UNK]   [UNK][UNK][UNK] __init__.py
+[UNK]   [UNK][UNK][UNK] cli.py                    # Command-line interface
+[UNK]   [UNK][UNK][UNK] generator.py              # Main generator class
+[UNK]   [UNK][UNK][UNK] config.py                 # Configuration management
+[UNK]   [UNK][UNK][UNK] blender_runner.py         # Blender execution handler
+[UNK]   [UNK][UNK][UNK] utils.py                  # Shared utilities
+[UNK]   [UNK][UNK][UNK] modes/
+[UNK]       [UNK][UNK][UNK] base_generator.py     # Abstract base class
+[UNK]       [UNK][UNK][UNK] single_pallet.py      # Single pallet mode
+[UNK]       [UNK][UNK][UNK] warehouse.py          # Warehouse mode
+[UNK][UNK][UNK] tests/                        # Comprehensive test suite
+[UNK][UNK][UNK] docs/                         # Sphinx documentation
+[UNK][UNK][UNK] scenes/                       # Example Blender scenes
+[UNK][UNK][UNK] original_files/               # Legacy reference implementations
+[UNK][UNK][UNK] scripts/                      # Development scripts
+[UNK][UNK][UNK] readme_images/               # README assets
 ```
 
-## 📚 API Reference
+## [UNK] API Reference
 
 ### Core Classes
 
@@ -488,7 +488,7 @@ blender_path = find_blender_executable()
 is_valid = validate_scene_file("path/to/scene.blend")
 ```
 
-## 🤝 Contributing
+## [UNK] Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -500,7 +500,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 4. **Update documentation** if needed
 5. **Submit a Pull Request** with clear description
 
-## 📄 License & Citation
+## [INFO] License & Citation
 
 ### License
 
@@ -520,16 +520,16 @@ If you use PalletDataGenerator in your research, please cite:
 }
 ```
 
-## 🔗 Links & Resources
+## [UNK] Links & Resources
 
-- 📖 **[Documentation](https://boubakriibrahim.github.io/PalletDataGenerator)** - Comprehensive guides and API reference
-- 🐛 **[Issue Tracker](https://github.com/boubakriibrahim/PalletDataGenerator/issues)** - Report bugs and request features
-- 💬 **[Discussions](https://github.com/boubakriibrahim/PalletDataGenerator/discussions)** - Community support and ideas
-- 📦 **[PyPI Package](https://pypi.org/project/palletdatagenerator/)** - Latest releases and installation
-- 🎬 **[Blender](https://www.blender.org/)** - 3D rendering engine
-- 🤖 **[Computer Vision Datasets](https://github.com/topics/computer-vision)** - Related projects
+- [UNK] **[Documentation](https://boubakriibrahim.github.io/PalletDataGenerator)** - Comprehensive guides and API reference
+- [UNK] **[Issue Tracker](https://github.com/boubakriibrahim/PalletDataGenerator/issues)** - Report bugs and request features
+- [INFO] **[Discussions](https://github.com/boubakriibrahim/PalletDataGenerator/discussions)** - Community support and ideas
+- [INFO] **[PyPI Package](https://pypi.org/project/palletdatagenerator/)** - Latest releases and installation
+- [UNK] **[Blender](https://www.blender.org/)** - 3D rendering engine
+- [UNK] **[Computer Vision Datasets](https://github.com/topics/computer-vision)** - Related projects
 
-## 🙏 Acknowledgments
+## [UNK] Acknowledgments
 
 - **Blender Foundation** for the incredible open-source 3D suite
 - **Computer Vision Community** for inspiration and feedback
@@ -540,8 +540,8 @@ If you use PalletDataGenerator in your research, please cite:
 
 <div align="center">
 
-**Made with ❤️ for the Computer Vision Community**
+**Made with [UNK][UNK] for the Computer Vision Community**
 
-⭐ **Star this repo** if you find it useful! ⭐
+[INFO] **Star this repo** if you find it useful! [INFO]
 
 </div>

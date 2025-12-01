@@ -63,11 +63,11 @@ services:
       - PYTHONPATH=/home/pallet/app/src
     command: |
       bash -c "
-        echo '🧪 Running tests...' &&
+        echo '[UNK] Running tests...' &&
         pytest tests/ -v --tb=short --cov=src/palletdatagenerator --cov-report=xml &&
-        echo '🔍 Running code quality checks...' &&
+        echo '[INFO] Running code quality checks...' &&
         pre-commit run --all-files &&
-        echo '✅ All checks passed!'
+        echo '[SUCCESS] All checks passed!'
       "
 
   # Documentation building container
@@ -84,10 +84,10 @@ services:
     working_dir: /home/pallet/app/docs
     command: |
       bash -c "
-        echo '📚 Building documentation...' &&
+        echo '[UNK] Building documentation...' &&
         make clean &&
         make html &&
-        echo '🌐 Serving documentation on port 8080...' &&
+        echo '[INFO] Serving documentation on port 8080...' &&
         cd _build/html &&
         python -m http.server 8080 --bind 0.0.0.0
       "

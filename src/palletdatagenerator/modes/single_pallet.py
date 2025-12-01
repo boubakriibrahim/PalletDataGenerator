@@ -92,25 +92,25 @@ class SinglePalletMode(BaseGenerator):
         """
         Main generation loop exactly as in original one_pallet_generator.py
         """
-        print("🚀 Starting single pallet generation...")
+        print("[INFO] Starting single pallet generation...")
         import sys
 
         sys.stdout.flush()
 
         # Setup output folders first
         self.setup_folders()
-        print("📁 Output folders created")
+        print("[INFO] Output folders created")
         sys.stdout.flush()
 
         # Get the main pallet object
-        print("🔍 Looking for pallet object...")
+        print("[INFO] Looking for pallet object...")
         sys.stdout.flush()
         base = bpy.data.objects.get("pallet")
         if not base or base.type != "MESH":
             raise RuntimeError("Object 'pallet' not found or is not a mesh.")
 
         # Setup camera
-        print("📷 Setting up camera...")
+        print("[UNK] Setting up camera...")
         sys.stdout.flush()
         cam_data = bpy.data.cameras.new("SynthCam")
         cam_obj = bpy.data.objects.new("SynthCam", cam_data)
@@ -120,18 +120,18 @@ class SinglePalletMode(BaseGenerator):
         bpy.context.scene.camera = cam_obj
 
         # Setup environment
-        print("🌍 Setting up environment...")
+        print("[INFO] Setting up environment...")
         sys.stdout.flush()
         self.setup_environment()
-        print("💡 Setting up lighting...")
+        print("[INFO] Setting up lighting...")
         sys.stdout.flush()
         self.setup_lighting(base)
 
         # Prepare pallets
-        print("📦 Preparing pallets...")
+        print("[INFO] Preparing pallets...")
         sys.stdout.flush()
         pallets = self.prepare_pallets(base)
-        print(f"✅ Prepared {len(pallets)} pallets")
+        print(f"[SUCCESS] Prepared {len(pallets)} pallets")
         sys.stdout.flush()
 
         # COCO scaffolding
@@ -156,12 +156,14 @@ class SinglePalletMode(BaseGenerator):
         if self.config.get("save_scene_before_render", False):
             self.save_generated_scene()
 
-        print(f"🔄 Starting generation loop: {total} frames")
+        print(f"[UNK] Starting generation loop: {total} frames")
         sys.stdout.flush()
 
         # Main generation loop - exactly as in original
         while valid < total:
-            print(f"🔁 Loop iteration: valid={valid}/{total}")
+            print("=" * 80)
+            print(f"[FRAME {valid}/{total}] Starting frame generation")
+            print("=" * 80)
             sys.stdout.flush()
 
             sc.frame_current = valid
@@ -170,17 +172,19 @@ class SinglePalletMode(BaseGenerator):
             # (since we delete and recreate it each frame with variant swapping)
             current_pallet = bpy.data.objects.get("pallet")
             if current_pallet:
-                # Update pallets list with current pallet from scene
-                if len(pallets) > 1:
-                    pallets = [current_pallet] + pallets[1:]
-                else:
-                    pallets = [current_pallet]
-                print(
-                    f"🔄 Refreshed pallet reference: {current_pallet.name}, pallets count: {len(pallets)}"
-                )
+                # Clean up any stacked pallets from previous frame
+                removed = self.cleanup_stacked_pallets(current_pallet)
+                if removed > 0:
+                    print(
+                        f"[STACK] Cleaned up {removed} stacked pallets from previous frame"
+                    )
+
+                # Apply per-frame stacking (random decision each frame)
+                pallets = self.apply_per_frame_stacking(current_pallet)
+                print(f"[FRAME] Pallets for this frame: {len(pallets)}")
             else:
                 print(
-                    f"❌ Pallet object not found in scene! Available objects: {[o.name for o in bpy.data.objects if 'pallet' in o.name.lower()]}"
+                    f"[ERROR] Pallet object not found in scene! Available objects: {[o.name for o in bpy.data.objects if 'pallet' in o.name.lower()]}"
                 )
 
             # Optional per-frame XY shift for pallet movement
@@ -194,33 +198,35 @@ class SinglePalletMode(BaseGenerator):
                     self.create_random_lights(pallets[0], replace_existing=True)
 
             # Camera movement - the key difference from current implementation!
-            print(f"📷 Positioning camera for frame {valid}...")
+            print(f"[UNK] Positioning camera for frame {valid}...")
             sys.stdout.flush()
 
             # Safety check: ensure pallets list is not empty
             if not pallets or len(pallets) == 0:
-                print(f"❌ No pallets available for camera positioning, skipping frame")
+                print(
+                    f"[ERROR] No pallets available for camera positioning, skipping frame"
+                )
                 continue
 
             focus_obj = pallets[min(len(pallets) // 2, len(pallets) - 1)]
             _camera_info = self.position_camera_for_side_face(
                 cam_obj, focus_obj, self.config
             )
-            print(f"✅ Camera positioned")
+            print(f"[SUCCESS] Camera positioned")
             sys.stdout.flush()
 
             # Handle attached boxes (per-frame rebuilding)
             try:
-                print(f"📦 Handling attached boxes...")
+                print(f"[INFO] Handling attached boxes...")
                 print(
                     f"   Pallets count: {len(pallets)}, Pallets: {[p.name if p else 'None' for p in pallets]}"
                 )
                 sys.stdout.flush()
                 self.handle_attached_boxes(pallets)
-                print(f"✅ Boxes handled")
+                print(f"[SUCCESS] Boxes handled")
                 sys.stdout.flush()
             except IndexError as e:
-                print(f"❌ IndexError in handle_attached_boxes: {e}")
+                print(f"[ERROR] IndexError in handle_attached_boxes: {e}")
                 print(f"   Pallets: {pallets}")
                 print(f"   Pallets length: {len(pallets)}")
                 import traceback
@@ -235,7 +241,7 @@ class SinglePalletMode(BaseGenerator):
                 sys.stdout.flush()
                 raise
             except Exception as e:
-                print(f"❌ General error in handle_attached_boxes: {e}")
+                print(f"[ERROR] General error in handle_attached_boxes: {e}")
                 import traceback
 
                 print("=" * 80)
@@ -256,56 +262,27 @@ class SinglePalletMode(BaseGenerator):
                 else:
                     pallets = [new_pallet]
             except Exception as e:
-                print(f"❌ Error randomizing pallet variant: {e}")
+                print(f"[ERROR] Error randomizing pallet variant: {e}")
                 # Try to recover by getting the pallet object again
                 base = bpy.data.objects.get("pallet")
                 if base:
                     pallets = [base]
                 else:
-                    print(f"❌ Cannot recover - pallet object not found!")
+                    print(f"[ERROR] Cannot recover - pallet object not found!")
                     raise
 
             # Get detections for all visible pallets
-            print(f"🔍 Getting detections...")
-            sys.stdout.flush()
             b2d_list, b3d_list, pockets_list = self.get_detections(pallets, cam_obj, sc)
-            print(f"✅ Got {len(b2d_list)} detections")
-            sys.stdout.flush()
 
             # Detect faces and generate keypoints
-            print(f"🎯 Generating keypoints...")
-            sys.stdout.flush()
             keypoints_data = self.generate_keypoints_for_frame(cam_obj, sc, valid)
-            print(f"✅ Keypoints generated")
-            sys.stdout.flush()
-
-            # Debug output for keypoints
-            print(f"📝 Processing keypoints debug output...")
-            sys.stdout.flush()
-
-            if keypoints_data:
-                print(
-                    f"🎯 Frame {valid}: Detected {len(keypoints_data)} faces with keypoints"
-                )
-                for face_data in keypoints_data:
-                    visible_kp = sum(
-                        1 for kp in face_data["keypoints"] if kp["visible"]
-                    )
-                    print(
-                        f"   - {face_data['face_name']} face: {visible_kp}/6 keypoints visible"
-                    )
-            else:
-                print(f"🎯 Frame {valid}: No faces detected for keypoints")
-
-            print(f"✅ Debug output complete")
-            sys.stdout.flush()
 
             if not b2d_list:
                 print(f"[skip] frame {valid} - no visible pallets")
                 valid += 1
                 continue
 
-            print(f"✅ Detection check passed, proceeding to auto-exposure")
+            print(f"[SUCCESS] Detection check passed, proceeding to auto-exposure")
             sys.stdout.flush()
 
             # Auto exposure
@@ -315,13 +292,13 @@ class SinglePalletMode(BaseGenerator):
             _new_ev = self.auto_expose_frame(sc, cam_obj)
             exposure_time = time.time() - start_exposure
             if exposure_time > 1.0:  # Only print if it takes more than 1 second
-                print(f"⏱️  Auto-exposure time: {exposure_time:.2f}s")
+                print(f"[INFO]  Auto-exposure time: {exposure_time:.2f}s")
                 sys.stdout.flush()
 
             # Verify GPU on first frame
             if valid == 0:
                 print("=" * 80)
-                print("🔍 VERIFYING RENDER CONFIGURATION BEFORE FIRST FRAME")
+                print("[INFO] VERIFYING RENDER CONFIGURATION BEFORE FIRST FRAME")
                 print(f"   Render engine: {sc.render.engine}")
                 print(f"   Cycles device: {sc.cycles.device}")
                 print(f"   Samples: {sc.cycles.samples}")
@@ -363,19 +340,19 @@ class SinglePalletMode(BaseGenerator):
                 )
 
                 if gpu_enabled and sc.cycles.device != "GPU":
-                    print(f"⚠️  Forcing scene to use GPU (was: {sc.cycles.device})")
+                    print(f"[WARN]  Forcing scene to use GPU (was: {sc.cycles.device})")
                     sc.cycles.device = "GPU"
 
             # CRITICAL: Verify GPU is actually being used right before render
-            print(f"🎬 Starting render for frame {fn}...")
-            print(f"🔍 Render engine: {sc.render.engine}")
+            print(f"[UNK] Starting render for frame {fn}...")
+            print(f"[INFO] Render engine: {sc.render.engine}")
             if sc.render.engine == "CYCLES":
-                print(f"🔍 Cycles device setting: {sc.cycles.device}")
+                print(f"[INFO] Cycles device setting: {sc.cycles.device}")
                 prefs = bpy.context.preferences
                 cycles_prefs = prefs.addons["cycles"].preferences
-                print(f"🔍 Compute device type: {cycles_prefs.compute_device_type}")
+                print(f"[INFO] Compute device type: {cycles_prefs.compute_device_type}")
                 active = [d.name for d in cycles_prefs.devices if d.use]
-                print(f"🔍 Active devices: {active}")
+                print(f"[INFO] Active devices: {active}")
             sys.stdout.flush()
 
             bpy.ops.render.render(write_still=True)
@@ -385,10 +362,10 @@ class SinglePalletMode(BaseGenerator):
             # Flag shader compilation time on first render
             if valid == 0:
                 print(
-                    f"⏱️  FIRST RENDER completed in {render_time:.2f}s (includes shader compilation)"
+                    f"[INFO]  FIRST RENDER completed in {render_time:.2f}s (includes shader compilation)"
                 )
             else:
-                print(f"⏱️  Render completed in {render_time:.2f}s")
+                print(f"[INFO]  Render completed in {render_time:.2f}s")
 
             sys.stdout.flush()
 
@@ -411,18 +388,18 @@ class SinglePalletMode(BaseGenerator):
             )
             postprocess_time = time.time() - start_postprocess
             total_time = render_time + postprocess_time
-            print(f"⏱️  Post-processing completed in {postprocess_time:.2f}s")
+            print(f"[INFO]  Post-processing completed in {postprocess_time:.2f}s")
             print(
-                f"⏱️  Total frame time: {total_time:.2f}s (render: {render_time:.2f}s, post: {postprocess_time:.2f}s)"
+                f"[INFO]  Total frame time: {total_time:.2f}s (render: {render_time:.2f}s, post: {postprocess_time:.2f}s)"
             )
             sys.stdout.flush()
 
             print(
-                f"✅ [{valid+1}/{total}] frame {fn} - {len(b2d_list)} pallets visible; EV={sc.view_settings.exposure:+.2f}"
+                f"[SUCCESS] [{valid+1}/{total}] frame {fn} - {len(b2d_list)} pallets visible; EV={sc.view_settings.exposure:+.2f}"
             )
             valid += 1
 
-        print(f"🎉 Generation completed! Generated {valid} frames")
+        print(f"[UNK] Generation completed! Generated {valid} frames")
 
         # Write final outputs
         self.save_final_outputs(coco, meta)
@@ -484,18 +461,70 @@ class SinglePalletMode(BaseGenerator):
 
         return pallets
 
-    def duplicate_pallets_if_needed(self, base_obj):
-        """Create duplicate pallets if requested in config."""
+    def cleanup_stacked_pallets(self, base_obj):
+        """Remove any stacked pallet duplicates, keeping only the base pallet."""
+        # Find and remove all pallet duplicates (pallet_1, pallet_2, etc.)
+        to_remove = []
+        base_name = base_obj.name if base_obj else "pallet"
+        for obj in bpy.data.objects:
+            # Match pallet_1, pallet_2, etc. but not the base pallet itself
+            if obj.name.startswith(f"{base_name}_") and obj.name != base_name:
+                to_remove.append(obj)
+
+        for obj in to_remove:
+            bpy.data.objects.remove(obj, do_unlink=True)
+
+        # Reset the duplicate_pallets flag for this frame
+        try:
+            self.config["duplicate_pallets"] = False
+        except Exception:
+            pass
+
+        return len(to_remove)
+
+    def apply_per_frame_stacking(self, base_obj):
+        """Apply stacking logic per frame based on probability. Returns list of pallets."""
         pallets = [base_obj]
-        if not self.config.get("duplicate_pallets", False):
+        cfg = self.config
+
+        prob = cfg.get("stacked_pallets_probability", None)
+        if prob is None:
             return pallets
 
-        n = max(1, int(self.config.get("num_pallets", 1)))
-        if n <= 1:
+        try:
+            prob = float(prob)
+        except Exception:
+            prob = 0.0
+
+        roll = random.random()
+        print(f"[STACK] Probability check: roll={roll:.3f}, prob={prob:.3f}")
+        if roll >= prob:
+            print(f"   -> No stacking this frame (roll >= prob)")
             return pallets
+
+        print(f"   -> Stacking triggered! (roll < prob)")
+
+        max_n = cfg.get("stacked_pallets_max", None)
+        if max_n is None:
+            max_n = 2
+        else:
+            max_n = int(max_n)
+
+        # Random number of pallets from 2 to max (at least 2 for stacking)
+        n = random.randint(2, max(2, max_n))
+        print(
+            f"[STACK] Random count n={n} (range: 2 to {max(2, max_n)}, max_n={max_n})"
+        )
+
+        # Record that we have duplicates for downstream logic
+        try:
+            cfg["duplicate_pallets"] = True
+            cfg["num_pallets"] = n
+        except Exception:
+            pass
 
         base_h = base_obj.dimensions.z
-        gap = float(self.config.get("pallet_stack_gap", 0.05))
+        gap = float(cfg.get("pallet_stack_gap", 0.05))
 
         for i in range(1, n):
             dup = base_obj.copy()
@@ -503,7 +532,47 @@ class SinglePalletMode(BaseGenerator):
             dup.name = f"{base_obj.name}_{i}"
             bpy.context.collection.objects.link(dup)
 
-            if self.config.get("pallet_stack_vertical", True):
+            if cfg.get("pallet_stack_vertical", True):
+                dup.matrix_world = base_obj.matrix_world.copy()
+                dup.location.z = base_obj.location.z + i * (base_h + gap)
+            else:
+                dup.matrix_world = base_obj.matrix_world.copy()
+                dup.location.x += (i % 2) * (base_obj.dimensions.x + 0.1)
+                dup.location.y += (i // 2) * (base_obj.dimensions.y + 0.1)
+
+            pallets.append(dup)
+
+        return pallets
+
+    def duplicate_pallets_if_needed(self, base_obj):
+        """Create duplicate pallets if requested in config (legacy mode only)."""
+        pallets = [base_obj]
+        cfg = self.config
+
+        # NOTE: Probability-based stacking is now handled per-frame in apply_per_frame_stacking()
+        # This method only handles legacy boolean-driven duplication
+        prob = cfg.get("stacked_pallets_probability", None)
+        if prob is not None:
+            # Probability stacking is handled per-frame, not here
+            return pallets
+
+        if not cfg.get("duplicate_pallets", False):
+            return pallets
+
+        n = max(1, int(cfg.get("num_pallets", 1)))
+        if n <= 1:
+            return pallets
+
+        base_h = base_obj.dimensions.z
+        gap = float(cfg.get("pallet_stack_gap", 0.05))
+
+        for i in range(1, n):
+            dup = base_obj.copy()
+            dup.data = base_obj.data
+            dup.name = f"{base_obj.name}_{i}"
+            bpy.context.collection.objects.link(dup)
+
+            if cfg.get("pallet_stack_vertical", True):
                 dup.matrix_world = base_obj.matrix_world.copy()
                 dup.location.z = base_obj.location.z + i * (base_h + gap)
             else:
@@ -547,8 +616,11 @@ class SinglePalletMode(BaseGenerator):
 
         # Safety check: ensure pallets list is not empty
         if not pallets or len(pallets) == 0:
-            print(f"⚠️  No pallets available for attached boxes")
+            print(f"[WARN] No pallets available for attached boxes")
             return
+
+        # Check if stacked pallets mode is active
+        is_stacked = cfg.get("duplicate_pallets", False) and len(pallets) > 1
 
         if cfg.get("attached_box_name"):
             self._cleanup_attached_group()
@@ -557,10 +629,17 @@ class SinglePalletMode(BaseGenerator):
             placeholder = bpy.data.objects.get(cfg.get("attached_box_name"))
 
             if placeholder:
-                # Hide placeholder if configured
+                # Always hide placeholder if configured
                 if cfg.get("hide_placeholder_box", True):
                     placeholder.hide_render = True
                     placeholder.hide_viewport = True
+
+                # Skip box group generation when pallets are stacked
+                if is_stacked:
+                    print(
+                        "[WARN] Skipping box group generation: stacked pallets mode active"
+                    )
+                    return
 
                 # build group/single fresh each frame (if enabled)
                 if cfg.get("attached_box_group", False):
@@ -575,26 +654,21 @@ class SinglePalletMode(BaseGenerator):
         # Check if randomization is enabled
         if not cfg.get("randomize_pallet_variant", False):
             print(
-                f"🔒 Pallet variant randomization disabled (randomize_pallet_variant=False)"
+                f"[INFO] Pallet variant randomization disabled (randomize_pallet_variant=False)"
             )
             return base_pallet
 
-        print(f"🎲 Pallet variant randomization enabled")
+        print(f"[UNK] Pallet variant randomization enabled")
 
         # Get all variant names
         variant_names = cfg.get(
             "pallet_variant_names",
             ["pallet.001", "pallet.002", "pallet.003", "pallet.004", "pallet.005"],
         )
-        print(f"📋 Available variants: {variant_names}")
-
         # Check probability
         probability = cfg.get("pallet_variant_change_probability", 0.25)
         random_value = random.random()
         use_variant = random_value <= probability
-        print(
-            f"🎲 Probability check: {random_value:.3f} <= {probability} = {use_variant}"
-        )
 
         # Create backup name for original pallet
         backup_name = "pallet_original_backup"
@@ -603,7 +677,6 @@ class SinglePalletMode(BaseGenerator):
         backup_obj = bpy.data.objects.get(backup_name)
         if not backup_obj:
             # First time: save the original pallet
-            print(f"📦 Creating backup of original pallet '{base_pallet.name}'...")
             backup_obj = base_pallet.copy()
             backup_obj.data = base_pallet.data.copy()
             backup_obj.name = backup_name
@@ -612,23 +685,21 @@ class SinglePalletMode(BaseGenerator):
             backup_obj.location = Vector((1000.0, 1000.0, 1000.0))
             backup_obj.hide_render = True
             backup_obj.hide_viewport = True
-            print(f"✅ Created backup at location {backup_obj.location}")
 
         # Store the current pallet's transform
         current_location = base_pallet.location.copy()
         current_rotation = base_pallet.rotation_euler.copy()
         current_scale = base_pallet.scale.copy()
-        print(f"📍 Current pallet location: {current_location}")
 
         # Choose which object to use as source
         if use_variant:
             # Choose random variant
             chosen_variant_name = random.choice(variant_names)
-            print(f"🎯 Attempting to use variant: {chosen_variant_name}")
+            print(f"[INFO] Attempting to use variant: {chosen_variant_name}")
             source_obj = bpy.data.objects.get(chosen_variant_name)
 
             if not source_obj:
-                print(f"❌ Variant '{chosen_variant_name}' not found in scene!")
+                print(f"[ERROR] Variant '{chosen_variant_name}' not found in scene!")
                 print(
                     f"   Available objects: {[obj.name for obj in bpy.data.objects if 'pallet' in obj.name.lower()]}"
                 )
@@ -636,23 +707,23 @@ class SinglePalletMode(BaseGenerator):
                 print(f"   Falling back to original backup")
             elif source_obj.type != "MESH":
                 print(
-                    f"❌ Variant '{chosen_variant_name}' is not a mesh (type: {source_obj.type})"
+                    f"[ERROR] Variant '{chosen_variant_name}' is not a mesh (type: {source_obj.type})"
                 )
                 source_obj = backup_obj
             else:
-                print(f"✅ Found variant '{chosen_variant_name}' - using it!")
+                print(f"[SUCCESS] Found variant '{chosen_variant_name}' - using it!")
         else:
             # Use original backup
-            print(f"📦 Using original backup (probability not met)")
+            print(f"[INFO] Using original backup (probability not met)")
             source_obj = backup_obj
 
         # Remove the current "pallet" object
-        print(f"🗑️  Removing current pallet object '{base_pallet.name}'...")
+        print(f"[INFO]  Removing current pallet object '{base_pallet.name}'...")
         old_pallet_name = base_pallet.name
         bpy.data.objects.remove(base_pallet, do_unlink=True)
 
         # Create new pallet from source
-        print(f"🔨 Creating new pallet from source '{source_obj.name}'...")
+        print(f"[INFO] Creating new pallet from source '{source_obj.name}'...")
         new_pallet = source_obj.copy()
         new_pallet.data = source_obj.data.copy()
         new_pallet.name = "pallet"  # MUST be named "pallet" for detection
@@ -668,9 +739,9 @@ class SinglePalletMode(BaseGenerator):
         new_pallet.hide_viewport = False
 
         print(
-            f"✅ Successfully created new pallet '{new_pallet.name}' from '{source_obj.name}'"
+            f"[SUCCESS] Successfully created new pallet '{new_pallet.name}' from '{source_obj.name}'"
         )
-        print(f"📍 New pallet location: {new_pallet.location}")
+        print(f"[INFO] New pallet location: {new_pallet.location}")
 
         return new_pallet
 
@@ -683,7 +754,7 @@ class SinglePalletMode(BaseGenerator):
             if not cfg.get("randomize_box_materials", False):
                 return
 
-            print(f"🎨 Loading random material for {obj.name}...")
+            print(f"[INFO] Loading random material for {obj.name}...")
 
             # Check probability
             probability = cfg.get("box_material_probability", 1.0)
@@ -707,7 +778,7 @@ class SinglePalletMode(BaseGenerator):
             print(f"   Materials path: {materials_path}")
 
             if not os.path.exists(materials_path):
-                print(f"⚠️  Box materials path not found: {materials_path}")
+                print(f"[WARN]  Box materials path not found: {materials_path}")
                 return
 
             # Get all subdirectories (each contains a blend file)
@@ -720,7 +791,7 @@ class SinglePalletMode(BaseGenerator):
             print(f"   Found {len(subdirs)} material folders")
 
             if not subdirs:
-                print(f"⚠️  No material folders found in {materials_path}")
+                print(f"[WARN]  No material folders found in {materials_path}")
                 return
 
             # Choose random material folder
@@ -733,7 +804,7 @@ class SinglePalletMode(BaseGenerator):
             blend_files = [f for f in os.listdir(folder_path) if f.endswith(".blend")]
 
             if not blend_files:
-                print(f"⚠️  No blend file found in {folder_path}")
+                print(f"[WARN]  No blend file found in {folder_path}")
                 return
 
             blend_file = os.path.join(folder_path, blend_files[0])
@@ -762,12 +833,12 @@ class SinglePalletMode(BaseGenerator):
                 # Assign new material
                 obj.data.materials.append(material)
 
-                print(f"✅ Applied material from: {chosen_folder}")
+                print(f"[SUCCESS] Applied material from: {chosen_folder}")
             else:
-                print(f"⚠️  No materials found in {blend_file}")
+                print(f"[WARN]  No materials found in {blend_file}")
 
         except Exception as e:
-            print(f"❌ Error loading box material: {e}")
+            print(f"[ERROR] Error loading box material: {e}")
             import traceback
 
             traceback.print_exc()
@@ -830,7 +901,9 @@ class SinglePalletMode(BaseGenerator):
             # Validate pallet object
             print(f"   Validating pallet: {pallet}")
             if not pallet or pallet.name not in bpy.data.objects:
-                print(f"⚠️  Pallet object is invalid or deleted, skipping single box")
+                print(
+                    f"[WARN]  Pallet object is invalid or deleted, skipping single box"
+                )
                 return
 
             print(f"   Choosing random variant...")
@@ -839,9 +912,11 @@ class SinglePalletMode(BaseGenerator):
             src = bpy.data.objects.get(name_src)
             if not src or not src.data:
                 if not src:
-                    print(f"⚠️  Source object '{name_src}' not found, skipping")
+                    print(f"[WARN]  Source object '{name_src}' not found, skipping")
                 else:
-                    print(f"⚠️  Source object '{name_src}' has no mesh data, skipping")
+                    print(
+                        f"[WARN]  Source object '{name_src}' has no mesh data, skipping"
+                    )
                 return
 
             print(f"   Copying object...")
@@ -863,9 +938,9 @@ class SinglePalletMode(BaseGenerator):
             # Apply random material to the box
             print(f"   Applying material...")
             self.load_random_box_material(dup)
-            print(f"   ✅ Single box complete")
+            print(f"   [SUCCESS] Single box complete")
         except Exception as e:
-            print(f"❌ Error in _build_attached_box_single: {e}")
+            print(f"[ERROR] Error in _build_attached_box_single: {e}")
             import traceback
 
             traceback.print_exc()
@@ -888,7 +963,9 @@ class SinglePalletMode(BaseGenerator):
             # Validate pallet object
             print(f"   Validating pallet: {pallet.name if pallet else 'None'}")
             if not pallet or pallet.name not in bpy.data.objects:
-                print(f"⚠️  Pallet object is invalid or deleted, skipping box group")
+                print(
+                    f"[WARN]  Pallet object is invalid or deleted, skipping box group"
+                )
                 return
 
             print(
@@ -896,7 +973,7 @@ class SinglePalletMode(BaseGenerator):
             )
             if not placeholder or placeholder.name not in bpy.data.objects:
                 print(
-                    f"⚠️  Placeholder object is invalid or deleted, skipping box group"
+                    f"[WARN]  Placeholder object is invalid or deleted, skipping box group"
                 )
                 return
 
@@ -1022,7 +1099,7 @@ class SinglePalletMode(BaseGenerator):
                             # Check if there's a previous layer to stack on
                             if not cell_objects:
                                 print(
-                                    f"⚠️  No previous layer for stacking, skipping layer {layer}"
+                                    f"[WARN]  No previous layer for stacking, skipping layer {layer}"
                                 )
                                 continue
 
@@ -1074,7 +1151,7 @@ class SinglePalletMode(BaseGenerator):
                     if obj_index >= count:
                         break
         except Exception as e:
-            print(f"❌ Error in _build_attached_box_group: {e}")
+            print(f"[ERROR] Error in _build_attached_box_group: {e}")
             import traceback
             import io
 
@@ -1183,19 +1260,19 @@ class SinglePalletMode(BaseGenerator):
                     keypoints_data,
                 )
                 if success:
-                    print(f"📊 Analysis image saved: analysis_{fn}.png")
+                    print(f"[INFO] Analysis image saved: analysis_{fn}.png")
                     sys.stdout.flush()
                 else:
-                    print(f"⚠️  Analysis image creation failed for frame {valid}")
+                    print(f"[WARN]  Analysis image creation failed for frame {valid}")
             except Exception as e:
-                print(f"❌ Analysis image error: {e}")
+                print(f"[ERROR] Analysis image error: {e}")
                 import traceback
 
                 traceback.print_exc()
         elif not self.config.get("generate_analysis_images", True):
-            print("⚠️  Analysis image generation disabled for speed")
+            print("[WARN]  Analysis image generation disabled for speed")
         elif not PIL_AVAILABLE:
-            print("⚠️  PIL not available - skipping analysis image")
+            print("[WARN]  PIL not available - skipping analysis image")
 
         # COCO (image)
         img_w, img_h = self.config["resolution_x"], self.config["resolution_y"]
@@ -1203,10 +1280,7 @@ class SinglePalletMode(BaseGenerator):
             {"id": valid, "file_name": f"{fn}.png", "width": img_w, "height": img_h}
         )
 
-        # YOLO pallets (class 0) - EXACT from original
-        yolo_file = os.path.join(self.paths["yolo"], f"{fn}.txt")
-        with open(yolo_file, "w") as y:
-            pass
+        # COCO annotations for pallets
         for b2d in b2d_list:
             coco["annotations"].append(
                 {
@@ -1220,22 +1294,13 @@ class SinglePalletMode(BaseGenerator):
                 }
             )
             ann_id += 1
-            xc, yc, w, h = xyxy_to_yolo(b2d, img_w, img_h)
-            with open(yolo_file, "a") as y:
-                y.write(f"0 {xc:.6f} {yc:.6f} {w:.6f} {h:.6f}\n")
 
-        # Holes (class 1) - using exact original logic
-        for pockets in pockets_list:
-            ann_id = self.project_holes_and_write_labels(
-                pockets, cam_obj, sc, self.paths["yolo"], fn, coco, ann_id, img_w, img_h
-            )
-
-        # Save keypoints labels
-        if keypoints_data:
-            self.save_keypoints_labels(keypoints_data, valid, img_w, img_h)
-
-        # VOC (all pallets) - EXACT from original
-        if PIL_AVAILABLE:
+        # VOC (all pallets) - EXACT from original (conditional)
+        if (
+            PIL_AVAILABLE
+            and self.config.get("generate_voc_xml", False)
+            and "voc" in self.paths
+        ):
             try:
                 from pascal_voc_writer import Writer as VocWriter
 
@@ -1373,7 +1438,7 @@ class SinglePalletMode(BaseGenerator):
         with open(os.path.join(root, "dataset_manifest.json"), "w") as mf:
             json.dump({"config": self.config, "frames": meta}, mf, indent=2)
 
-        print("✅ COCO / YOLO / VOC annotations written.")
+        print("[SUCCESS] COCO / YOLO / VOC annotations written.")
 
     def apply_initial_transform(self, pallets, base_mat):
         """Apply random initial transform to pallets."""
@@ -1433,12 +1498,12 @@ class SinglePalletMode(BaseGenerator):
         scene_path = scenes_folder / scene_filename
 
         try:
-            print(f"💾 Saving generated scene to: {scene_path}")
+            print(f"[INFO] Saving generated scene to: {scene_path}")
             import sys
 
             sys.stdout.flush()
             bpy.ops.wm.save_as_mainfile(filepath=str(scene_path))
-            print(f"✅ Scene saved successfully: {scene_filename}")
+            print(f"[SUCCESS] Scene saved successfully: {scene_filename}")
             sys.stdout.flush()
 
             # Also save scene info as JSON for reference
@@ -1466,7 +1531,7 @@ class SinglePalletMode(BaseGenerator):
                 json.dump(scene_info, f, indent=2)
 
         except Exception as e:
-            print(f"⚠️  Failed to save generated scene: {e}")
+            print(f"[WARN]  Failed to save generated scene: {e}")
             import sys
 
             sys.stdout.flush()

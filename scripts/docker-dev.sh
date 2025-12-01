@@ -11,7 +11,7 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
-echo -e "${BLUE}🐳 PalletDataGenerator Docker Development Helper${NC}"
+echo -e "${BLUE}[UNK] PalletDataGenerator Docker Development Helper${NC}"
 
 function show_help() {
     echo "Usage: $0 [command]"
@@ -38,13 +38,13 @@ function show_help() {
 function build_images() {
     echo -e "${BLUE}Building Docker images...${NC}"
     docker-compose build
-    echo -e "${GREEN}✅ Images built successfully${NC}"
+    echo -e "${GREEN}[SUCCESS] Images built successfully${NC}"
 }
 
 function start_dev() {
     echo -e "${BLUE}Starting development container...${NC}"
     docker-compose up -d pallet-dev
-    echo -e "${GREEN}✅ Development container started${NC}"
+    echo -e "${GREEN}[SUCCESS] Development container started${NC}"
     echo -e "${YELLOW}Use '$0 shell' to open a shell${NC}"
 }
 
@@ -58,7 +58,7 @@ function start_blender() {
     fi
 
     docker-compose up -d pallet-blender
-    echo -e "${GREEN}✅ Blender development container started${NC}"
+    echo -e "${GREEN}[SUCCESS] Blender development container started${NC}"
     echo -e "${YELLOW}Use '$0 shell pallet-blender' to open a shell${NC}"
 }
 
@@ -102,7 +102,7 @@ function clean_up() {
     docker-compose down -v
     docker-compose down --rmi all --remove-orphans
     docker system prune -f
-    echo -e "${GREEN}✅ Cleanup completed${NC}"
+    echo -e "${GREEN}[SUCCESS] Cleanup completed${NC}"
 }
 
 # Main command handling

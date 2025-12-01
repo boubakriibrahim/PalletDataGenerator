@@ -31,4 +31,4 @@ scenes/warehouse_generated/
 .ruff_cache/
 
 venv/
-
+temp_blender_script.py

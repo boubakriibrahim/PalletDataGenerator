@@ -109,24 +109,29 @@ class BaseGenerator:
             "normals": self._ensure_dir(os.path.join(root, "normals")),
             "index": self._ensure_dir(os.path.join(root, "index")),
             "analysis": self._ensure_dir(os.path.join(root, "analysis")),
-            "yolo": self._ensure_dir(os.path.join(root, "yolo_labels")),
-            "voc": self._ensure_dir(os.path.join(root, "voc_xml")),
-            "keypoints": self._ensure_dir(os.path.join(root, "keypoints_labels")),
-            "debug_3d": self._ensure_dir(os.path.join(root, "debug_3d")),
-            "debug_3d_images": self._ensure_dir(
-                os.path.join(root, "debug_3d", "images")
-            ),
-            "debug_3d_coordinates": self._ensure_dir(
-                os.path.join(root, "debug_3d", "coordinates")
-            ),
-            "debug_3d_figures": self._ensure_dir(
-                os.path.join(root, "debug_3d", "figures")
-            ),
             "face_2d_boxes": self._ensure_dir(os.path.join(root, "face_2d_boxes")),
-            "face_3d_coordinates": self._ensure_dir(
-                os.path.join(root, "face_3d_coordinates")
+            "face_2d_keypoints": self._ensure_dir(
+                os.path.join(root, "face_2d_keypoints")
             ),
         }
+
+        # Conditionally create debug_3d folder
+        if self.config.get("generate_debug_3d", False):
+            self.paths["debug_3d"] = self._ensure_dir(os.path.join(root, "debug_3d"))
+            self.paths["debug_3d_images"] = self._ensure_dir(
+                os.path.join(root, "debug_3d", "images")
+            )
+            self.paths["debug_3d_coordinates"] = self._ensure_dir(
+                os.path.join(root, "debug_3d", "coordinates")
+            )
+            self.paths["debug_3d_figures"] = self._ensure_dir(
+                os.path.join(root, "debug_3d", "figures")
+            )
+
+        # Conditionally create voc_xml folder
+        if self.config.get("generate_voc_xml", False):
+            self.paths["voc"] = self._ensure_dir(os.path.join(root, "voc_xml"))
+
         return self.paths
 
     def _ensure_dir(self, path):
@@ -140,8 +145,8 @@ class BaseGenerator:
         sc = bpy.context.scene
 
         # Print Blender version info
-        print(f"🔍 Blender version: {bpy.app.version_string}")
-        print(f"🔍 Scene: {sc.name}")
+        print(f"[INFO] Blender version: {bpy.app.version_string}")
+        print(f"[INFO] Scene: {sc.name}")
         sys.stdout.flush()
 
         sc.render.engine = cfg["render_engine"]
@@ -159,7 +164,7 @@ class BaseGenerator:
         # ============== GPU SETUP FOR CYCLES ==============
         if sc.render.engine == "CYCLES":
             print("=" * 80)
-            print("🔧 CONFIGURING GPU FOR CYCLES RENDERING")
+            print("[UNK] CONFIGURING GPU FOR CYCLES RENDERING")
             print("=" * 80)
             sys.stdout.flush()
 
@@ -169,18 +174,20 @@ class BaseGenerator:
             cuda_home = os.environ.get("CUDA_HOME") or os.environ.get("CUDA_PATH")
             cuda_visible = os.environ.get("CUDA_VISIBLE_DEVICES")
             if cuda_home:
-                print(f"🔍 CUDA_HOME: {cuda_home}")
+                print(f"[INFO] CUDA_HOME: {cuda_home}")
             if cuda_visible:
-                print(f"🔍 CUDA_VISIBLE_DEVICES: {cuda_visible}")
+                print(f"[INFO] CUDA_VISIBLE_DEVICES: {cuda_visible}")
             else:
-                print(f"⚠️  CUDA_VISIBLE_DEVICES not set!")
+                print(f"[WARN]  CUDA_VISIBLE_DEVICES not set!")
 
             # Check for loaded modules (Compute Canada specific)
             loaded_modules = os.environ.get("LOADEDMODULES", "")
             if "cuda" in loaded_modules.lower():
-                print(f"✅ CUDA module detected in environment")
+                print(f"[SUCCESS] CUDA module detected in environment")
             else:
-                print(f"⚠️  No CUDA module detected - you may need: module load cuda")
+                print(
+                    f"[WARN]  No CUDA module detected - you may need: module load cuda"
+                )
 
             sys.stdout.flush()
 
@@ -190,7 +197,7 @@ class BaseGenerator:
 
                 # Show current device type
                 current_type = cycles_preferences.compute_device_type
-                print(f"📌 Current compute device type: {current_type}")
+                print(f"[UNK] Current compute device type: {current_type}")
                 sys.stdout.flush()
 
                 # Allow environment override for cluster-specific preferences
@@ -207,7 +214,7 @@ class BaseGenerator:
                     if preferred_backend in backend_order:
                         backend_order.remove(preferred_backend)
                         backend_order.insert(0, preferred_backend)
-                    print(f"🎯 Preferred GPU backend: {preferred_backend}")
+                    print(f"[INFO] Preferred GPU backend: {preferred_backend}")
 
                 # Try to set device type in priority order
                 device_type_set = None
@@ -215,7 +222,7 @@ class BaseGenerator:
                     try:
                         cycles_preferences.compute_device_type = device_type
                         device_type_set = device_type
-                        print(f"✅ Set compute device type to: {device_type}")
+                        print(f"[SUCCESS] Set compute device type to: {device_type}")
                         sys.stdout.flush()
                         break
                     except:
@@ -224,11 +231,11 @@ class BaseGenerator:
                 # Refresh devices after setting type
                 cycles_preferences.refresh_devices()
                 backend = cycles_preferences.compute_device_type
-                print(f"🔄 Refreshed devices for type: {backend}")
+                print(f"[UNK] Refreshed devices for type: {backend}")
                 sys.stdout.flush()
 
                 # Show and configure all devices - ONLY enable devices matching the chosen backend
-                print("📋 Available devices:")
+                print("[UNK] Available devices:")
                 gpu_devices = []
                 cpu_devices = []
 
@@ -251,7 +258,7 @@ class BaseGenerator:
                 if gpu_devices:
                     sc.cycles.device = "GPU"
                     print("=" * 80)
-                    print(f"🚀 GPU RENDERING ENABLED!")
+                    print(f"[INFO] GPU RENDERING ENABLED!")
                     print(f"   Devices: {len(gpu_devices)} GPU(s)")
                     for gpu in gpu_devices:
                         print(f"   - {gpu}")
@@ -260,7 +267,7 @@ class BaseGenerator:
 
                     # CRITICAL: Verify preferences are saved
                     cycles_preferences.get_devices()
-                    print(f"✅ GPU preferences verified")
+                    print(f"[SUCCESS] GPU preferences verified")
                     print(
                         f"   Compute device type: {cycles_preferences.compute_device_type}"
                     )
@@ -271,7 +278,7 @@ class BaseGenerator:
                 else:
                     sc.cycles.device = "CPU"
                     print("=" * 80)
-                    print("⚠️  NO GPU FOUND - USING CPU")
+                    print("[WARN]  NO GPU FOUND - USING CPU")
                     print("=" * 80)
 
                 sys.stdout.flush()
@@ -280,7 +287,7 @@ class BaseGenerator:
                 import traceback
 
                 print("=" * 80)
-                print(f"❌ GPU SETUP FAILED: {e}")
+                print(f"[ERROR] GPU SETUP FAILED: {e}")
                 print(traceback.format_exc())
                 print("=" * 80)
                 sc.cycles.device = "CPU"
@@ -303,13 +310,13 @@ class BaseGenerator:
         cyc.samples = cfg["fast_samples"] if cfg.get("fast_mode", False) else 128
 
         print(
-            f"🎨 Render settings: samples={cyc.samples}, fast_mode={cfg.get('fast_mode', False)}, device={sc.cycles.device}"
+            f"[INFO] Render settings: samples={cyc.samples}, fast_mode={cfg.get('fast_mode', False)}, device={sc.cycles.device}"
         )
         sys.stdout.flush()
 
         if hasattr(cyc, "use_adaptive_sampling"):
             cyc.use_adaptive_sampling = bool(cfg.get("fast_adaptive_sampling", False))
-            print(f"🎨 Adaptive sampling: {cyc.use_adaptive_sampling}")
+            print(f"[INFO] Adaptive sampling: {cyc.use_adaptive_sampling}")
             sys.stdout.flush()
 
         if cfg.get("fast_mode", False):
@@ -329,7 +336,7 @@ class BaseGenerator:
                 for candidate in denoiser_priority:
                     try:
                         cyc.denoiser = candidate
-                        print(f"🎨 Denoiser: {candidate}")
+                        print(f"[INFO] Denoiser: {candidate}")
                         sys.stdout.flush()
                         break
                     except Exception:
@@ -339,7 +346,7 @@ class BaseGenerator:
                 for candidate in (den, "OPENIMAGEDENOISE", "OPTIX", "NLM"):
                     try:
                         cyc.denoiser = candidate
-                        print(f"🎨 Denoiser: {candidate}")
+                        print(f"[INFO] Denoiser: {candidate}")
                         sys.stdout.flush()
                         break
                     except Exception:
@@ -369,7 +376,7 @@ class BaseGenerator:
             if hasattr(sc.render, "tile_x"):
                 sc.render.tile_x = 256  # Large tiles for GPU
                 sc.render.tile_y = 256
-                print(f"🎨 Tile size: {sc.render.tile_x}x{sc.render.tile_y}")
+                print(f"[INFO] Tile size: {sc.render.tile_x}x{sc.render.tile_y}")
 
             # ULTRA LOW bounces for maximum speed
             cyc.max_bounces = 2  # Minimal bounces
@@ -390,7 +397,7 @@ class BaseGenerator:
                 cyc.use_fast_gi = True
                 if hasattr(cyc, "fast_gi_method"):
                     cyc.fast_gi_method = "REPLACE"  # Fastest
-                print(f"🎨 Fast GI enabled: {cyc.use_fast_gi}")
+                print(f"[INFO] Fast GI enabled: {cyc.use_fast_gi}")
                 sys.stdout.flush()
 
             # Reduce texture limit for faster loading
@@ -404,10 +411,10 @@ class BaseGenerator:
             # CRITICAL: Shader JIT compilation cache
             if hasattr(cyc, "use_cache"):
                 cyc.use_cache = True
-                print(f"🎨 Shader cache enabled")
+                print(f"[INFO] Shader cache enabled")
 
             print(
-                f"🎨 GPU optimizations: max_bounces={cyc.max_bounces}, caustics=off, fast_gi={hasattr(cyc, 'use_fast_gi')}"
+                f"[INFO] GPU optimizations: max_bounces={cyc.max_bounces}, caustics=off, fast_gi={hasattr(cyc, 'use_fast_gi')}"
             )
             sys.stdout.flush()
 
@@ -421,7 +428,7 @@ class BaseGenerator:
             sc.render.simplify_subdivision = 0  # Disable subdivision in render
             sc.render.simplify_child_particles = 0.0  # Reduce particles
             sc.render.simplify_volumes = 1.0
-            print(f"🎨 Scene simplification enabled")
+            print(f"[INFO] Scene simplification enabled")
             sys.stdout.flush()
 
         # CRITICAL: Disable all subdivision modifiers for speed
@@ -437,11 +444,13 @@ class BaseGenerator:
                         mod.show_render = False
                         geometry_nodes_count += 1
         if subdivision_count > 0:
-            print(f"🎨 Disabled {subdivision_count} subdivision modifiers for speed")
+            print(
+                f"[INFO] Disabled {subdivision_count} subdivision modifiers for speed"
+            )
             sys.stdout.flush()
         if geometry_nodes_count > 0:
             print(
-                f"🎨 Disabled {geometry_nodes_count} geometry node modifiers for speed"
+                f"[INFO] Disabled {geometry_nodes_count} geometry node modifiers for speed"
             )
             sys.stdout.flush()
 
@@ -456,12 +465,12 @@ class BaseGenerator:
                     high_poly_objects.append((obj.name, poly_count))
 
         if high_poly_objects:
-            print(f"⚠️  High-poly objects detected (may be slow):")
+            print(f"[WARN]  High-poly objects detected (may be slow):")
             for name, count in high_poly_objects[:5]:  # Show top 5
                 print(f"   - {name}: {count:,} polygons")
             sys.stdout.flush()
 
-        print(f"🔍 Total scene polygons: {total_polys:,}")
+        print(f"[INFO] Total scene polygons: {total_polys:,}")
         sys.stdout.flush()
 
         # Enable passes
@@ -867,8 +876,8 @@ class BaseGenerator:
                         # Always draw all keypoints (visible and invisible)
                         x, y = int(kp["position_2d"][0]), int(kp["position_2d"][1])
 
-                        # Only draw if we have valid coordinates
-                        if x > 0 and y > 0:
+                        # Only draw if coordinates are within image bounds
+                        if x > 0 and y > 0 and x < img.width and y < img.height:
                             # Check if this keypoint is part of an overlap group
                             is_overlap = False
                             overlap_group = None
@@ -955,17 +964,20 @@ class BaseGenerator:
                     bbox_2d = face_data["bbox_2d"]
                     face_color = face_colors_2d[face_idx % len(face_colors_2d)]
 
-                    # Draw 2D bounding box
-                    draw.rectangle(
-                        [
-                            bbox_2d["x_min"],
-                            bbox_2d["y_min"],
-                            bbox_2d["x_max"],
-                            bbox_2d["y_max"],
-                        ],
-                        outline=face_color,
-                        width=2,
-                    )
+                    # Check if bbox is within image bounds
+                    x_min = max(0, bbox_2d["x_min"])
+                    y_min = max(0, bbox_2d["y_min"])
+                    x_max = min(img.width, bbox_2d["x_max"])
+                    y_max = min(img.height, bbox_2d["y_max"])
+
+                    # Only draw if box has valid dimensions
+                    if x_max > x_min and y_max > y_min:
+                        # Draw 2D bounding box
+                        draw.rectangle(
+                            [x_min, y_min, x_max, y_max],
+                            outline=face_color,
+                            width=2,
+                        )
 
             # Draw 3D coordinates for selected faces if enabled
             if (
@@ -1018,7 +1030,15 @@ class BaseGenerator:
             pad, sample_sz, line_gap = 8, 18, 8
             legend_items = [(f"Frame {frame_id}", None)]
 
-            # Only add labels if they are actually shown
+            # Face colors used for keypoints
+            face_colors = [
+                (255, 0, 0),  # Red for face 0
+                (0, 255, 0),  # Green for face 1
+                (0, 0, 255),  # Blue for face 2
+                (255, 255, 0),  # Yellow for face 3
+            ]
+
+            # Only add YOLO labels if analysis_show_all_labels is True
             if self.config.get("analysis_show_all_labels", True):
                 if bboxes2d:
                     legend_items.append(("2D bbox", color_2d))
@@ -1027,39 +1047,36 @@ class BaseGenerator:
                 if all_pockets_world:
                     legend_items.append(("Hole polygon", color_hole))
 
-            # Add keypoints to legend if available and shown
+            # Add keypoints legend entries if keypoints are shown
             if keypoints_data and self.config.get("analysis_show_keypoints", True):
-                # Add face colors for each selected face
                 for face_idx, face_data in enumerate(keypoints_data):
                     face_color = face_colors[face_idx % len(face_colors)]
                     face_name = face_data.get("face_name", f"face_{face_idx}")
-                    legend_items.append((f"Face: {face_name}", face_color))
+                    legend_items.append((f"Keypoints: {face_name}", face_color))
 
-            # Add 2D boxes to legend if shown
+            # Add 2D boxes legend entries if shown
             if self.config.get("analysis_show_2d_boxes", False) and keypoints_data:
-                # Add each face with its 2D box color
                 face_colors_2d = [
-                    (255, 0, 0),  # Red for face 0
-                    (0, 255, 0),  # Green for face 1
-                    (0, 0, 255),  # Blue for face 2
-                    (255, 255, 0),  # Yellow for face 3
+                    (255, 0, 0),
+                    (0, 255, 0),
+                    (0, 0, 255),
+                    (255, 255, 0),
                 ]
                 for face_idx, face_data in enumerate(keypoints_data):
                     face_color = face_colors_2d[face_idx % len(face_colors_2d)]
                     face_name = face_data.get("face_name", f"face_{face_idx}")
                     legend_items.append((f"2D Box: {face_name}", face_color))
 
-            # Add 3D coordinates to legend if shown
+            # Add 3D face polygon legend entries if shown
             if (
                 self.config.get("analysis_show_3d_coordinates", False)
                 and keypoints_data
             ):
-                # Add each selected face with its color
                 face_colors_3d = [
-                    (255, 0, 255),  # Magenta for face 0
-                    (0, 255, 255),  # Cyan for face 1
-                    (255, 0, 0),  # Red for face 2
-                    (0, 255, 0),  # Green for face 3
+                    (255, 0, 255),
+                    (0, 255, 255),
+                    (255, 0, 0),
+                    (0, 255, 0),
                 ]
                 for face_idx, face_data in enumerate(keypoints_data):
                     face_color = face_colors_3d[face_idx % len(face_colors_3d)]
@@ -1480,8 +1497,22 @@ class BaseGenerator:
             if obj.type == "MESH" and (
                 obj.pass_index > 0 or "pallet" in obj.name.lower()
             ):
-                # Skip objects that might be bottom/top faces or other non-pallet objects
+                # Skip hidden objects (templates, variants, backups)
+                if obj.hide_render or obj.hide_viewport:
+                    continue
+
+                # Skip template/variant pallets (pallet.001, pallet.002, etc.)
+                # Only process "pallet" or "pallet_N" (stacked duplicates)
                 obj_name_lower = obj.name.lower()
+                if "." in obj.name and obj.name.split(".")[0].lower() == "pallet":
+                    # This is a variant like pallet.001, pallet.002 - skip it
+                    continue
+
+                # Skip backup pallets
+                if "backup" in obj_name_lower or "original" in obj_name_lower:
+                    continue
+
+                # Skip objects that might be bottom/top faces or other non-pallet objects
                 if any(
                     skip_word in obj_name_lower
                     for skip_word in ["down", "bottom", "top", "up", "face"]
@@ -1537,11 +1568,16 @@ class BaseGenerator:
                                 face_normal.dot(camera_direction)
                             )  # Higher = more directly facing camera
 
+                            # Create face name with pallet object name
+                            pallet_name = obj.name
+                            full_face_name = f"{pallet_name}_{face_name}"
+
                             visible_faces.append(
                                 {
                                     "object": obj,
                                     "face_index": original_face_idx,
-                                    "face_name": face_name,
+                                    "face_name": full_face_name,
+                                    "pallet_name": pallet_name,
                                     "face_center_3d": face_center,
                                     "face_corners_3d": face_corners_3d,
                                     "face_normal": face_normal,
@@ -2774,7 +2810,7 @@ class BaseGenerator:
         faces = self.detect_faces_in_scene(cam_obj, sc)
 
         # Create 3D debug visualization AFTER face calculations are complete
-        if frame_id is not None:
+        if frame_id is not None and self.config.get("generate_debug_3d", False):
             logger.info(f"Creating 3D debug visualization for frame {frame_id}")
 
             pallet_objects_found = 0
@@ -2840,36 +2876,29 @@ class BaseGenerator:
                 }
             )
 
-        # Generate 2D boxes and 3D coordinates for selected faces
+        # Generate 2D boxes and keypoints for selected faces
+        # Use keypoints_data which has the generated keypoints, not faces
         if frame_id is not None:
             # Get image dimensions from config
-            img_width = self.config.get("resolution", [1024, 768])[0]
-            img_height = self.config.get("resolution", [1024, 768])[1]
-            self.generate_face_2d_boxes(faces, frame_id, img_width, img_height)
-            self.generate_face_3d_coordinates(faces, frame_id, img_width, img_height)
+            img_width = self.config.get("resolution_x", 1024)
+            img_height = self.config.get("resolution_y", 768)
+            self.generate_face_2d_boxes(keypoints_data, frame_id, img_width, img_height)
+            self.generate_face_2d_keypoints(
+                keypoints_data, frame_id, img_width, img_height
+            )
 
         return keypoints_data
 
     def generate_face_2d_boxes(self, selected_faces, frame_id, img_width, img_height):
-        """Generate 2D bounding boxes for selected faces in YOLO format."""
+        """Generate 2D bounding boxes for selected faces in YOLO format (class 0 = face)."""
         if not selected_faces:
             return
 
         # Create output file for 2D boxes in YOLO format
-        output_file = os.path.join(
-            self.paths["face_2d_boxes"], f"frame_{frame_id:06d}_2d_boxes.txt"
-        )
+        output_file = os.path.join(self.paths["face_2d_boxes"], f"{frame_id:06d}.txt")
 
         with open(output_file, "w") as f:
-            f.write(
-                f"# 2D Bounding Boxes for Selected Faces - Frame {frame_id} (YOLO Format)\n"
-            )
-            f.write(
-                "# Format: class_id x_center y_center width height (normalized 0-1)\n"
-            )
-            f.write(f"# Total faces: {len(selected_faces)}\n\n")
-
-            for face_idx, face_data in enumerate(selected_faces):
+            for face_data in selected_faces:
                 bbox_2d = face_data["bbox_2d"]
 
                 x_min = bbox_2d["x_min"]
@@ -2883,38 +2912,26 @@ class BaseGenerator:
                 width = (x_max - x_min) / img_width
                 height = (y_max - y_min) / img_height
 
-                # Use face index as class_id (0, 1, 2, etc.)
-                class_id = face_idx
+                # Class 0 = face (single class detection)
+                f.write(f"0 {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n")
 
-                f.write(
-                    f"{class_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}\n"
-                )
-
-    def generate_face_3d_coordinates(
+    def generate_face_2d_keypoints(
         self, selected_faces, frame_id, img_width, img_height
     ):
-        """Generate 3D coordinates for selected faces in YOLO format."""
+        """Generate 2D keypoints for selected faces in YOLO keypoints format."""
         if not selected_faces:
             return
 
-        # Create output file for 3D coordinates in YOLO format
+        # Create output file for 2D keypoints in YOLO keypoints format
         output_file = os.path.join(
-            self.paths["face_3d_coordinates"],
-            f"frame_{frame_id:06d}_3d_coordinates.txt",
+            self.paths["face_2d_keypoints"],
+            f"{frame_id:06d}.txt",
         )
 
         with open(output_file, "w") as f:
-            f.write(
-                f"# 3D Coordinates for Selected Faces - Frame {frame_id} (YOLO Format)\n"
-            )
-            f.write(
-                "# Format: class_id x_center y_center width height kp1_x kp1_y kp1_v kp2_x kp2_y kp2_v ...\n"
-            )
-            f.write(f"# Total faces: {len(selected_faces)}\n\n")
-
-            for face_idx, face_data in enumerate(selected_faces):
-                face_corners_3d = face_data["face_corners_3d"]
+            for face_data in selected_faces:
                 bbox_2d = face_data["bbox_2d"]
+                keypoints = face_data.get("keypoints", [])
 
                 # Calculate 2D bounding box in YOLO format
                 x_min = bbox_2d["x_min"]
@@ -2927,29 +2944,18 @@ class BaseGenerator:
                 width = (x_max - x_min) / img_width
                 height = (y_max - y_min) / img_height
 
-                # Use face index as class_id
-                class_id = face_idx
+                # Class 0 = face
+                line = f"0 {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}"
 
-                # Start the line with YOLO bbox format
-                line = (
-                    f"{class_id} {x_center:.6f} {y_center:.6f} {width:.6f} {height:.6f}"
-                )
+                # Add keypoints (normalized coordinates and visibility)
+                for kp in keypoints:
+                    kp_x = kp["position_2d"][0] / img_width
+                    kp_y = kp["position_2d"][1] / img_height
+                    visibility = 2 if kp.get("visible", True) else 0
 
-                # Add 3D corner points as keypoints (projected to 2D)
-                for corner in face_corners_3d:
-                    # Project 3D point to 2D (this would need camera context, using bbox for now)
-                    # For now, we'll use the corner positions relative to the bbox
-                    corner_x = (
-                        (corner.x - x_min) / (x_max - x_min) if x_max > x_min else 0.5
-                    )
-                    corner_y = (
-                        (corner.y - y_min) / (y_max - y_min) if y_max > y_min else 0.5
-                    )
-                    visibility = 2  # Always visible for 3D coordinates
+                    line += f" {kp_x:.6f} {kp_y:.6f} {visibility}"
 
-                    line += f" {corner_x:.6f} {corner_y:.6f} {visibility}"
-
-                f.write(f"{line}\n")
+                f.write(line + "\n")
 
     def create_interactive_3d_figure(
         self, corners_3d, camera_pos, selected_faces, frame_id, output_path

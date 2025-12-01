@@ -86,7 +86,7 @@ Where:
 ```
 
 This represents:
-- Face at center (0.573, 0.639) with size 0.284×0.139
+- Face at center (0.573, 0.639) with size 0.284[UNK]0.139
 - All 6 keypoints visible (visibility=2)
 - **Real example** from generated dataset with actual face detection results
 
@@ -190,12 +190,12 @@ The system generates comprehensive 3D debug information in the `debug_3d` folder
 ### Debug Output Structure
 ```
 debug_3d/
-├── coordinates/           # Detailed coordinate information
-│   └── frame_XXXXXX_coordinates.txt
-├── figures/              # Interactive HTML 3D figures
-│   └── frame_XXXXXX_3d_interactive.html
-└── images/               # 3D debug visualization images
-    └── frame_XXXXXX_3d_debug.png
+[UNK][UNK][UNK] coordinates/           # Detailed coordinate information
+[UNK]   [UNK][UNK][UNK] frame_XXXXXX_coordinates.txt
+[UNK][UNK][UNK] figures/              # Interactive HTML 3D figures
+[UNK]   [UNK][UNK][UNK] frame_XXXXXX_3d_interactive.html
+[UNK][UNK][UNK] images/               # 3D debug visualization images
+    [UNK][UNK][UNK] frame_XXXXXX_3d_debug.png
 ```
 
 ### Coordinate Files

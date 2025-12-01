@@ -4,7 +4,7 @@ REM Usage: scripts\setup-dev.bat
 
 setlocal enabledelayedexpansion
 
-echo 🚀 Setting up PalletDataGenerator development environment...
+echo [INFO] Setting up PalletDataGenerator development environment...
 
 REM Check if Python is available
 python --version >nul 2>&1
@@ -98,14 +98,14 @@ REM Run initial tests
 echo Running initial tests...
 pytest tests/ -v --tb=short
 if %errorlevel% equ 0 (
-    echo ✅ All tests passed!
+    echo [SUCCESS] All tests passed!
 ) else (
-    echo ⚠️  Some tests failed, but setup completed.
+    echo [WARN]  Some tests failed, but setup completed.
 )
 
 REM Final instructions
 echo.
-echo 🎉 Development environment setup complete!
+echo [UNK] Development environment setup complete!
 echo.
 echo Next steps:
 echo 1. Run aliases: %ALIASES_FILE%
@@ -125,5 +125,5 @@ if %CONDA_AVAILABLE% equ 1 (
 )
 
 echo.
-echo Happy coding! 🚀
+echo Happy coding! [INFO]
 pause

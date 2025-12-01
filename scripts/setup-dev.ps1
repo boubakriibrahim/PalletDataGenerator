@@ -11,7 +11,7 @@ param(
 Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
-Write-Host "🚀 Setting up PalletDataGenerator development environment..." -ForegroundColor Blue
+Write-Host "[INFO] Setting up PalletDataGenerator development environment..." -ForegroundColor Blue
 
 # Colors
 $Colors = @{
@@ -136,7 +136,7 @@ function pgen-format {
     ruff check --fix src/ tests/ @args
 }
 
-Write-Host "PalletDataGenerator aliases loaded! 🚀" -ForegroundColor Green
+Write-Host "PalletDataGenerator aliases loaded! [INFO]" -ForegroundColor Green
 '@
 
 # Add to PowerShell profile
@@ -165,13 +165,13 @@ if (!(Test-Path $ProfilePath) -or $Force) {
 Write-ColoredOutput "Running initial tests..." $Colors.Blue
 try {
     pytest tests/ -v --tb=short
-    Write-ColoredOutput "✅ All tests passed!" $Colors.Green
+    Write-ColoredOutput "[SUCCESS] All tests passed!" $Colors.Green
 } catch {
-    Write-ColoredOutput "⚠️  Some tests failed, but setup completed." $Colors.Yellow
+    Write-ColoredOutput "[WARN]  Some tests failed, but setup completed." $Colors.Yellow
 }
 
 # Final instructions
-Write-ColoredOutput "`n🎉 Development environment setup complete!" $Colors.Green
+Write-ColoredOutput "`n[UNK] Development environment setup complete!" $Colors.Green
 Write-ColoredOutput "`nNext steps:" $Colors.Blue
 Write-ColoredOutput "1. Restart PowerShell or reload profile: . `$PROFILE" $Colors.Yellow
 Write-ColoredOutput "2. Try the CLI: pgen info --version" $Colors.Yellow
@@ -188,4 +188,4 @@ if ($CondaAvailable) {
     Write-ColoredOutput "To activate it in new shells: $ActivateScript" $Colors.Yellow
 }
 
-Write-ColoredOutput "`nHappy coding! 🚀" $Colors.Green
+Write-ColoredOutput "`nHappy coding! [INFO]" $Colors.Green

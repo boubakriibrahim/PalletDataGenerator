@@ -20,7 +20,7 @@ The visibility detection system uses a three-stage filtering approach:
 2. **Face Orientation Check**: Ensures faces are facing towards the camera
    - Calculates the dot product between face normal and camera direction
    - Only keeps faces where the normal points generally towards the camera
-   - Uses FACING_DEG (default 88°) to allow slight tolerance for grazing angles
+   - Uses FACING_DEG (default 88[UNK]) to allow slight tolerance for grazing angles
 
 3. **Occlusion Detection**: Uses BVH ray casting to detect blocked faces
    - Builds a BVH (Bounding Volume Hierarchy) tree from all scene geometry
@@ -86,7 +86,7 @@ from bpy_extras.object_utils import world_to_camera_view
 # Constants for visibility detection
 EPS_RAY_ORIGIN = 1e-4  # Small offset for ray origin to avoid self-intersection
 EPS_HIT = 1e-3  # Tolerance for hit detection
-FACING_ANGLE_MAX = 120.0  # Maximum angle for face to be considered "facing" camera (120° allows extremely wide side views)
+FACING_ANGLE_MAX = 120.0  # Maximum angle for face to be considered "facing" camera (120[UNK] allows extremely wide side views)
 
 
 class VisibilityCache:
@@ -113,7 +113,7 @@ class VisibilityCache:
 
     def _build_cache(self):
         """Build the BVH tree and pallet face cache from scene geometry."""
-        print("🔧 Building visibility cache...")
+        print("[UNK] Building visibility cache...")
 
         # Arrays for BVH construction (world space)
         all_verts_ws = []
@@ -142,12 +142,12 @@ class VisibilityCache:
         if all_verts_ws and all_tris:
             self.bvh = BVHTree.FromPolygons(all_verts_ws, all_tris, all_triangles=True)
             print(
-                f"✅ BVH built with {len(all_verts_ws)} vertices, {len(all_tris)} triangles"
+                f"[SUCCESS] BVH built with {len(all_verts_ws)} vertices, {len(all_tris)} triangles"
             )
         else:
-            print("⚠️  No geometry found for BVH")
+            print("[WARN]  No geometry found for BVH")
 
-        print(f"✅ Cached {len(self.pallet_faces)} pallet faces for visibility checking")
+        print(f"[SUCCESS] Cached {len(self.pallet_faces)} pallet faces for visibility checking")
 
     def _is_renderable_mesh(self, obj):
         """Check if object is a renderable mesh."""
@@ -199,7 +199,7 @@ class VisibilityCache:
             return len(all_verts_ws)
 
         except Exception as e:
-            print(f"⚠️  Error adding mesh to BVH: {e}")
+            print(f"[WARN]  Error adding mesh to BVH: {e}")
             return v_offset
 
     def _add_pallet_faces(self, eval_obj, M_ws, obj_name):
@@ -226,7 +226,7 @@ class VisibilityCache:
             eval_obj.to_mesh_clear()
 
         except Exception as e:
-            print(f"⚠️  Error processing pallet faces: {e}")
+            print(f"[WARN]  Error processing pallet faces: {e}")
 
 
 class VisibilitySolver:
@@ -252,7 +252,7 @@ class VisibilitySolver:
         self.scene = scene
         self.camera = camera
         self.cam_loc = camera.matrix_world.translation
-        # Accept faces facing up to 100° from camera (cos(100°) = -0.174)
+        # Accept faces facing up to 100[UNK] from camera (cos(100[UNK]) = -0.174)
         # This means we accept faces that are somewhat sideways to the camera
         self.cos_min = math.cos(math.radians(FACING_ANGLE_MAX))
 
@@ -307,17 +307,17 @@ class VisibilitySolver:
         Check if a face is facing towards the camera.
 
         A face is facing the camera if its normal points generally towards the camera.
-        We accept faces up to 120° from the camera direction (extremely lenient for warehouse views).
+        We accept faces up to 120[UNK] from the camera direction (extremely lenient for warehouse views).
         """
         # Vector from face to camera
         to_camera = (self.cam_loc - point_ws).normalized()
 
         # Dot product between face normal and direction to camera
         # Positive dot product means they point in similar directions
-        # We use cos_min to allow very wide angle tolerance (120° = extremely wide side views)
+        # We use cos_min to allow very wide angle tolerance (120[UNK] = extremely wide side views)
         dot_product = normal_ws.dot(to_camera)
 
-        # Accept if dot product is above cos(120°) which is negative (-0.5)
+        # Accept if dot product is above cos(120[UNK]) which is negative (-0.5)
         # This means we accept faces from head-on (dot=1.0) to very sideways (dot=-0.5)
         return dot_product >= self.cos_min
 
@@ -395,7 +395,7 @@ def detect_all_visible_pallet_faces(cam_obj, scene, config=None):
     config = config or {}
 
     print("=" * 80)
-    print("🔍 COMPREHENSIVE PALLET FACE DETECTION")
+    print("[INFO] COMPREHENSIVE PALLET FACE DETECTION")
     print("=" * 80)
 
     # Step 1: Find ALL pallet objects in the scene
@@ -430,18 +430,18 @@ def detect_all_visible_pallet_faces(cam_obj, scene, config=None):
             if is_pallet:
                 pallet_objects.append(obj)
 
-    print(f"📦 Found {len(pallet_objects)} pallet objects in scene")
+    print(f"[INFO] Found {len(pallet_objects)} pallet objects in scene")
 
     if not pallet_objects:
-        print("⚠️  No pallets found!")
+        print("[WARN]  No pallets found!")
         return []
 
     # Step 2: Build BVH tree for occlusion testing
-    print(f"🔧 Building BVH tree for occlusion detection...")
+    print(f"[UNK] Building BVH tree for occlusion detection...")
     bvh = build_bvh_tree_from_scene(scene)
 
     if not bvh:
-        print("⚠️  No BVH tree available, occlusion testing disabled")
+        print("[WARN]  No BVH tree available, occlusion testing disabled")
 
     # Step 3: Create visibility solver
     solver = VisibilitySolver(bvh, scene, cam_obj)
@@ -604,7 +604,7 @@ def detect_all_visible_pallet_faces(cam_obj, scene, config=None):
                 face_info.append(info)
 
             print(
-                f"      ✅ Selected {len(selected_for_pallet)}/{len(pallet_visible_faces)} faces: {', '.join(face_info)}"
+                f"      [SUCCESS] Selected {len(selected_for_pallet)}/{len(pallet_visible_faces)} faces: {', '.join(face_info)}"
             )
 
             all_faces.extend(selected_for_pallet)
@@ -613,12 +613,12 @@ def detect_all_visible_pallet_faces(cam_obj, scene, config=None):
             # Show why no faces were selected
             reasons = [f"{k}: {v}" for k, v in pallet_rejections.items() if v > 0]
             print(
-                f"      ❌ No visible faces. Rejected: {', '.join(reasons) if reasons else 'unknown'}"
+                f"      [ERROR] No visible faces. Rejected: {', '.join(reasons) if reasons else 'unknown'}"
             )
 
     # Print summary
     print("\n" + "=" * 80)
-    print("📊 DETECTION SUMMARY")
+    print("[INFO] DETECTION SUMMARY")
     print("=" * 80)
     print(f"   Pallets scanned:              {len(pallet_objects)}")
     print(f"   Pallets with visible faces:   {pallets_with_visible_faces}")
@@ -682,15 +682,15 @@ def build_bvh_tree_from_scene(scene):
             objects_added += 1
 
         except Exception as e:
-            print(f"⚠️  Error processing object {obj.name} for BVH: {e}")
+            print(f"[WARN]  Error processing object {obj.name} for BVH: {e}")
             continue
 
-    print(f"   📦 Added {objects_added} objects to BVH")
+    print(f"   [INFO] Added {objects_added} objects to BVH")
 
     if all_verts_ws and all_tris:
         bvh = BVHTree.FromPolygons(all_verts_ws, all_tris, all_triangles=True)
         print(
-            f"   ✅ BVH built: {len(all_verts_ws)} vertices, {len(all_tris)} triangles"
+            f"   [SUCCESS] BVH built: {len(all_verts_ws)} vertices, {len(all_tris)} triangles"
         )
         return bvh
     else:
@@ -799,7 +799,7 @@ def project_points_to_2d(points_3d, cam_obj, scene):
 
     depsgraph = bpy.context.evaluated_depsgraph_get()
 
-    print(f"🔍 Building BVH for {len(list(bpy.context.scene.objects))} scene objects...")
+    print(f"[INFO] Building BVH for {len(list(bpy.context.scene.objects))} scene objects...")
 
     # Add all renderable meshes to BVH
     for obj in bpy.context.scene.objects:
@@ -836,7 +836,7 @@ def project_points_to_2d(points_3d, cam_obj, scene):
             v_offset = len(all_verts_ws)
 
         except Exception as e:
-            print(f"⚠️  Error processing object {obj.name}: {e}")
+            print(f"[WARN]  Error processing object {obj.name}: {e}")
             continue
 
     # Build BVH tree
@@ -844,10 +844,10 @@ def project_points_to_2d(points_3d, cam_obj, scene):
     if all_verts_ws and all_tris:
         bvh = BVHTree.FromPolygons(all_verts_ws, all_tris, all_triangles=True)
         print(
-            f"✅ BVH built with {len(all_verts_ws)} vertices, {len(all_tris)} triangles"
+            f"[SUCCESS] BVH built with {len(all_verts_ws)} vertices, {len(all_tris)} triangles"
         )
     else:
-        print("⚠️  No geometry for BVH, skipping occlusion testing")
+        print("[WARN]  No geometry for BVH, skipping occlusion testing")
         return faces  # Return all faces if no BVH
 
     # Create visibility solver
@@ -921,7 +921,7 @@ def project_points_to_2d(points_3d, cam_obj, scene):
             visible_faces.append(face)
             selected_count += 1
 
-    print(f"🎯 Visibility filtering results:")
+    print(f"[INFO] Visibility filtering results:")
     print(f"   - Input faces: {total_input_faces}")
     print(f"   - Not in frustum: {not_in_frustum_count}")
     print(f"   - Not facing camera: {not_facing_count}")

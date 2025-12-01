@@ -28,6 +28,6 @@ while true; do
     echo "[$end_time] Run #$count ended   (duration: ${duration}s)" | tee -a "$LOGFILE"
     echo "--------------------------------------------------------" | tee -a "$LOGFILE"
     
-    # Optional: short sleep so logs don’t explode
+    # Optional: short sleep so logs don[UNK]t explode
     # sleep 1
 done
