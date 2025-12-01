@@ -89,8 +89,8 @@ SINGLE_PALLET_CONFIG = {
     "duplicate_pallets": False,
     "num_pallets": 2,
     # Probability-driven stacking: per-scene chance to create a stacked pallet setup
-    "stacked_pallets_probability": None,
-    "stacked_pallets_max": None,
+    "stacked_pallets_probability": 0.5,  # 50% chance per frame to stack pallets
+    "stacked_pallets_max": 4,  # Max number of stacked pallets (random 2 to max)
     "pallet_stack_vertical": True,
     "pallet_stack_gap": 0.0,
     "unique_object_index": True,
