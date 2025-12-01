@@ -23,7 +23,7 @@ from mathutils import Vector
 from ..utils import logger
 
 
-def _pip_install(args):
+def _pip_install(args, force_reinstall=False):
     import ensurepip, subprocess, sys, os
 
     try:
@@ -34,6 +34,7 @@ def _pip_install(args):
         "/cvmfs/soft.computecanada.ca/custom/python/wheelhouse/avx2",
         "/cvmfs/soft.computecanada.ca/custom/python/wheelhouse/generic",
     ]
+    extra_args = ["--force-reinstall"] if force_reinstall else []
     if all(os.path.exists(link) for link in wheel_links):
         cmd = [
             sys.executable,
@@ -46,7 +47,7 @@ def _pip_install(args):
             "--find-links",
             wheel_links[1],
             "--user",
-        ] + args
+        ] + extra_args + args
     else:
         cmd = [
             sys.executable,
@@ -54,7 +55,7 @@ def _pip_install(args):
             "pip",
             "install",
             "--user",
-        ] + args
+        ] + extra_args + args
     subprocess.run(cmd, check=True, text=True)
 
     user_site = site.getusersitepackages()
@@ -65,8 +66,10 @@ def _pip_install(args):
 
 
 # ---------------------------- 1) Pillow -----------------------------
+PIL_AVAILABLE = False
 try:
     from PIL import Image, ImageDraw, ImageFont
+    PIL_AVAILABLE = True
 except ModuleNotFoundError:
     _pip_install(["pillow>=10,<11"])  # pick a version present in the wheelhouse
     import importlib
@@ -79,9 +82,10 @@ except ModuleNotFoundError:
 # ----------------------- 2) pascal_voc_writer -----------------------
 try:
     from pascal_voc_writer import Writer as VocWriter
-except ImportError:
+except (ImportError, ModuleNotFoundError):
     try:
-        _pip_install(["pascal_voc_writer"])
+        _pip_install(["pascal-voc-writer"], force_reinstall=True)
+        importlib.invalidate_caches()
         from pascal_voc_writer import Writer as VocWriter  # retry
     except Exception:
         VocWriter = None

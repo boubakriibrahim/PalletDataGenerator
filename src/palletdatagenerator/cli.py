@@ -111,7 +111,9 @@ def find_blender_executable():
                         install_dir = winreg.QueryValueEx(key, "InstallDir")[0]
                         blender_exe = Path(install_dir) / "blender.exe"
                         if blender_exe.exists():
-                            print(f"[SUCCESS] Found Blender via registry: {blender_exe}")
+                            print(
+                                f"[SUCCESS] Found Blender via registry: {blender_exe}"
+                            )
                             return str(blender_exe)
                 except (FileNotFoundError, OSError):
                     continue
@@ -159,7 +161,9 @@ def find_blender_executable():
     if system == "windows":
         print("   [UNK] Download from https://www.blender.org/download/")
         print("   [UNK] Or install via Chocolatey: choco install blender")
-        print("   [UNK] Or install via Winget: winget install BlenderFoundation.Blender")
+        print(
+            "   [UNK] Or install via Winget: winget install BlenderFoundation.Blender"
+        )
     elif system == "darwin":
         print("   [UNK] Download from https://www.blender.org/download/")
         print("   [UNK] Or install via Homebrew: brew install --cask blender")
@@ -260,12 +264,13 @@ except Exception as e:
         formatted_script = script_content
 
         # Replace all template variables
+        # Use forward slashes for paths to avoid Windows backslash escape issues
         formatted_script = formatted_script.replace("{debug}", str(debug))
         formatted_script = formatted_script.replace("{mode}", mode)
-        formatted_script = formatted_script.replace("{scene_path}", str(scene_path))
+        formatted_script = formatted_script.replace("{scene_path}", str(scene_path).replace("\\", "/"))
         formatted_script = formatted_script.replace("{frames}", str(frames))
         formatted_script = formatted_script.replace(
-            "{output}", str(output) if output else "None"
+            "{output}", str(output).replace("\\", "/") if output else "None"
         )
         formatted_script = formatted_script.replace("{resolution}", str(resolution))
         # Build config_overrides literal based on provided function args
@@ -285,13 +290,13 @@ except Exception as e:
             "{config_overrides}", repr(overrides)
         )
 
-        # Inject the actual source directory path
-        formatted_script = formatted_script.replace("{src_dir}", str(src_dir))
+        # Inject the actual source directory path (use forward slashes for Windows compatibility)
+        formatted_script = formatted_script.replace("{src_dir}", str(src_dir).replace("\\", "/"))
 
         # Fix the output_dir placeholder
         if output:
             formatted_script = formatted_script.replace(
-                "{output_dir}", f'Path("{output}")'
+                "{output_dir}", f'Path("{str(output).replace(chr(92), "/")}")'
             )
         else:
             formatted_script = formatted_script.replace("{output_dir}", "None")
@@ -469,8 +474,8 @@ Examples:
         nargs=2,
         type=int,
         metavar=("WIDTH", "HEIGHT"),
-        default=[1024, 768],
-        help="Image resolution (default: 1024 768)",
+        default=[640, 640],
+        help="Image resolution (default: 640 640 for YOLO)",
     )
 
     parser.add_argument(

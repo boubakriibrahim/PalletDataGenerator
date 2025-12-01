@@ -54,7 +54,7 @@ SINGLE_PALLET_CONFIG = {
     "num_images": 50,
     "render_engine": "CYCLES",
     "resolution_x": 640,
-    "resolution_y": 480,
+    "resolution_y": 640,
     # camera
     "camera_focal_mm": 35.0,
     "camera_sensor_mm": 36.0,
@@ -202,8 +202,8 @@ WAREHOUSE_CONFIG = {
     "max_images_per_scene": 15,
     "max_total_images": 50,
     # Render quality
-    "resolution_x": 1280,
-    "resolution_y": 720,
+    "resolution_x": 640,
+    "resolution_y": 640,
     "render_engine": "CYCLES",
     "fast_samples": 8,  # ULTRA low samples for maximum speed, denoiser will clean it
     "fast_mode": True,

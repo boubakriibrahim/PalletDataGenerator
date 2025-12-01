@@ -77,30 +77,42 @@ def ensure_dependencies():
         from PIL import Image, ImageDraw, ImageFont  # noqa: F401
 
         PIL_AVAILABLE = True
-    except ModuleNotFoundError:
-        _pip_install(["install", "pillow>=10.0.0"])
-
-        PIL_AVAILABLE = True
+    except (ModuleNotFoundError, ImportError):
+        _pip_install(["install", "--force-reinstall", "pillow>=10.0.0"])
+        importlib.invalidate_caches()
+        try:
+            from PIL import Image, ImageDraw, ImageFont  # noqa: F401
+            PIL_AVAILABLE = True
+        except (ModuleNotFoundError, ImportError):
+            PIL_AVAILABLE = False
 
     try:
         from pascal_voc_writer import Writer as VocWriter  # noqa: F401
-    except ModuleNotFoundError:
-        _pip_install(["install", "pascal_voc_writer"])
+    except (ModuleNotFoundError, ImportError):
+        _pip_install(["install", "--force-reinstall", "pascal-voc-writer"])
+        importlib.invalidate_caches()
+        # Retry import after install
+        try:
+            from pascal_voc_writer import Writer as VocWriter  # noqa: F401
+        except (ModuleNotFoundError, ImportError) as e:
+            print(f"[WARN] pascal_voc_writer still not importable: {e}")
 
     # Install matplotlib for 3D visualization
     try:
         import matplotlib.pyplot as plt  # noqa: F401
         import numpy as np  # noqa: F401
         from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
-    except ModuleNotFoundError:
-        _pip_install(["install", "matplotlib>=3.5.0"])
+    except (ModuleNotFoundError, ImportError):
+        _pip_install(["install", "matplotlib>=3.5.0", "numpy"])
+        importlib.invalidate_caches()
 
     # Install plotly for interactive 3D figures
     try:
         import plotly.graph_objects as go  # noqa: F401
         import plotly.offline as pyo  # noqa: F401
-    except ModuleNotFoundError:
+    except (ModuleNotFoundError, ImportError):
         _pip_install(["install", "plotly>=5.0.0"])
+        importlib.invalidate_caches()
 
     print("✅ Dependencies ready")
     return PIL_AVAILABLE
