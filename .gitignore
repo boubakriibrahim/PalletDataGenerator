@@ -29,3 +29,6 @@ scenes/warehouse_generated/
 
 .mypy_cache/
 .ruff_cache/
+
+venv/
+
