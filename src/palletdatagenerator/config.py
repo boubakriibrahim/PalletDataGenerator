@@ -104,18 +104,18 @@ SINGLE_PALLET_CONFIG = {
     # GPU backend preference (CUDA for H100, OPTIX for RTX cards, METAL for macOS)
     "_gpu_backend": "CUDA",  # Prefer CUDA on H100 (lacks RT cores), can override with PALLET_GPU_BACKEND env var
     # Performance: Disable slow post-processing for speed
-    "generate_analysis_images": False,  # Analysis images are slow, disable for production
+    "generate_analysis_images": True,  # Analysis images are slow, disable for production
     "generate_depth_normals_index": False,  # Depth/normals/index passes are slow, disable for speed
     "analysis_show_all_labels": True,  # Only used if generate_analysis_images=True
     # ---------------- Lighting randomness ----------------
     "randomize_lights_per_frame": False,
-    "light_count_range": (1, 3),
+    "light_count_range": (2, 4),  # Increased minimum from 1 to 2 lights
     "light_types": ["POINT", "AREA", "SPOT", "SUN"],
     "light_energy_ranges": {
-        "POINT": (50, 300),
-        "AREA": (30, 200),
-        "SPOT": (300, 1200),
-        "SUN": (2, 8),
+        "POINT": (200, 500),  # Increased from (50, 300)
+        "AREA": (150, 400),  # Increased from (30, 200)
+        "SPOT": (600, 1500),  # Increased from (300, 1200)
+        "SUN": (4, 10),  # Increased from (2, 8)
     },
     "light_distance_range": (2.0, 6.0),
     "light_elevation_deg_range": (10.0, 80.0),
@@ -134,13 +134,13 @@ SINGLE_PALLET_CONFIG = {
     "spot_blend_range": (0.1, 0.4),
     # --------- Realism helpers to prevent dark frames ---------
     "force_key_light": True,  # ensure at least one bright white key light (Default True in original)
-    "min_key_light_energy": 500.0,  # watts-ish (for SPOT/AREA); SUN uses small strengths
-    "min_total_light_energy": 300.0,  # minimum total lighting energy to prevent dark frames
-    "world_min_strength": 0.2,  # minimum background light strength (Filmic + low key)
+    "min_key_light_energy": 800.0,  # Increased from 500.0 - watts-ish (for SPOT/AREA); SUN uses small strengths
+    "min_total_light_energy": 600.0,  # Increased from 300.0 - minimum total lighting energy to prevent dark frames
+    "world_min_strength": 0.5,  # Increased from 0.2 - minimum background light strength (Filmic + low key)
     # --------- Auto exposure (per-frame) ----------
     "enable_auto_exposure": True,
     "target_luminance": 0.18,  # aim for 18% gray average luminance
-    "exposure_min": -2.0,  # EV clamp - more conservative to prevent very dark frames
+    "exposure_min": -1.0,  # Changed from -2.0 - less negative to prevent very dark frames
     "exposure_max": 4.0,
     "exposure_smooth": 0.6,  # 0..1 how strongly to apply EV correction
     "preview_samples": 1,  # Reduced from 4 to 1 for maximum speed (preview is just for exposure measurement)
@@ -148,6 +148,16 @@ SINGLE_PALLET_CONFIG = {
     "initial_exposure_ev": 0.0,  # starting EV
     # Name of an auxiliary object that moves with pallet but is not annotated
     "attached_box_name": "box",
+    # --------------- Pallet variant randomization ---------------
+    "randomize_pallet_variant": True,  # Enable pallet variant swapping
+    "pallet_variant_change_probability": 0.5,
+    "pallet_variant_names": [
+        "pallet.001",
+        "pallet.002",
+        "pallet.003",
+        "pallet.004",
+        "pallet.005",
+    ],
     # --------------- Attached box randomization ---------------
     "attached_box_variants": ["box1", "box2", "box3"],
     "randomize_attached_box_per_frame": True,
@@ -159,6 +169,10 @@ SINGLE_PALLET_CONFIG = {
     "attached_box_stack_probability": 0.6,
     "attached_box_stack_layers_range": (2, 4),
     "attached_box_stack_offset_factor": 0.05,
+    # --------------- Box material randomization ---------------
+    "randomize_box_materials": True,  # DISABLED temporarily - Enable random material loading from blend files
+    "box_materials_path": "scenes/assets/materials/boxes",  # Path to folder containing material blend files
+    "box_material_probability": 0.25,  # Probability to apply random material to each box (1.0 = always)
     # --------------- Keypoints Generation ---------------
     "generate_keypoints": True,
     "keypoints_min_face_area": 80,  # Minimum face area to generate keypoints
@@ -169,7 +183,7 @@ SINGLE_PALLET_CONFIG = {
     "keypoints_show_labels": True,  # Show all keypoint labels (names, coordinates) in analysis images
     "analysis_show_all_labels": False,  # Show all labels in analysis images (YOLO boxes, 3D structures)
     "analysis_show_keypoints": True,  # Show keypoints in analysis images
-    "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
+    "analysis_show_2d_boxes": False,  # Show 2D bounding boxes of selected faces in analysis images
     "analysis_show_3d_coordinates": True,  # Show 3D coordinates of selected faces in analysis images
 }
 

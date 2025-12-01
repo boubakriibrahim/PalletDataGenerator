@@ -323,6 +323,11 @@ except Exception as e:
                     "SCENE",
                     "warehouse",
                     "Rendering frame",
+                    "TRACEBACK",
+                    "Traceback",
+                    'File "',
+                    "IndexError",
+                    "===",
                 ]
             ):
                 print(line)

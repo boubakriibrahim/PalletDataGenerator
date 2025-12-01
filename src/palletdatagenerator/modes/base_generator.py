@@ -34,18 +34,27 @@ def _pip_install(args):
         "/cvmfs/soft.computecanada.ca/custom/python/wheelhouse/avx2",
         "/cvmfs/soft.computecanada.ca/custom/python/wheelhouse/generic",
     ]
-    cmd = [
-        sys.executable,
-        "-m",
-        "pip",
-        "install",
-        "--no-index",
-        "--find-links",
-        wheel_links[0],
-        "--find-links",
-        wheel_links[1],
-        "--user",
-    ] + args
+    if all(os.path.exists(link) for link in wheel_links):
+        cmd = [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--no-index",
+            "--find-links",
+            wheel_links[0],
+            "--find-links",
+            wheel_links[1],
+            "--user",
+        ] + args
+    else:
+        cmd = [
+            sys.executable,
+            "-m",
+            "pip",
+            "install",
+            "--user",
+        ] + args
     subprocess.run(cmd, check=True, text=True)
 
     user_site = site.getusersitepackages()
@@ -72,7 +81,7 @@ try:
     from pascal_voc_writer import Writer as VocWriter
 except ImportError:
     try:
-        _pip_install(["install", "pascal_voc_writer"])
+        _pip_install(["pascal_voc_writer"])
         from pascal_voc_writer import Writer as VocWriter  # retry
     except Exception:
         VocWriter = None
@@ -187,19 +196,19 @@ class BaseGenerator:
                 # Allow environment override for cluster-specific preferences
                 env_backend = os.environ.get("PALLET_GPU_BACKEND")
                 preferred_backend = cfg.get("_gpu_backend", env_backend)
-                
+
                 # For Linux/NVIDIA (H100): prefer CUDA first (H100 lacks RT cores; CUDA faster than OPTIX)
                 # For macOS: METAL only
                 # For AMD: HIP
                 backend_order = ["CUDA", "OPTIX", "HIP", "METAL", "OPENCL"]
-                
+
                 if preferred_backend:
                     # Move preferred to front
                     if preferred_backend in backend_order:
                         backend_order.remove(preferred_backend)
                         backend_order.insert(0, preferred_backend)
                     print(f"🎯 Preferred GPU backend: {preferred_backend}")
-                
+
                 # Try to set device type in priority order
                 device_type_set = None
                 for device_type in backend_order:
@@ -229,7 +238,7 @@ class BaseGenerator:
 
                     if device.type in {"CUDA", "OPTIX", "OPENCL", "METAL", "HIP"}:
                         # CRITICAL: Only enable devices matching the chosen backend (not all GPUs)
-                        device.use = (device.type == backend)
+                        device.use = device.type == backend
                         if device.use:
                             gpu_devices.append(device.name)
                     elif device.type == "CPU":
@@ -350,7 +359,9 @@ class BaseGenerator:
 
         # Reduce fireflies and improve speed
         if hasattr(cyc, "light_threshold"):
-            cyc.light_threshold = 0.01  # Increased from 0.001 for more speed (cull dim light paths)
+            cyc.light_threshold = (
+                0.01  # Increased from 0.001 for more speed (cull dim light paths)
+            )
 
         # GPU-specific performance settings
         if sc.cycles.device == "GPU":
@@ -880,6 +891,8 @@ class BaseGenerator:
                                     self.draw_overlapping_keypoint_circles(
                                         draw, overlap_group, x, y
                                     )
+                                    # Set radius for label positioning
+                                    radius = 4
                                 else:
                                     # Single keypoint
                                     radius = 4
