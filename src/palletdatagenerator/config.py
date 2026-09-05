@@ -189,7 +189,7 @@ SINGLE_PALLET_CONFIG = {
     "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
     "analysis_show_3d_coordinates": False,  # Show 3D coordinates of selected faces in analysis images
     # --------------- Output folder generation ---------------
-    "generate_debug_3d": False,  # Generate debug_3d folder with 3D visualizations
+    "generate_debug_3d": True,  # Generate debug_3d folder with 3D visualizations
     "generate_voc_xml": False,  # Generate VOC XML annotations
 }
 
@@ -263,7 +263,7 @@ WAREHOUSE_CONFIG = {
     "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
     "analysis_show_3d_coordinates": False,  # Show 3D coordinates of selected faces in analysis images
     # --------------- Output folder generation ---------------
-    "generate_debug_3d": False,  # Generate debug_3d folder with 3D visualizations
+    "generate_debug_3d": True,  # Generate debug_3d folder with 3D visualizations
     "generate_voc_xml": False,  # Generate VOC XML annotations
 }
 
