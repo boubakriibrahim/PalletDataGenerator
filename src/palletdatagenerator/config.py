@@ -41,7 +41,7 @@ def get_next_batch_folder(base_output_dir: str, mode: str) -> str:
     batch_folder_name = f"generated_{next_num:06d}"
     batch_folder_path = os.path.join(mode_dir, batch_folder_name)
 
-    print(f"📁 Creating batch folder: {batch_folder_path}")
+    print(f"[INFO] Creating batch folder: {batch_folder_path}")
     os.makedirs(batch_folder_path, exist_ok=True)
 
     return batch_folder_path
@@ -54,7 +54,7 @@ SINGLE_PALLET_CONFIG = {
     "num_images": 50,
     "render_engine": "CYCLES",
     "resolution_x": 640,
-    "resolution_y": 480,
+    "resolution_y": 640,
     # camera
     "camera_focal_mm": 35.0,
     "camera_sensor_mm": 36.0,
@@ -88,6 +88,9 @@ SINGLE_PALLET_CONFIG = {
     # duplicate pallets
     "duplicate_pallets": False,
     "num_pallets": 2,
+    # Probability-driven stacking: per-scene chance to create a stacked pallet setup
+    "stacked_pallets_probability": 0.5,  # 50% chance per frame to stack pallets
+    "stacked_pallets_max": 4,  # Max number of stacked pallets (random 2 to max)
     "pallet_stack_vertical": True,
     "pallet_stack_gap": 0.0,
     "unique_object_index": True,
@@ -97,19 +100,25 @@ SINGLE_PALLET_CONFIG = {
     "camera_min_z_above_ground": 0.05,
     # FAST mode
     "fast_mode": True,
-    "fast_samples": 32,
+    "fast_samples": 8,  # ULTRA low samples for maximum speed, denoiser will clean it
     "fast_denoiser": "AUTO",  # AUTO: Metal->OIDN, CUDA->OPTIX
     "fast_adaptive_sampling": True,
     "cycles_persistent_data": True,
+    # GPU backend preference (CUDA for H100, OPTIX for RTX cards, METAL for macOS)
+    "_gpu_backend": "CUDA",  # Prefer CUDA on H100 (lacks RT cores), can override with PALLET_GPU_BACKEND env var
+    # Performance: Disable slow post-processing for speed
+    "generate_analysis_images": True,  # Analysis images are slow, disable for production
+    "generate_depth_normals_index": True,  # Depth/normals/index passes are slow, disable for speed
+    "analysis_show_all_labels": True,  # Only used if generate_analysis_images=True
     # ---------------- Lighting randomness ----------------
     "randomize_lights_per_frame": False,
-    "light_count_range": (1, 3),
+    "light_count_range": (2, 4),  # Increased minimum from 1 to 2 lights
     "light_types": ["POINT", "AREA", "SPOT", "SUN"],
     "light_energy_ranges": {
-        "POINT": (50, 300),
-        "AREA": (30, 200),
-        "SPOT": (300, 1200),
-        "SUN": (2, 8),
+        "POINT": (200, 500),  # Increased from (50, 300)
+        "AREA": (150, 400),  # Increased from (30, 200)
+        "SPOT": (600, 1500),  # Increased from (300, 1200)
+        "SUN": (4, 10),  # Increased from (2, 8)
     },
     "light_distance_range": (2.0, 6.0),
     "light_elevation_deg_range": (10.0, 80.0),
@@ -128,19 +137,30 @@ SINGLE_PALLET_CONFIG = {
     "spot_blend_range": (0.1, 0.4),
     # --------- Realism helpers to prevent dark frames ---------
     "force_key_light": True,  # ensure at least one bright white key light (Default True in original)
-    "min_key_light_energy": 500.0,  # watts-ish (for SPOT/AREA); SUN uses small strengths
-    "min_total_light_energy": 300.0,  # minimum total lighting energy to prevent dark frames
-    "world_min_strength": 0.2,  # minimum background light strength (Filmic + low key)
+    "min_key_light_energy": 800.0,  # Increased from 500.0 - watts-ish (for SPOT/AREA); SUN uses small strengths
+    "min_total_light_energy": 600.0,  # Increased from 300.0 - minimum total lighting energy to prevent dark frames
+    "world_min_strength": 0.5,  # Increased from 0.2 - minimum background light strength (Filmic + low key)
     # --------- Auto exposure (per-frame) ----------
     "enable_auto_exposure": True,
     "target_luminance": 0.18,  # aim for 18% gray average luminance
-    "exposure_min": -2.0,  # EV clamp - more conservative to prevent very dark frames
+    "exposure_min": -1.0,  # Changed from -2.0 - less negative to prevent very dark frames
     "exposure_max": 4.0,
     "exposure_smooth": 0.6,  # 0..1 how strongly to apply EV correction
-    "preview_samples": 4,  # quick preview render for measurement
+    "preview_samples": 1,  # Reduced from 4 to 1 for maximum speed (preview is just for exposure measurement)
+    "preview_resolution_percent": 50,  # Render preview at 50% resolution for speed
     "initial_exposure_ev": 0.0,  # starting EV
     # Name of an auxiliary object that moves with pallet but is not annotated
     "attached_box_name": "box",
+    # --------------- Pallet variant randomization ---------------
+    "randomize_pallet_variant": True,  # Enable pallet variant swapping
+    "pallet_variant_change_probability": 0.5,
+    "pallet_variant_names": [
+        "pallet.001",
+        "pallet.002",
+        "pallet.003",
+        "pallet.004",
+        "pallet.005",
+    ],
     # --------------- Attached box randomization ---------------
     "attached_box_variants": ["box1", "box2", "box3"],
     "randomize_attached_box_per_frame": True,
@@ -152,6 +172,10 @@ SINGLE_PALLET_CONFIG = {
     "attached_box_stack_probability": 0.6,
     "attached_box_stack_layers_range": (2, 4),
     "attached_box_stack_offset_factor": 0.05,
+    # --------------- Box material randomization ---------------
+    "randomize_box_materials": True,  # DISABLED temporarily - Enable random material loading from blend files
+    "box_materials_path": "scenes/assets/materials/boxes",  # Path to folder containing material blend files
+    "box_material_probability": 0.25,  # Probability to apply random material to each box (1.0 = always)
     # --------------- Keypoints Generation ---------------
     "generate_keypoints": True,
     "keypoints_min_face_area": 80,  # Minimum face area to generate keypoints
@@ -163,7 +187,10 @@ SINGLE_PALLET_CONFIG = {
     "analysis_show_all_labels": False,  # Show all labels in analysis images (YOLO boxes, 3D structures)
     "analysis_show_keypoints": True,  # Show keypoints in analysis images
     "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
-    "analysis_show_3d_coordinates": True,  # Show 3D coordinates of selected faces in analysis images
+    "analysis_show_3d_coordinates": False,  # Show 3D coordinates of selected faces in analysis images
+    # --------------- Output folder generation ---------------
+    "generate_debug_3d": True,  # Generate debug_3d folder with 3D visualizations
+    "generate_voc_xml": False,  # Generate VOC XML annotations
 }
 
 
@@ -175,12 +202,15 @@ WAREHOUSE_CONFIG = {
     "max_images_per_scene": 15,
     "max_total_images": 50,
     # Render quality
-    "resolution_x": 1280,
-    "resolution_y": 720,
+    "resolution_x": 640,
+    "resolution_y": 640,
     "render_engine": "CYCLES",
-    "fast_samples": 64,
+    "fast_samples": 8,  # ULTRA low samples for maximum speed, denoiser will clean it
     "fast_mode": True,
     "fast_denoiser": "AUTO",
+    # Performance: Disable slow post-processing for speed
+    "generate_analysis_images": False,  # Analysis images are slow, disable for production
+    "generate_depth_normals_index": False,  # Depth/normals/index passes are slow, disable for speed
     # Forklift simulation
     "camera_focal_mm": 35.0,
     "camera_sensor_mm": 36.0,
@@ -198,7 +228,7 @@ WAREHOUSE_CONFIG = {
     # Generation options
     "generate_analysis": True,
     "generate_segmentation": True,
-    "save_scene_before_render": False,
+    "save_scene_before_render": True,
     # Detection
     "max_faces_per_pallet": 2,
     "min_pallet_area": 100,
@@ -231,7 +261,10 @@ WAREHOUSE_CONFIG = {
     "analysis_show_all_labels": False,  # Show all labels in analysis images (YOLO boxes, 3D structures)
     "analysis_show_keypoints": True,  # Show keypoints in analysis images
     "analysis_show_2d_boxes": True,  # Show 2D bounding boxes of selected faces in analysis images
-    "analysis_show_3d_coordinates": True,  # Show 3D coordinates of selected faces in analysis images
+    "analysis_show_3d_coordinates": False,  # Show 3D coordinates of selected faces in analysis images
+    # --------------- Output folder generation ---------------
+    "generate_debug_3d": True,  # Generate debug_3d folder with 3D visualizations
+    "generate_voc_xml": False,  # Generate VOC XML annotations
 }
 
 

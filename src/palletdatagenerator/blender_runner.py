@@ -51,7 +51,7 @@ except ImportError:
 def _pip_install(packages: list[str]) -> None:
     for pkg in packages:
         try:
-            print(f"📦 Installing: {pkg}")
+            print(f"[INFO] Installing: {pkg}")
             # Use a visible install (not fully quiet) so user sees potential build errors
             result = subprocess.run(
                 [sys.executable, "-m", "pip", "install", pkg],
@@ -60,18 +60,18 @@ def _pip_install(packages: list[str]) -> None:
                 text=True,
             )
             if result.returncode != 0:
-                print(f"⚠️  Install stderr for {pkg}:\n{result.stderr.strip()[:500]}")
+                print(f"[WARN]  Install stderr for {pkg}:\n{result.stderr.strip()[:500]}")
             else:
-                print(f"✅ Installed {pkg}")
+                print(f"[SUCCESS] Installed {pkg}")
         except Exception as e:  # noqa: BLE001
-            print(f"⚠️  Failed installing {pkg}: {e}")
+            print(f"[WARN]  Failed installing {pkg}: {e}")
 
 
 try:
     if importlib.util.find_spec("palletdatagenerator") is None:
         project_pyproject = project_root / "pyproject.toml"
         if project_pyproject.exists():
-            print("📦 Editable install of project into Blender env")
+            print("[INFO] Editable install of project into Blender env")
             _pip_install([f"-e{project_root}"])
         if importlib.util.find_spec("palletdatagenerator") is None:
             _pip_install(["palletdatagenerator"])
@@ -90,7 +90,7 @@ try:
         # Install pillow first so later imports (analysis) work
         pkgs_sorted = sorted(missing_pkgs, key=lambda p: (p != "pillow", p))
         print(
-            f"📦 Installing missing runtime deps inside Blender: {' '.join(pkgs_sorted)}"
+            f"[INFO] Installing missing runtime deps inside Blender: {' '.join(pkgs_sorted)}"
         )
         _pip_install(pkgs_sorted)
 
@@ -98,7 +98,7 @@ try:
     if importlib.util.find_spec("PIL") is None:
         fallback_dir = project_root / ".palletgen_blender_deps"
         try:
-            print("⚠️  Pillow still missing; attempting target fallback install.")
+            print("[WARN]  Pillow still missing; attempting target fallback install.")
             fallback_dir.mkdir(exist_ok=True)
             subprocess.run(
                 [
@@ -117,12 +117,12 @@ try:
             if str(fallback_dir) not in sys.path:
                 sys.path.insert(0, str(fallback_dir))
         except Exception as e:  # noqa: BLE001
-            print(f"⚠️  Pillow fallback install failed: {e}")
+            print(f"[WARN]  Pillow fallback install failed: {e}")
         if importlib.util.find_spec("PIL") is None:
-            print("❌ Pillow still not importable; analysis images will be skipped.")
+            print("[ERROR] Pillow still not importable; analysis images will be skipped.")
 
     if importlib.util.find_spec("yaml") is None:
-        print("⚠️  PyYAML missing; attempting --target fallback install.")
+        print("[WARN]  PyYAML missing; attempting --target fallback install.")
         fallback_dir = project_root / ".palletgen_blender_deps"
         try:
             fallback_dir.mkdir(exist_ok=True)
@@ -144,14 +144,14 @@ try:
             if str(fallback_dir) not in sys.path:
                 sys.path.insert(0, str(fallback_dir))
         except Exception as e:  # noqa: BLE001
-            print(f"⚠️  Fallback PyYAML target install failed: {e}")
+            print(f"[WARN]  Fallback PyYAML target install failed: {e}")
         if importlib.util.find_spec("yaml") is None:
             print(
-                "❌ PyYAML still not importable after fallback. Run manually:"
+                "[ERROR] PyYAML still not importable after fallback. Run manually:"
                 f" {sys.executable} -m pip install pyyaml"
             )
 except Exception as e:  # noqa: BLE001
-    print(f"⚠️  Auto-install sequence failed: {e}")
+    print(f"[WARN]  Auto-install sequence failed: {e}")
 
 
 class BlenderEnvironmentManager:
@@ -181,13 +181,13 @@ class BlenderEnvironmentManager:
             return self.scene_validated
 
         except Exception as e:
-            print(f"⚠️  Blender environment validation failed: {e}")
+            print(f"[WARN]  Blender environment validation failed: {e}")
             return False
 
     def _validate_scene_objects(self) -> bool:
         """Validate that required scene objects exist."""
         if not bpy.data.objects:
-            print("⚠️  No objects found in scene")
+            print("[WARN]  No objects found in scene")
             return False
 
         # Check for pallet objects
@@ -196,7 +196,7 @@ class BlenderEnvironmentManager:
         ]
         if not pallet_objects:
             print(
-                "⚠️  No pallet objects found. Ensure objects are named with 'pallet' prefix"
+                "[WARN]  No pallet objects found. Ensure objects are named with 'pallet' prefix"
             )
 
         # Check for box template objects
@@ -207,7 +207,7 @@ class BlenderEnvironmentManager:
         ]
         if not box_templates:
             print(
-                "⚠️  No box template objects found. Ensure objects are named 'box1', 'box2', etc."
+                "[WARN]  No box template objects found. Ensure objects are named 'box1', 'box2', etc."
             )
 
         return True
@@ -242,15 +242,15 @@ class BlenderEnvironmentManager:
 
                 if gpu_devices:
                     bpy.context.scene.cycles.device = "GPU"
-                    print(f"🚀 GPU rendering enabled: {', '.join(gpu_devices)}")
+                    print(f"[INFO] GPU rendering enabled: {', '.join(gpu_devices)}")
                 else:
-                    print("⚠️  No GPU devices found, using CPU")
+                    print("[WARN]  No GPU devices found, using CPU")
                     bpy.context.scene.cycles.device = "CPU"
             else:
                 bpy.context.scene.cycles.device = "CPU"
 
         except Exception as e:
-            print(f"⚠️  Failed to setup Blender preferences: {e}")
+            print(f"[WARN]  Failed to setup Blender preferences: {e}")
 
     def get_scene_info(self) -> dict[str, Any]:
         """Get information about the current Blender scene.
@@ -302,7 +302,7 @@ class BlenderEnvironmentManager:
             }
 
         except Exception as e:
-            print(f"⚠️  Failed to get scene info: {e}")
+            print(f"[WARN]  Failed to get scene info: {e}")
             return {}
 
 
@@ -320,7 +320,7 @@ def setup_background_images(background_dir: str) -> list[str]:
 
     background_path = Path(background_dir)
     if not background_path.exists():
-        print(f"⚠️  Background directory not found: {background_dir}")
+        print(f"[WARN]  Background directory not found: {background_dir}")
         return []
 
     # Supported image formats
@@ -333,10 +333,10 @@ def setup_background_images(background_dir: str) -> list[str]:
             background_images.append(str(img_path))
 
     if not background_images:
-        print(f"⚠️  No supported background images found in: {background_dir}")
+        print(f"[WARN]  No supported background images found in: {background_dir}")
         return []
 
-    print(f"🖼️  Found {len(background_images)} background images")
+    print(f"[UNK][UNK]  Found {len(background_images)} background images")
     return background_images
 
 
@@ -384,11 +384,11 @@ def apply_random_background(background_images: list[str]) -> str | None:
         links.new(env_tex.outputs["Color"], background.inputs["Color"])
         links.new(background.outputs["Background"], output.inputs["Surface"])
 
-        print(f"🖼️  Applied background: {Path(selected_bg).name}")
+        print(f"[UNK][UNK]  Applied background: {Path(selected_bg).name}")
         return selected_bg
 
     except Exception as e:
-        print(f"⚠️  Failed to apply background image: {e}")
+        print(f"[WARN]  Failed to apply background image: {e}")
         return None
 
 
@@ -401,7 +401,7 @@ def run_with_blender_args():
     from palletdatagenerator.cli import main
 
     if not BLENDER_AVAILABLE:
-        print("❌ This script must be run within Blender!")
+        print("[ERROR] This script must be run within Blender!")
         sys.exit(1)
 
     # Initialize environment manager
@@ -409,15 +409,15 @@ def run_with_blender_args():
 
     # Validate environment
     if not env_manager.validate_blender_environment():
-        print("❌ Blender environment validation failed!")
-        print("💡 Ensure your scene has:")
-        print("   • Objects named with 'pallet' prefix")
-        print("   • Box template objects named 'box1', 'box2', etc.")
+        print("[ERROR] Blender environment validation failed!")
+        print("[INFO] Ensure your scene has:")
+        print("   [UNK] Objects named with 'pallet' prefix")
+        print("   [UNK] Box template objects named 'box1', 'box2', etc.")
         sys.exit(1)
 
     # Get scene info
     scene_info = env_manager.get_scene_info()
-    print("🎬 Blender Scene Information:")
+    print("[UNK] Blender Scene Information:")
     print(f"   Scene: {scene_info.get('scene_name', 'Unknown')}")
     print(f"   Objects: {scene_info.get('total_objects', 0)}")
     print(f"   Pallets: {scene_info.get('pallet_count', 0)}")
@@ -432,7 +432,7 @@ def run_with_blender_args():
         # No '--' found, use default args
         script_args = ["generate", "--help"]
 
-    print(f"🚀 Running with args: {' '.join(script_args)}")
+    print(f"[INFO] Running with args: {' '.join(script_args)}")
 
     # Run the main CLI
     sys.exit(main(script_args))

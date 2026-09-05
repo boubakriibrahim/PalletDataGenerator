@@ -11,5 +11,5 @@
 - Pallets ideally grouped in collections (e.g., `Column.*`) or named with `pallet` prefix.
 
 ## General
-- Apply transforms (Ctrl+A → Scale).
+- Apply transforms (Ctrl+A [UNK] Scale).
 - Use metric units (meters).

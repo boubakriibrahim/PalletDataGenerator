@@ -4,7 +4,7 @@
 
 set -e  # Exit on any error
 
-echo "🚀 Setting up PalletDataGenerator development environment..."
+echo "[INFO] Setting up PalletDataGenerator development environment..."
 
 # Colors for output
 RED='\033[0;31m'
@@ -131,13 +131,13 @@ fi
 # Run initial tests
 echo -e "${BLUE}Running initial tests...${NC}"
 if pytest tests/ -v --tb=short; then
-    echo -e "${GREEN}✅ All tests passed!${NC}"
+    echo -e "${GREEN}[SUCCESS] All tests passed!${NC}"
 else
-    echo -e "${YELLOW}⚠️  Some tests failed, but setup completed.${NC}"
+    echo -e "${YELLOW}[WARN]  Some tests failed, but setup completed.${NC}"
 fi
 
 # Final instructions
-echo -e "\n${GREEN}🎉 Development environment setup complete!${NC}"
+echo -e "\n${GREEN}[UNK] Development environment setup complete!${NC}"
 echo -e "\n${BLUE}Next steps:${NC}"
 echo -e "1. Reload your shell or run: ${YELLOW}source $SHELL_PROFILE${NC}"
 echo -e "2. Try the CLI: ${YELLOW}pgen info --version${NC}"
@@ -153,4 +153,4 @@ else
     echo -e "To activate it in new shells: ${YELLOW}source venv/bin/activate${NC}"
 fi
 
-echo -e "\n${GREEN}Happy coding! 🚀${NC}"
+echo -e "\n${GREEN}Happy coding! [INFO]${NC}"

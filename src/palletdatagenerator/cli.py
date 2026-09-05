@@ -65,7 +65,7 @@ def find_blender_executable():
             "/usr/share/blender*/blender",
         ]
 
-    print(f"🔍 Searching for Blender on {system.title()}...")
+    print(f"[INFO] Searching for Blender on {system.title()}...")
 
     # Method 1: Try to find blender in PATH
     for name in executable_names:
@@ -84,14 +84,14 @@ def find_blender_executable():
                 matches = glob.glob(expanded_path)
                 for match in sorted(matches, reverse=True):  # Get latest version first
                     if Path(match).exists() and Path(match).is_file():
-                        print(f"✅ Found Blender: {match}")
+                        print(f"[SUCCESS] Found Blender: {match}")
                         return match
             except Exception:
                 continue
         else:
             path = Path(expanded_path)
             if path.exists() and path.is_file():
-                print(f"✅ Found Blender: {path}")
+                print(f"[SUCCESS] Found Blender: {path}")
                 return str(path)
 
     # Method 3: Try some additional system-specific searches
@@ -111,7 +111,9 @@ def find_blender_executable():
                         install_dir = winreg.QueryValueEx(key, "InstallDir")[0]
                         blender_exe = Path(install_dir) / "blender.exe"
                         if blender_exe.exists():
-                            print(f"✅ Found Blender via registry: {blender_exe}")
+                            print(
+                                f"[SUCCESS] Found Blender via registry: {blender_exe}"
+                            )
                             return str(blender_exe)
                 except (FileNotFoundError, OSError):
                     continue
@@ -131,7 +133,7 @@ def find_blender_executable():
             matches = glob.glob(expanded)
             for match in sorted(matches, reverse=True):
                 if Path(match).exists() and os.access(match, os.X_OK):
-                    print(f"✅ Found Blender AppImage: {match}")
+                    print(f"[SUCCESS] Found Blender AppImage: {match}")
                     return match
 
     # Method 4: Try to find using 'locate' command on Unix systems
@@ -149,24 +151,26 @@ def find_blender_executable():
                             and path.is_file()
                             and os.access(path, os.X_OK)
                         ):
-                            print(f"✅ Found Blender via locate: {path}")
+                            print(f"[SUCCESS] Found Blender via locate: {path}")
                             return str(path)
         except (subprocess.TimeoutExpired, FileNotFoundError):
             pass  # locate command not available or timed out
 
-    print("❌ Blender executable not found!")
-    print("💡 Installation suggestions:")
+    print("[ERROR] Blender executable not found!")
+    print("[INFO] Installation suggestions:")
     if system == "windows":
-        print("   • Download from https://www.blender.org/download/")
-        print("   • Or install via Chocolatey: choco install blender")
-        print("   • Or install via Winget: winget install BlenderFoundation.Blender")
+        print("   [UNK] Download from https://www.blender.org/download/")
+        print("   [UNK] Or install via Chocolatey: choco install blender")
+        print(
+            "   [UNK] Or install via Winget: winget install BlenderFoundation.Blender"
+        )
     elif system == "darwin":
-        print("   • Download from https://www.blender.org/download/")
-        print("   • Or install via Homebrew: brew install --cask blender")
-        print("   • Or install from Mac App Store")
+        print("   [UNK] Download from https://www.blender.org/download/")
+        print("   [UNK] Or install via Homebrew: brew install --cask blender")
+        print("   [UNK] Or install from Mac App Store")
     else:  # Linux
-        print("   • Download from https://www.blender.org/download/")
-        print("   • Or install via package manager:")
+        print("   [UNK] Download from https://www.blender.org/download/")
+        print("   [UNK] Or install via package manager:")
         print("     - Ubuntu/Debian: sudo apt install blender")
         print("     - Fedora: sudo dnf install blender")
         print("     - Arch: sudo pacman -S blender")
@@ -176,27 +180,48 @@ def find_blender_executable():
     return None
 
 
-def run_in_blender(scene_path, mode, frames, resolution, output, debug=False):
-    """Execute the generator within Blender."""
+def run_in_blender(
+    scene_path,
+    mode,
+    frames,
+    resolution,
+    output,
+    debug=False,
+    stacked_pallets=None,
+    stacked_pallets_max=None,
+    pallet_stack_vertical=None,
+    pallet_stack_gap=None,
+    debug_3d=False,
+):
+    """Execute the generator within Blender.
+
+    This helper will embed optional pallet-stacking overrides into the temporary
+    script so they are applied inside Blender.
+    """
     blender_exe = find_blender_executable()
     if not blender_exe:
-        print("❌ Error: Blender executable not found!")
-        print("💡 Please ensure Blender is installed and accessible in PATH")
+        print("[ERROR] Error: Blender executable not found!")
+        print("[INFO] Please ensure Blender is installed and accessible in PATH")
         print("   Or install Blender from: https://www.blender.org/download/")
         sys.exit(1)
 
-    print(f"🎬 Found Blender: {blender_exe}")
-    print("🚀 Launching Blender to run generation...")
+    print(f"[UNK] Found Blender: {blender_exe}")
+    print("[INFO] Launching Blender to run generation...")
+
+    # Get the actual source directory path to inject into the script
+    src_dir = Path(__file__).parent.parent  # src/ directory
 
     # Create a temporary script that will run inside Blender
-    script_content = f"""
+    # NOTE: use a normal string (not f-string) so placeholders like
+    # {config_overrides} are not interpolated here [UNK] we replace them later.
+    script_content = """
 import sys
 from pathlib import Path
 
 # Add package to path
-package_dir = Path("{Path(__file__).parent}")
-if str(package_dir.parent) not in sys.path:
-    sys.path.insert(0, str(package_dir.parent))
+src_dir = Path("{src_dir}")
+if str(src_dir) not in sys.path:
+    sys.path.insert(0, str(src_dir))
 
 from palletdatagenerator.generator import PalletDataGenerator
 from palletdatagenerator.utils import setup_logging
@@ -209,21 +234,25 @@ try:
     # Create generator
     generator = PalletDataGenerator(mode="{mode}")
 
+    # Config overrides supplied by the CLI runner
+    config_overrides = {config_overrides}
+
     # Generate dataset (all parameters are passed to generate method)
     result = generator.generate(
         scene_path=Path("{scene_path}"),
         num_frames={frames},
-        output_dir={f'Path("{output}")' if output else None},
-        resolution={resolution}
+        output_dir={output_dir},
+        resolution={resolution},
+        config_overrides=config_overrides,
     )
 
-    print("✅ Generation completed successfully!")
+    print("[SUCCESS] Generation completed successfully!")
     print(f"   Output: {{result.get('output_path', 'Unknown')}}")
     print(f"   Frames: {{result.get('frames', 'Unknown')}}")
     print(f"   Mode: {{result.get('mode', 'Unknown')}}")
 
 except Exception as e:
-    print(f"❌ Error during generation: {{e}}")
+    print(f"[ERROR] Error during generation: {{e}}")
     import traceback
     traceback.print_exc()
 """
@@ -235,29 +264,42 @@ except Exception as e:
         formatted_script = script_content
 
         # Replace all template variables
+        # Use forward slashes for paths to avoid Windows backslash escape issues
         formatted_script = formatted_script.replace("{debug}", str(debug))
         formatted_script = formatted_script.replace("{mode}", mode)
-        formatted_script = formatted_script.replace("{scene_path}", str(scene_path))
+        formatted_script = formatted_script.replace("{scene_path}", str(scene_path).replace("\\", "/"))
         formatted_script = formatted_script.replace("{frames}", str(frames))
         formatted_script = formatted_script.replace(
-            "{output}", str(output) if output else "None"
+            "{output}", str(output).replace("\\", "/") if output else "None"
         )
         formatted_script = formatted_script.replace("{resolution}", str(resolution))
+        # Build config_overrides literal based on provided function args
+        overrides = {}
+        if stacked_pallets is not None:
+            overrides["stacked_pallets_probability"] = float(stacked_pallets)
+        if stacked_pallets_max is not None:
+            overrides["stacked_pallets_max"] = int(stacked_pallets_max)
+        if pallet_stack_vertical is not None:
+            overrides["pallet_stack_vertical"] = bool(pallet_stack_vertical)
+        if pallet_stack_gap is not None:
+            overrides["pallet_stack_gap"] = float(pallet_stack_gap)
+        if debug_3d:
+            overrides["generate_debug_3d"] = True
 
-        # Fix the Path(__file__).parent issue
         formatted_script = formatted_script.replace(
-            "{Path(__file__).parent}", "__file__"
+            "{config_overrides}", repr(overrides)
         )
 
-        # Fix the f-string issue for output
+        # Inject the actual source directory path (use forward slashes for Windows compatibility)
+        formatted_script = formatted_script.replace("{src_dir}", str(src_dir).replace("\\", "/"))
+
+        # Fix the output_dir placeholder
         if output:
             formatted_script = formatted_script.replace(
-                "{f'Path(\"{output}\")' if output else None}", f'Path("{output}")'
+                "{output_dir}", f'Path("{str(output).replace(chr(92), "/")}")'
             )
         else:
-            formatted_script = formatted_script.replace(
-                "{f'Path(\"{output}\")' if output else None}", "None"
-            )
+            formatted_script = formatted_script.replace("{output_dir}", "None")
 
         f.write(formatted_script)
 
@@ -271,7 +313,7 @@ except Exception as e:
             str(script_path),  # Run our script
         ]
 
-        print(f"🎬 Executing: {' '.join(cmd)}")
+        print(f"[UNK] Executing: {' '.join(cmd)}")
 
         # Run Blender with output filtering
         import re
@@ -294,7 +336,47 @@ except Exception as e:
             if not line:
                 continue
 
-            # Skip verbose Blender memory and timing lines
+            # FIRST: Show important messages immediately (before skip filtering)
+            if any(
+                important in line
+                for important in [
+                    "[DEBUG]",
+                    "[SUCCESS]",
+                    "[ERROR]",
+                    "[WARN]",
+                    "[INFO]",
+                    "[INFO]",
+                    "[INFO]",
+                    "Error",
+                    "error",
+                    "Saved:",
+                    "Analysis",
+                    "YOLO",
+                    "COCO",
+                    "VOC",
+                    "blender",
+                    "PIL",
+                    "generation",
+                    "[INFO]",
+                    "[INFO]",
+                    "[UNK]",
+                    "[UNK]",
+                    "save_frame",
+                    "SCENE",
+                    "warehouse",
+                    "Rendering frame",
+                    "TRACEBACK",
+                    "Traceback",
+                    'File "',
+                    "IndexError",
+                    "===",
+                ]
+            ):
+                print(line)
+                sys.stdout.flush()  # Force immediate output
+                continue
+
+            # THEN: Skip verbose Blender memory and timing lines
             if any(
                 skip_pattern in line
                 for skip_pattern in [
@@ -323,40 +405,8 @@ except Exception as e:
                         if new_frame != current_frame:
                             current_frame = new_frame
                             # Only show this for single pallet mode
-                            # Warehouse mode shows its own "📸 Rendering frame" messages
+                            # Warehouse mode shows its own "[UNK] Rendering frame" messages
                 continue
-
-            # Show important messages immediately
-            if any(
-                important in line
-                for important in [
-                    "[DEBUG]",
-                    "✅",
-                    "❌",
-                    "⚠️",
-                    "📊",
-                    "Error",
-                    "error",
-                    "Saved:",
-                    "Analysis",
-                    "YOLO",
-                    "COCO",
-                    "VOC",
-                    "blender",
-                    "PIL",
-                    "generation",
-                    "🚀",
-                    "📁",
-                    "📸",
-                    "🏭",
-                    "save_frame",
-                    "SCENE",
-                    "warehouse",
-                    "Rendering frame",
-                ]
-            ):
-                print(line)
-                sys.stdout.flush()  # Force immediate output
 
         # Wait for process to complete
         return_code = process.wait()
@@ -364,14 +414,14 @@ except Exception as e:
         if return_code != 0:
             raise subprocess.CalledProcessError(return_code, cmd)
 
-        print("✅ Blender execution completed!")
+        print("[SUCCESS] Blender execution completed!")
 
     except subprocess.CalledProcessError as e:
-        print(f"❌ Blender execution failed with exit code {e.returncode}")
+        print(f"[ERROR] Blender execution failed with exit code {e.returncode}")
         sys.exit(e.returncode)
 
     except KeyboardInterrupt:
-        print("\n⚠️  Generation interrupted by user")
+        print("\n[WARN]  Generation interrupted by user")
         sys.exit(1)
 
     finally:
@@ -424,8 +474,8 @@ Examples:
         nargs=2,
         type=int,
         metavar=("WIDTH", "HEIGHT"),
-        default=[1024, 768],
-        help="Image resolution (default: 1024 768)",
+        default=[640, 640],
+        help="Image resolution (default: 640 640 for YOLO)",
     )
 
     parser.add_argument(
@@ -439,6 +489,49 @@ Examples:
         "--debug",
         action="store_true",
         help="Enable debug logging for detailed output",
+    )
+
+    # Pallet stacking overrides (optional)
+    parser.add_argument(
+        "--stacked-pallets",
+        dest="stacked_pallets",
+        type=float,
+        default=None,
+        help="Probability (0..1) to create a stacked pallet scene (float, default: disabled)",
+    )
+    parser.add_argument(
+        "--stacked-pallets-max",
+        dest="stacked_pallets_max",
+        type=int,
+        default=5,
+        help="Maximum number of pallets to stack when stacking is triggered (int, default: 5)",
+    )
+    parser.add_argument(
+        "--pallet-stack-vertical",
+        dest="pallet_stack_vertical",
+        action="store_true",
+        default=True,
+        help="Stack duplicates vertically (default behavior)",
+    )
+    parser.add_argument(
+        "--no-pallet-stack-vertical",
+        dest="pallet_stack_vertical",
+        action="store_false",
+        help="Do not stack duplicates vertically; offset in X/Y instead",
+    )
+    parser.add_argument(
+        "--pallet-stack-gap",
+        dest="pallet_stack_gap",
+        type=float,
+        default=0.0,
+        help="Vertical gap between stacked pallets (float, Blender units, default: 0.0)",
+    )
+    parser.add_argument(
+        "--debug-3d",
+        dest="debug_3d",
+        action="store_true",
+        default=False,
+        help="Generate debug_3d folder with 3D visualizations (default: False)",
     )
 
     return parser
@@ -457,14 +550,14 @@ def main():
 
     # Validate scene file
     if not args.scene_path.exists():
-        print(f"❌ Error: Scene file not found: {args.scene_path}")
+        print(f"[ERROR] Error: Scene file not found: {args.scene_path}")
         sys.exit(1)
 
     if args.scene_path.suffix != ".blend":
-        print(f"❌ Error: Scene file must be a .blend file: {args.scene_path}")
+        print(f"[ERROR] Error: Scene file must be a .blend file: {args.scene_path}")
         sys.exit(1)
 
-    print("🚀 Starting Pallet Data Generator")
+    print("[INFO] Starting Pallet Data Generator")
     print(f"   Mode: {args.mode}")
     print(f"   Scene: {args.scene_path}")
     print(f"   Frames: {args.frames}")
@@ -474,7 +567,7 @@ def main():
 
     # Check if we're running inside Blender or outside
     if not RUNNING_IN_BLENDER:
-        print("🎬 Not running in Blender - launching Blender automatically...")
+        print("[UNK] Not running in Blender - launching Blender automatically...")
         run_in_blender(
             scene_path=args.scene_path,
             mode=args.mode,
@@ -482,6 +575,11 @@ def main():
             resolution=args.resolution,
             output=args.output,
             debug=args.debug,
+            stacked_pallets=args.stacked_pallets,
+            stacked_pallets_max=args.stacked_pallets_max,
+            pallet_stack_vertical=args.pallet_stack_vertical,
+            pallet_stack_gap=args.pallet_stack_gap,
+            debug_3d=args.debug_3d,
         )
         return
 
@@ -490,15 +588,39 @@ def main():
         # Create generator
         generator = PalletDataGenerator(mode=args.mode)
 
+        # Build config_overrides from CLI args (only include set values)
+        config_overrides = {}
+        if hasattr(args, "stacked_pallets") and args.stacked_pallets is not None:
+            # Probability 0..1 to create a stacked pallet scene
+            config_overrides["stacked_pallets_probability"] = float(
+                args.stacked_pallets
+            )
+        if (
+            hasattr(args, "stacked_pallets_max")
+            and args.stacked_pallets_max is not None
+        ):
+            # Maximum number of pallets to stack (driver for random choice)
+            config_overrides["stacked_pallets_max"] = int(args.stacked_pallets_max)
+        if (
+            hasattr(args, "pallet_stack_vertical")
+            and args.pallet_stack_vertical is not None
+        ):
+            config_overrides["pallet_stack_vertical"] = bool(args.pallet_stack_vertical)
+        if hasattr(args, "pallet_stack_gap") and args.pallet_stack_gap is not None:
+            config_overrides["pallet_stack_gap"] = float(args.pallet_stack_gap)
+        if hasattr(args, "debug_3d") and args.debug_3d:
+            config_overrides["generate_debug_3d"] = True
+
         # Generate dataset (all parameters are passed to generate method)
         result = generator.generate(
             scene_path=args.scene_path,
             num_frames=args.frames,
             output_dir=args.output,
             resolution=args.resolution,
+            config_overrides=config_overrides if config_overrides else None,
         )
 
-        print("✅ Generation completed successfully!")
+        print("[SUCCESS] Generation completed successfully!")
         print(f"   Output: {result['output_path']}")
         print(f"   Frames: {result['frames']}")
         print(f"   Mode: {result['mode']}")
@@ -507,11 +629,11 @@ def main():
             print(f"   Pallets detected: {result['pallets_detected']}")
 
     except KeyboardInterrupt:
-        print("\n⚠️  Generation interrupted by user")
+        print("\n[WARN]  Generation interrupted by user")
         sys.exit(1)
 
     except Exception as e:
-        print(f"❌ Error during generation: {e}")
+        print(f"[ERROR] Error during generation: {e}")
         import traceback
 
         traceback.print_exc()

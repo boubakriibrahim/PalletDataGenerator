@@ -7,6 +7,9 @@ original_files
 .vscode
 .DS_Store
 
+.cursor
+.github/copilot-instructions.md
+
 docs/_build/
 
 __pycache__
@@ -22,3 +25,10 @@ htmlcov/
 dataset*
 
 output
+scenes/warehouse_generated/
+
+.mypy_cache/
+.ruff_cache/
+
+venv/
+temp_blender_script.py

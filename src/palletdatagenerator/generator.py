@@ -77,30 +77,42 @@ def ensure_dependencies():
         from PIL import Image, ImageDraw, ImageFont  # noqa: F401
 
         PIL_AVAILABLE = True
-    except ModuleNotFoundError:
-        _pip_install(["install", "pillow>=10.0.0"])
-
-        PIL_AVAILABLE = True
+    except (ModuleNotFoundError, ImportError):
+        _pip_install(["install", "--force-reinstall", "pillow>=10.0.0"])
+        importlib.invalidate_caches()
+        try:
+            from PIL import Image, ImageDraw, ImageFont  # noqa: F401
+            PIL_AVAILABLE = True
+        except (ModuleNotFoundError, ImportError):
+            PIL_AVAILABLE = False
 
     try:
         from pascal_voc_writer import Writer as VocWriter  # noqa: F401
-    except ModuleNotFoundError:
-        _pip_install(["install", "pascal_voc_writer"])
+    except (ModuleNotFoundError, ImportError):
+        _pip_install(["install", "--force-reinstall", "pascal-voc-writer"])
+        importlib.invalidate_caches()
+        # Retry import after install
+        try:
+            from pascal_voc_writer import Writer as VocWriter  # noqa: F401
+        except (ModuleNotFoundError, ImportError) as e:
+            print(f"[WARN] pascal_voc_writer still not importable: {e}")
 
     # Install matplotlib for 3D visualization
     try:
         import matplotlib.pyplot as plt  # noqa: F401
         import numpy as np  # noqa: F401
         from mpl_toolkits.mplot3d import Axes3D  # noqa: F401
-    except ModuleNotFoundError:
-        _pip_install(["install", "matplotlib>=3.5.0"])
+    except (ModuleNotFoundError, ImportError):
+        _pip_install(["install", "matplotlib>=3.5.0", "numpy"])
+        importlib.invalidate_caches()
 
     # Install plotly for interactive 3D figures
     try:
         import plotly.graph_objects as go  # noqa: F401
         import plotly.offline as pyo  # noqa: F401
-    except ModuleNotFoundError:
+    except (ModuleNotFoundError, ImportError):
         _pip_install(["install", "plotly>=5.0.0"])
+        importlib.invalidate_caches()
 
     print("✅ Dependencies ready")
     return PIL_AVAILABLE
@@ -133,6 +145,7 @@ class PalletDataGenerator:
         num_frames: int = 50,
         output_dir: Path | None = None,
         resolution: tuple[int, int] | None = None,
+        config_overrides: dict | None = None,
     ) -> dict[str, Any]:
         """Generate dataset using the appropriate mode class."""
         if not BLENDER_AVAILABLE:
@@ -160,6 +173,9 @@ class PalletDataGenerator:
         # Get the appropriate config and set the batch folder as output_dir
         if self.mode == "single_pallet":
             CONFIG = SINGLE_PALLET_CONFIG.copy()
+            # Apply any overrides from CLI or caller
+            if config_overrides:
+                CONFIG.update(config_overrides)
             CONFIG["num_images"] = num_frames
             CONFIG["output_dir"] = batch_folder
             if resolution:
@@ -170,7 +186,12 @@ class PalletDataGenerator:
             mode_generator = SinglePalletMode(CONFIG)
             mode_generator.setup_folders()
             mode_generator.configure_render()
-            mode_generator.setup_compositor_nodes()
+
+            # Only setup compositor if depth/normals/index are needed
+            if CONFIG.get("generate_depth_normals_index", True):
+                mode_generator.setup_compositor_nodes()
+            else:
+                print("⚡ Skipping compositor setup for maximum speed")
 
             print("🔄 Running EXACT single pallet generator logic...")
             result = mode_generator.generate_frames()
@@ -179,6 +200,9 @@ class PalletDataGenerator:
         else:
             # Warehouse mode
             CONFIG = WAREHOUSE_CONFIG.copy()
+            # Apply any overrides from CLI or caller
+            if config_overrides:
+                CONFIG.update(config_overrides)
             CONFIG["max_total_images"] = num_frames
             CONFIG["output_dir"] = batch_folder
             if resolution:
@@ -189,7 +213,12 @@ class PalletDataGenerator:
             mode_generator = WarehouseMode(CONFIG)
             mode_generator.setup_folders()
             mode_generator.configure_render()
-            mode_generator.setup_compositor_nodes()
+
+            # Only setup compositor if depth/normals/index are needed
+            if CONFIG.get("generate_depth_normals_index", True):
+                mode_generator.setup_compositor_nodes()
+            else:
+                print("⚡ Skipping compositor setup for maximum speed")
 
             print("🔄 Running EXACT warehouse generator logic...")
             result = mode_generator.generate_frames()
@@ -264,17 +293,19 @@ def ensure(path):
     return path
 
 
-def build_folders(root):
+def build_folders(root, config=None):
     sub = {
         "images": ensure(os.path.join(root, "images")),
         "depth": ensure(os.path.join(root, "depth")),
         "normals": ensure(os.path.join(root, "normals")),
         "index": ensure(os.path.join(root, "index")),
         "analysis": ensure(os.path.join(root, "analysis")),
-        "yolo": ensure(os.path.join(root, "yolo_labels")),
-        "voc": ensure(os.path.join(root, "voc_xml")),
-        "keypoints": ensure(os.path.join(root, "keypoints_labels")),
+        "face_2d_boxes": ensure(os.path.join(root, "face_2d_boxes")),
+        "face_2d_keypoints": ensure(os.path.join(root, "face_2d_keypoints")),
     }
+    # Conditionally create voc_xml folder
+    if config and config.get("generate_voc_xml", False):
+        sub["voc"] = ensure(os.path.join(root, "voc_xml"))
     return sub
 
 
@@ -541,7 +572,7 @@ def main_single_pallet(CONFIG):
 
     os.makedirs(cfg["output_dir"], exist_ok=True)
     root = ensure(cfg["output_dir"])
-    paths = build_folders(root)
+    paths = build_folders(root, cfg)
     configure_render(cfg)
     setup_compositor_nodes(paths, cfg)
 
@@ -649,19 +680,6 @@ def main_single_pallet(CONFIG):
             bpy.ops.render.render(write_still=True)
             print(f"✅ Rendered frame {valid+1}/{total}: {fn}.png")
 
-            # Create simple YOLO label file
-            yolo_path = os.path.join(paths["yolo"], f"{fn}.txt")
-            with open(yolo_path, "w") as yf:
-                for _i, b2d in enumerate(b2d_list):
-                    # Simple normalized coordinates (center_x, center_y, width, height)
-                    center_x = (b2d["x"] + b2d["width"] / 2) / img_w
-                    center_y = (b2d["y"] + b2d["height"] / 2) / img_h
-                    norm_w = b2d["width"] / img_w
-                    norm_h = b2d["height"] / img_h
-                    yf.write(
-                        f"0 {center_x:.6f} {center_y:.6f} {norm_w:.6f} {norm_h:.6f}\n"
-                    )
-
             # Add to COCO format
             coco["images"].append(
                 {"id": valid, "width": img_w, "height": img_h, "file_name": f"{fn}.png"}
@@ -693,11 +711,12 @@ def main_single_pallet(CONFIG):
                     with open(ana_path, "w") as af:
                         af.write("# Analysis image placeholder\n")
 
-            # Create simple VOC XML
-            voc_path = os.path.join(paths["voc"], f"{fn}.xml")
-            with open(voc_path, "w") as vf:
-                vf.write(
-                    f"""<?xml version="1.0"?>
+            # Create simple VOC XML (conditional)
+            if cfg.get("generate_voc_xml", False) and "voc" in paths:
+                voc_path = os.path.join(paths["voc"], f"{fn}.xml")
+                with open(voc_path, "w") as vf:
+                    vf.write(
+                        f"""<?xml version="1.0"?>
 <annotation>
     <filename>{fn}.png</filename>
     <size>
@@ -706,7 +725,7 @@ def main_single_pallet(CONFIG):
         <depth>3</depth>
     </size>
 </annotation>"""
-                )
+                    )
 
         except Exception as e:
             print(f"❌ Error rendering frame {valid}: {e}")

@@ -5,31 +5,31 @@ All notable changes to this project will be documented in this file.
 ## [0.1.3] - 2025-01-15
 
 ### Added
-- **🎯 Advanced Keypoints Generation**: Automatic face detection with 6 keypoints per selected face
+- **[INFO] Advanced Keypoints Generation**: Automatic face detection with 6 keypoints per selected face
   - **Selective face detection**: Detects 1-2 most visible faces from the pallet (not all faces)
   - **6 keypoints per selected face**: 2 middle (top-down), 2 left (top-down), 2 right (top-down)
   - **Visibility tracking**: Ray casting for occlusion detection between face and camera
   - **YOLO format output**: Normalized coordinates with visibility flags (2=visible, 0=hidden)
   - **Analysis visualization**: Keypoints with different colors for visible/hidden states
-- **🔍 3D Debug Visualization**: Comprehensive debugging tools for keypoints analysis
+- **[INFO] 3D Debug Visualization**: Comprehensive debugging tools for keypoints analysis
   - **Interactive HTML figures**: Real-time 3D visualization using Plotly.js
   - **Face selection analysis**: Shows which faces were chosen and why
   - **Camera positioning**: Distance calculations to each face with visual lines
   - **Coordinate tracking**: Detailed 3D coordinate information for debugging
   - **Debug output structure**: `debug_3d/` folder with coordinates, figures, and images
-- **📊 Enhanced Output Structure**: New directories for comprehensive debugging
+- **[INFO] Enhanced Output Structure**: New directories for comprehensive debugging
   - `keypoints_labels/`: YOLO format keypoints annotations
   - `face_2d_boxes/`: 2D bounding boxes for detected faces
   - `face_3d_coordinates/`: 3D coordinates for keypoints
   - `debug_3d/coordinates/`: Detailed coordinate information
   - `debug_3d/figures/`: Interactive HTML 3D figures
   - `debug_3d/images/`: 3D debug visualization images
-- **🎮 Interactive 3D Visualization**: Real-time exploration tools
+- **[UNK] Interactive 3D Visualization**: Real-time exploration tools
   - **Interactive controls**: Rotate, zoom, pan, reset view
   - **Color-coded elements**: Red corners, blue camera, gray distance lines, green/orange selected faces
   - **Face highlighting**: Selected faces in green/orange, unselected in blue
   - **Camera visualization**: Green diamond showing camera position with distance lines
-- **📚 Comprehensive Documentation**: Updated guides and examples
+- **[UNK] Comprehensive Documentation**: Updated guides and examples
   - **Keypoints Generation Guide**: Detailed documentation in `docs/keypoints_generation.md`
   - **Real examples**: Actual data from generated datasets
   - **Interactive examples**: Working HTML visualizations with real data
@@ -161,13 +161,13 @@ All notable changes to this project will be documented in this file.
 This is the first stable release of the Pallet Data Generator library. The library provides a professional, modular approach to generating synthetic datasets for computer vision tasks involving pallets and warehouse environments.
 
 **Key Highlights:**
-- 🎯 **Professional Architecture**: Clean, modular design following Python best practices
-- 🔧 **Easy to Use**: Simple API with sensible defaults and comprehensive configuration options
-- 📊 **Multiple Formats**: Support for YOLO, COCO, and PASCAL VOC annotation formats
-- 🚀 **High Performance**: GPU-accelerated rendering with Blender integration
-- 🧪 **Well Tested**: Comprehensive test suite with >90% code coverage
-- 📚 **Great Documentation**: Clear documentation with examples and API reference
-- 🔄 **CI/CD Ready**: Automated testing, building, and deployment pipeline
+- [INFO] **Professional Architecture**: Clean, modular design following Python best practices
+- [UNK] **Easy to Use**: Simple API with sensible defaults and comprehensive configuration options
+- [INFO] **Multiple Formats**: Support for YOLO, COCO, and PASCAL VOC annotation formats
+- [INFO] **High Performance**: GPU-accelerated rendering with Blender integration
+- [UNK] **Well Tested**: Comprehensive test suite with >90% code coverage
+- [UNK] **Great Documentation**: Clear documentation with examples and API reference
+- [UNK] **CI/CD Ready**: Automated testing, building, and deployment pipeline
 
 **What's Included:**
 - Core library with generator classes
@@ -210,7 +210,7 @@ For information about contributing to this project, see [CONTRIBUTING.md](CONTRI
 
 ## Support
 
-- 📖 **Documentation**: https://boubakriibrahim.github.io/PalletDataGenerator
-- 🐛 **Issues**: https://github.com/boubakriibrahim/PalletDataGenerator/issues
-- 💬 **Discussions**: https://github.com/boubakriibrahim/PalletDataGenerator/discussions
-- 📦 **PyPI**: https://pypi.org/project/palletdatagenerator/
+- [UNK] **Documentation**: https://boubakriibrahim.github.io/PalletDataGenerator
+- [UNK] **Issues**: https://github.com/boubakriibrahim/PalletDataGenerator/issues
+- [INFO] **Discussions**: https://github.com/boubakriibrahim/PalletDataGenerator/discussions
+- [INFO] **PyPI**: https://pypi.org/project/palletdatagenerator/
